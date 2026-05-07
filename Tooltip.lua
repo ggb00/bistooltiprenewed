@@ -2,17 +2,7 @@
 local eventFrame = CreateFrame("Frame", nil, UIParent)
 local tooltip_cache = {}
 
-local HARDCODED_CLASS_COLORS = {
-    ["DEATHKNIGHT"] = {0.77, 0.12, 0.23},
-    ["DRUID"]       = {1.00, 0.49, 0.04},
-    ["HUNTER"]      = {0.67, 0.83, 0.45},
-    ["MAGE"]        = {0.25, 0.78, 0.92},
-    ["PALADIN"]     = {0.96, 0.55, 0.73},
-    ["PRIEST"]      = {1.00, 1.00, 1.00},
-    ["ROGUE"]       = {1.00, 0.96, 0.41},
-    ["SHAMAN"]      = {0.00, 0.44, 0.87},
-    ["WARLOCK"]     = {0.53, 0.53, 0.93},
-    ["WARRIOR"]     = {0.78, 0.61, 0.43},
+local HARDCODED_CLASS_COLORS = {["DEATHKNIGHT"] = {0.77, 0.12, 0.23}, ["DRUID"]   = {1.00, 0.49, 0.04},["HUNTER"]      = {0.67, 0.83, 0.45},["MAGE"]    = {0.25, 0.78, 0.92},["PALADIN"]     = {0.96, 0.55, 0.73}, ["PRIEST"]  = {1.00, 1.00, 1.00},["ROGUE"]       = {1.00, 0.96, 0.41},["SHAMAN"]  = {0.00, 0.44, 0.87},["WARLOCK"]     = {0.53, 0.53, 0.93},["WARRIOR"] = {0.78, 0.61, 0.43},
 }
 
 local highlight_colors = {
@@ -24,22 +14,18 @@ local highlight_colors = {
 }
 
 local function specHighlighted(class_name, spec_name)
-    if not BistooltipAddon.db.char.highlight_spec then return false end
-    return (BistooltipAddon.db.char.highlight_spec.spec_name == spec_name and
-            BistooltipAddon.db.char.highlight_spec.class_name == class_name)
+    if not BisTooltipAddon.db.char.highlight_spec then return false end
+    return (BisTooltipAddon.db.char.highlight_spec.spec_name == spec_name and
+            BisTooltipAddon.db.char.highlight_spec.class_name == class_name)
 end
 
 local function specFiltered(class_name, spec_name)
     if specHighlighted(class_name, spec_name) then return false end
     if IsAltKeyDown() then return false end
-    if BistooltipAddon.db.char.filter_specs and BistooltipAddon.db.char.filter_specs[class_name] then
-        return BistooltipAddon.db.char.filter_specs[class_name][spec_name] == true
+    if BisTooltipAddon.db.char.filter_specs and BisTooltipAddon.db.char.filter_specs[class_name] then
+        return BisTooltipAddon.db.char.filter_specs[class_name][spec_name] == true
     end
     return false
-end
-
-local function classNamesFiltered()
-    return BistooltipAddon.db.char.filter_class_names == true
 end
 
 local DataStore_Inventory = DataStore_Inventory or nil
@@ -69,15 +55,13 @@ local function GetItemSource(itemId)
 
     if not source and DataStore_Inventory then
         local Instance, Boss = DataStore_Inventory:GetSource(itemId)
-        if Instance and Boss then
-            return "|cFFFFFFFFSource:|r |cFF00FF00[" .. formatInstanceName(Instance) .. "] - " .. Boss .. "|r"
-        end
+        if Instance and Boss then return "|cFFFFFFFFSource:|r |cFF00FF00[" .. formatInstanceName(Instance) .. "] - " .. Boss .. "|r" end
     end
     return nil
 end
 
 local function OnGameTooltipSetItem(tooltip)
-    if BistooltipAddon.db.char.tooltip_with_ctrl and not IsControlKeyDown() then return end
+    if BisTooltipAddon.db.char.tooltip_with_ctrl and not IsControlKeyDown() then return end
 
     local _, link = tooltip:GetItem()
     if not link then return end
@@ -90,25 +74,11 @@ local function OnGameTooltipSetItem(tooltip)
             tooltip:AddDoubleLine(line.left, line.right, line.r1, line.g1, line.b1, line.r2, line.g2, line.b2)
         end
     else
-        local itemBisData = BistooltipAddon.ReverseLookup and BistooltipAddon.ReverseLookup[itemId]
-        
-        -- Fallback translation lookup just in case Core.lua missed it
-        if not itemBisData and Bistooltip_horde_to_ali then
-            local translated = Bistooltip_horde_to_ali[itemId]
-            if not translated then
-                for h_id, a_id in pairs(Bistooltip_horde_to_ali) do
-                    if a_id == itemId then translated = h_id; break end
-                end
-            end
-            if translated and BistooltipAddon.ReverseLookup then
-                itemBisData = BistooltipAddon.ReverseLookup[translated]
-            end
-        end
+        local itemBisData = BisTooltipAddon.ReverseLookup and BisTooltipAddon.ReverseLookup[itemId]
 
         if itemBisData then
             local cached_lines = {} 
             local sortedClasses = {}
-            
             for class in pairs(itemBisData) do table.insert(sortedClasses, class) end
             table.sort(sortedClasses)
 
@@ -121,27 +91,20 @@ local function OnGameTooltipSetItem(tooltip)
                 for _, spec in ipairs(sortedSpecs) do
                     if not specFiltered(class, spec) then
                         local foundPhases = specs[spec]
-                        local icon = Bistooltip_spec_icons[class] and Bistooltip_spec_icons[class][spec]
+                        local icon = BisTooltip_SpecIcons[class] and BisTooltip_SpecIcons[class][spec]
                         if icon then
                             local iconString = string.format("|T%s:18|t", icon)
-                            local lineText = classNamesFiltered() and string.format("%s %s", iconString, spec) or string.format("%s %s - %s", iconString, class, spec)
-                            
+                            local lineText = BisTooltipAddon.db.char.filter_class_names and string.format("%s %s", iconString, spec) or string.format("%s %s - %s", iconString, class, spec)
                             local r1, g1, b1, r2, g2, b2
                             
                             if specHighlighted(class, spec) then
-                                local selectedColor = BistooltipAddon.db.char.highlight_color or "purple"
+                                local selectedColor = BisTooltipAddon.db.char.highlight_color or "purple"
                                 local colorRGB = highlight_colors[selectedColor] or highlight_colors["purple"]
                                 r1, g1, b1 = colorRGB[1], colorRGB[2], colorRGB[3]
                                 r2, g2, b2 = colorRGB[1], colorRGB[2], colorRGB[3]
                             else
                                 r2, g2, b2 = 0.8, 0.8, 0.8 
-                                
-                                local use_class_colors = true
-                                if BistooltipAddon.db.char.use_class_colors ~= nil then
-                                    use_class_colors = BistooltipAddon.db.char.use_class_colors
-                                end
-
-                                if use_class_colors then
+                                if BisTooltipAddon.db.char.use_class_colors then
                                     local classKey = string.upper(string.gsub(class, "%s+", ""))
                                     local cColor = HARDCODED_CLASS_COLORS[classKey] or {0.8, 0.8, 0.8}
                                     r1, g1, b1 = cColor[1], cColor[2], cColor[3]
@@ -168,11 +131,9 @@ local function OnGameTooltipSetItem(tooltip)
     end
 end
 
-function BistooltipAddon:ClearTooltipCache()
-    tooltip_cache = {}
-end
+function BisTooltipAddon:ClearTooltipCache() tooltip_cache = {} end
 
-function BistooltipAddon:initBisTooltip()
+function BisTooltipAddon:initBisTooltip()
     eventFrame:RegisterEvent("MODIFIER_STATE_CHANGED")
     eventFrame:SetScript("OnEvent", function(_, _, e_key)
         if GameTooltip:GetOwner() and not GameTooltip:GetOwner().hasItem then
@@ -185,7 +146,6 @@ function BistooltipAddon:initBisTooltip()
             end
         end
     end)
-
     GameTooltip:HookScript("OnTooltipSetItem", OnGameTooltipSetItem)
     ItemRefTooltip:HookScript("OnTooltipSetItem", OnGameTooltipSetItem)
 end

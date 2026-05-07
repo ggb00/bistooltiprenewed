@@ -19,7 +19,6 @@ local specDropdown = nil
 local phaseDropDown = nil
 
 local isHorde = UnitFactionGroup("player") == "Horde"
-
 local missing_widgets = {}
 local query_queue = {}
 local scanner = CreateFrame("GameTooltip", "BisTooltipScanner", UIParent, "GameTooltipTemplate")
@@ -27,15 +26,8 @@ local item_fetch_frame = CreateFrame("Frame")
 
 local function createItemFrame(item_id, size, with_checkmark)
     if item_id < 0 then return AceGUI:Create("Label") end
-
     local item_frame = AceGUI:Create("Icon")
     item_frame:SetImageSize(size, size)
-
-    -- Correct translation mapping for UI
-    if isHorde and Bistooltip_horde_to_ali then
-        local translated = Bistooltip_horde_to_ali[item_id]
-        if translated then item_id = translated end
-    end
 
     local itemName, itemLink, _, _, _, _, _, _, _, itemIcon, _, _, _, bindType = GetItemInfo(item_id)
 
@@ -44,7 +36,7 @@ local function createItemFrame(item_id, size, with_checkmark)
         item_frame.frame.bisCheckMark:SetWidth(32)
         item_frame.frame.bisCheckMark:SetHeight(32)
         item_frame.frame.bisCheckMark:SetPoint("CENTER", 6, -8)
-        item_frame.frame.bisCheckMark:SetTexture("Interface\\AddOns\\Bistooltip\\checkmark-16.tga")
+        item_frame.frame.bisCheckMark:SetTexture("Interface\\AddOns\\Bis-Tooltip\\checkmark-16.tga") -- NOTE: Match your folder name here!
     end
 
     if not item_frame.frame.bisBoeMark then
@@ -57,7 +49,7 @@ local function createItemFrame(item_id, size, with_checkmark)
 
     if with_checkmark then 
         item_frame.frame.bisCheckMark:Show() 
-        item_frame.image:SetVertexColor(0.35, 0.35, 0.35, 1) -- Set to 0.35 (lighter than 0.2, darker than 0.5)
+        item_frame.image:SetVertexColor(0.3, 0.3, 0.3, 1) -- Slightly darker tint requested
     else 
         item_frame.frame.bisCheckMark:Hide() 
         item_frame.image:SetVertexColor(1, 1, 1, 1)
@@ -66,10 +58,8 @@ local function createItemFrame(item_id, size, with_checkmark)
     if not itemName then
         item_frame:SetImage("Interface\\Icons\\INV_Misc_QuestionMark")
         item_frame.frame.bisBoeMark:Hide()
-        
         if not missing_widgets[item_id] then missing_widgets[item_id] = {} end
         table.insert(missing_widgets[item_id], item_frame)
-        
         query_queue[item_id] = true
         return item_frame
     end
@@ -88,7 +78,6 @@ local function createItemFrame(item_id, size, with_checkmark)
     return item_frame
 end
 
--- Lightning Fast Fetch Queue (Fetches up to 5 items per rendered frame, 300 items/sec)
 item_fetch_frame:SetScript("OnUpdate", function()
     for i = 1, 5 do
         local next_id = next(query_queue)
@@ -96,9 +85,7 @@ item_fetch_frame:SetScript("OnUpdate", function()
             scanner:SetOwner(UIParent, "ANCHOR_NONE")
             scanner:SetHyperlink("item:" .. next_id .. ":0:0:0:0:0:0:0")
             query_queue[next_id] = nil
-        else
-            break
-        end
+        else break end
     end
 end)
 
@@ -110,16 +97,9 @@ item_fetch_frame:SetScript("OnEvent", function(_, _, received_item_id)
             for _, widget in ipairs(missing_widgets[received_item_id]) do
                 if widget and widget.frame and widget.frame:IsShown() then
                     widget:SetImage(itemIcon)
-                    
-                    local isEquipped = Bistooltip_char_equipment and Bistooltip_char_equipment[received_item_id]
-                    if isEquipped then
-                        widget.image:SetVertexColor(0.35, 0.35, 0.35, 1) 
-                    else
-                        widget.image:SetVertexColor(1, 1, 1, 1) 
-                    end
-                    
+                    local isEquipped = BisTooltip_EquipmentCache and BisTooltip_EquipmentCache[received_item_id]
+                    if isEquipped then widget.image:SetVertexColor(0.3, 0.3, 0.3, 1) else widget.image:SetVertexColor(1, 1, 1, 1) end
                     if bindType == 2 then widget.frame.bisBoeMark:Show() else widget.frame.bisBoeMark:Hide() end
-
                     widget:SetCallback("OnClick", function() SetItemRef(itemLink, itemLink, "LeftButton") end)
                     widget:SetCallback("OnEnter", function(w)
                         GameTooltip:SetOwner(w.frame)
@@ -135,18 +115,14 @@ end)
 
 local function createSpellFrame(spell_id, size)
     if spell_id < 0 then return AceGUI:Create("Label") end
-
     local spell_frame = AceGUI:Create("Icon")
     spell_frame:SetImageSize(size, size)
     spell_frame.image:SetVertexColor(1, 1, 1, 1) 
-
     local name, _, icon = GetSpellInfo(spell_id)
     if not name then return spell_frame end
-
     spell_frame:SetImage(icon)
     local link = GetSpellLink(spell_id)
     if not link then link = "\124cffffd000\124Hspell:" .. spell_id .. "\124h[" .. name .. "]\124h\124r" end
-
     spell_frame:SetCallback("OnClick", function() SetItemRef(link, link, "LeftButton") end)
     spell_frame:SetCallback("OnEnter", function()
         GameTooltip:SetOwner(spell_frame.frame)
@@ -154,7 +130,6 @@ local function createSpellFrame(spell_id, size)
         GameTooltip:SetHyperlink(link)
     end)
     spell_frame:SetCallback("OnLeave", function() GameTooltip:Hide() end)
-
     return spell_frame
 end
 
@@ -173,13 +148,9 @@ local function createEnhancementsFrame(enhancements)
     frame:SetAutoAdjustHeight(false)
     for _, enhancement in ipairs(enhancements) do
         local size = 16
-        if enhancement.type == "none" then
-            frame:AddChild(createItemFrame(-1, size))
-        elseif enhancement.type == "item" then
-            frame:AddChild(createItemFrame(enhancement.id, size))
-        elseif enhancement.type == "spell" then
-            frame:AddChild(createSpellFrame(enhancement.id, size))
-        end
+        if enhancement.type == "none" then frame:AddChild(createItemFrame(-1, size))
+        elseif enhancement.type == "item" then frame:AddChild(createItemFrame(enhancement.id, size))
+        elseif enhancement.type == "spell" then frame:AddChild(createSpellFrame(enhancement.id, size)) end
     end
     return frame
 end
@@ -192,16 +163,17 @@ local function drawItemSlot(slot)
     spec_frame:AddChild(createEnhancementsFrame(slot.enhs))
 
     for _, original_item_id in ipairs(slot) do
-        local item_id = original_item_id
+        local display_id = original_item_id
         
-        -- Translate to correct faction to check if equipped
-        if isHorde and Bistooltip_horde_to_ali then
-            local translated = Bistooltip_horde_to_ali[original_item_id]
-            if translated then item_id = translated end
+        -- Smart Faction Translator (Bulletproof)
+        if isHorde and BisTooltip_AliToHorde and BisTooltip_AliToHorde[original_item_id] then
+            display_id = BisTooltip_AliToHorde[original_item_id]
+        elseif not isHorde and BisTooltip_FactionMap and BisTooltip_FactionMap[original_item_id] then
+            display_id = BisTooltip_FactionMap[original_item_id]
         end
 
-        local isEquipped = item_id and Bistooltip_char_equipment and Bistooltip_char_equipment[item_id]
-        spec_frame:AddChild(createItemFrame(item_id, 40, isEquipped))
+        local isEquipped = display_id and BisTooltip_EquipmentCache and BisTooltip_EquipmentCache[display_id]
+        spec_frame:AddChild(createItemFrame(display_id, 40, isEquipped))
     end
 end
 
@@ -221,34 +193,26 @@ local function drawTableHeader(frame)
     end
 end
 
-local function saveData()
-    BistooltipAddon.db.char.class_index = class_index
-    BistooltipAddon.db.char.spec_index = spec_index
-    BistooltipAddon.db.char.phase_index = phase_index
-end
-
 local function drawSpecData()
-    saveData()
+    BisTooltipAddon.db.char.class_index = class_index
+    BisTooltipAddon.db.char.spec_index = spec_index
+    BisTooltipAddon.db.char.phase_index = phase_index
+
     missing_widgets = {}
     query_queue = {}
     spec_frame:ReleaseChildren()
     drawTableHeader(spec_frame)
     
-    if not spec or not phase or not Bistooltip_bislists[class] or not Bistooltip_bislists[class][spec] then
-        return
-    end
-    local slots = Bistooltip_bislists[class][spec][phase]
+    if not spec or not phase or not BisTooltip_ItemLists[class] or not BisTooltip_ItemLists[class][spec] then return end
+    local slots = BisTooltip_ItemLists[class][spec][phase]
     if not slots then return end
-    
-    for _, slot in ipairs(slots) do
-        drawItemSlot(slot)
-    end
+    for _, slot in ipairs(slots) do drawItemSlot(slot) end
 end
 
 local function buildClassDict()
-    if not Bistooltip_classes or type(Bistooltip_classes) ~= "table" then return end
+    if not BisTooltip_ClassData or type(BisTooltip_ClassData) ~= "table" then return end
     class_options = {}
-    for ci, class_data in ipairs(Bistooltip_classes) do
+    for ci, class_data in ipairs(BisTooltip_ClassData) do
         local option_name = class_data.name
         table.insert(class_options, option_name)
         class_options_to_class[option_name] = { name = class_data.name, i = ci }
@@ -256,39 +220,33 @@ local function buildClassDict()
 end
 
 local function buildSpecsDict(class_i)
-    if not Bistooltip_classes or type(Bistooltip_classes) ~= "table" then return end
+    if not BisTooltip_ClassData or type(BisTooltip_ClassData) ~= "table" then return end
     spec_options = {}
     spec_options_to_spec = {}
-    local class_data = Bistooltip_classes[class_i]
+    local class_data = BisTooltip_ClassData[class_i]
     for si, spec_name in ipairs(class_data.specs) do
-        local option_name = "|T" .. Bistooltip_spec_icons[class_data.name][spec_name] .. ":14|t " .. spec_name
+        local option_name = "|T" .. BisTooltip_SpecIcons[class_data.name][spec_name] .. ":14|t " .. spec_name
         table.insert(spec_options, option_name)
         spec_options_to_spec[option_name] = spec_name
     end
 end
 
 local function loadData()
-    class_index = BistooltipAddon.db.char.class_index
-    spec_index = BistooltipAddon.db.char.spec_index
-    phase_index = BistooltipAddon.db.char.phase_index
+    class_index = BisTooltipAddon.db.char.class_index
+    spec_index = BisTooltipAddon.db.char.spec_index
+    phase_index = BisTooltipAddon.db.char.phase_index
     if class_index then
         class = class_options_to_class[class_options[class_index]].name
         buildSpecsDict(class_index)
     end
-    if spec_index then
-        spec = spec_options_to_spec[spec_options[spec_index]]
-    end
-    if phase_index then
-        phase = Bistooltip_phases[phase_index]
-    end
+    if spec_index then spec = spec_options_to_spec[spec_options[spec_index]] end
+    if phase_index then phase = BisTooltip_PhaseData[phase_index] end
 end
 
 local function drawDropdowns()
     local dropDownGroup = AceGUI:Create("SimpleGroup")
     dropDownGroup:SetLayout("Table")
-    dropDownGroup:SetUserData("table", {
-        columns = {110, 180, 70}, space = 1, align = "BOTTOMRIGHT"
-    })
+    dropDownGroup:SetUserData("table", { columns = {110, 180, 70}, space = 1, align = "BOTTOMRIGHT" })
     main_frame:AddChild(dropDownGroup)
 
     classDropdown = AceGUI:Create("Dropdown")
@@ -298,7 +256,7 @@ local function drawDropdowns()
 
     phaseDropDown:SetCallback("OnValueChanged", function(_, _, key)
         phase_index = key
-        phase = Bistooltip_phases[key]
+        phase = BisTooltip_PhaseData[key]
         drawSpecData()
     end)
 
@@ -321,9 +279,8 @@ local function drawDropdowns()
     end)
 
     classDropdown:SetList(class_options)
-    
     local phase_opts = {}
-    for i, p in ipairs(Bistooltip_phases) do phase_opts[i] = p end
+    for i, p in ipairs(BisTooltip_PhaseData) do phase_opts[i] = p end
     phaseDropDown:SetList(phase_opts)
 
     dropDownGroup:AddChild(classDropdown)
@@ -358,38 +315,32 @@ local function createSpecFrame()
     spec_frame = frame
 end
 
-function BistooltipAddon:reloadData()
+function BisTooltipAddon:reloadData()
     buildClassDict()
-    class_index = BistooltipAddon.db.char.class_index
-    spec_index = BistooltipAddon.db.char.spec_index
-    phase_index = BistooltipAddon.db.char.phase_index
+    class_index = BisTooltipAddon.db.char.class_index
+    spec_index = BisTooltipAddon.db.char.spec_index
+    phase_index = BisTooltipAddon.db.char.phase_index
 
     class = class_options_to_class[class_options[class_index]].name
     buildSpecsDict(class_index)
     spec = spec_options_to_spec[spec_options[spec_index]]
-    phase = Bistooltip_phases[phase_index]
+    phase = BisTooltip_PhaseData[phase_index]
 
     if main_frame then
         local phase_opts = {}
-        for i, p in ipairs(Bistooltip_phases) do phase_opts[i] = p end
+        for i, p in ipairs(BisTooltip_PhaseData) do phase_opts[i] = p end
         phaseDropDown:SetList(phase_opts)
-        
         classDropdown:SetList(class_options)
         specDropdown:SetList(spec_options)
-
         classDropdown:SetValue(class_index)
         specDropdown:SetValue(spec_index)
         phaseDropDown:SetValue(phase_index)
-
         drawSpecData()
     end
 end
 
-function BistooltipAddon:createMainFrame()
-    if main_frame then
-        BistooltipAddon:closeMainFrame()
-        return
-    end
+function BisTooltipAddon:createMainFrame()
+    if main_frame then BisTooltipAddon:closeMainFrame(); return end
 
     main_frame = AceGUI:Create("Frame")
     main_frame:SetWidth(450)
@@ -405,8 +356,7 @@ function BistooltipAddon:createMainFrame()
         main_frame = nil
     end)
     main_frame:SetLayout("List")
-    main_frame:SetTitle(BistooltipAddon.AddonNameAndVersion)
-    main_frame:SetStatusText(Bistooltip_source_to_url[BistooltipAddon.db.char.data_source])
+    main_frame:SetTitle(BisTooltipAddon.AddonNameAndVersion)
 
     drawDropdowns()
     createSpecFrame()
@@ -420,7 +370,7 @@ function BistooltipAddon:createMainFrame()
     local reloadButton = AceGUI:Create("Button")
     reloadButton:SetText("Reload Data")
     reloadButton:SetWidth(120) 
-    reloadButton:SetCallback("OnClick", function() BistooltipAddon:reloadData() end)
+    reloadButton:SetCallback("OnClick", function() BisTooltipAddon:reloadData() end)
     buttonContainer:AddChild(reloadButton)
 
     local noteLabel = AceGUI:Create("Label")
@@ -436,21 +386,14 @@ function BistooltipAddon:createMainFrame()
     main_frame:AddChild(buttonContainer)
 end
 
-function BistooltipAddon:closeMainFrame()
+function BisTooltipAddon:closeMainFrame()
     if main_frame then
         AceGUI:Release(main_frame)
-        classDropdown = nil
-        specDropdown = nil
-        phaseDropDown = nil
-        missing_widgets = {}
-        query_queue = {}
+        classDropdown = nil; specDropdown = nil; phaseDropDown = nil; missing_widgets = {}; query_queue = {}
     end
 end
 
-function BistooltipAddon:initBislists()
+function BisTooltipAddon:initBislists()
     buildClassDict()
     loadData()
-    LibStub("AceConsole-3.0"):RegisterChatCommand("bistooltip", function()
-        BistooltipAddon:createMainFrame()
-    end, persist)
 end

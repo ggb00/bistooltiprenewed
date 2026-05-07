@@ -1,6 +1,7 @@
 -- Core.lua
-BistooltipAddon = LibStub("AceAddon-3.0"):NewAddon("Bis-Tooltip")
-Bistooltip_char_equipment = {}
+BisTooltipAddon = LibStub("AceAddon-3.0"):NewAddon("Bis-Tooltip")
+BisTooltip_EquipmentCache = {}
+BisTooltip_AliToHorde = {} -- Generated automatically on load
 
 local function collectItemIDs(bislists)
     local itemIDs = {}
@@ -10,7 +11,7 @@ local function collectItemIDs(bislists)
                 for _, itemData in ipairs(phaseData) do
                     for key, value in pairs(itemData) do
                         if type(key) == "number" then
-                            itemIDs[value] = true -- Using hash table to prevent duplicates
+                            itemIDs[value] = true
                         elseif key == "enhs" then
                             for _, enhData in pairs(value) do
                                 if enhData.type == "item" and enhData.id then
@@ -24,7 +25,6 @@ local function collectItemIDs(bislists)
         end
     end
     
-    -- Convert hash map back to array for fast iteration
     local flatIDs = {}
     for id in pairs(itemIDs) do table.insert(flatIDs, id) end
     return flatIDs
@@ -45,43 +45,40 @@ local function createEquipmentWatcher()
             flag = true
             local collection = {}
 
-            -- Cache the master list once to save CPU
             if not master_item_list then 
-                master_item_list = collectItemIDs(Bistooltip_bislists) 
+                master_item_list = collectItemIDs(BisTooltip_ItemLists) 
             end
 
-            -- O(1) Native C++ lookup for inventory and bank
             for _, itemID in ipairs(master_item_list) do
-                if GetItemCount(itemID, true) > 0 then 
-                    collection[itemID] = 1 
-                end
+                if GetItemCount(itemID, true) > 0 then collection[itemID] = 1 end
             end
 
-            -- O(1) Native loop for worn equipment
             for i = 1, 19 do
                 local itemID = GetInventoryItemID("player", i)
                 if itemID then collection[itemID] = 2 end
             end
 
-            Bistooltip_char_equipment = collection
+            BisTooltip_EquipmentCache = collection
             flag = false
         end
     end)
 end
 
-function BistooltipAddon:BuildReverseLookup()
-    self.ReverseLookup = {}
-    if not Bistooltip_bislists then return end
-
-    local sortedPhases = Bistooltip_phases or {}
-    local ali_to_horde = {}
-    if Bistooltip_horde_to_ali then
-        for h_id, a_id in pairs(Bistooltip_horde_to_ali) do
-            ali_to_horde[a_id] = h_id
+function BisTooltipAddon:BuildFactionMaps()
+    BisTooltip_AliToHorde = {}
+    if BisTooltip_FactionMap then
+        for h_id, a_id in pairs(BisTooltip_FactionMap) do
+            BisTooltip_AliToHorde[a_id] = h_id
         end
     end
+end
 
-    for class, specs in pairs(Bistooltip_bislists) do
+function BisTooltipAddon:BuildReverseLookup()
+    self.ReverseLookup = {}
+    if not BisTooltip_ItemLists then return end
+    local sortedPhases = BisTooltip_PhaseData or {}
+
+    for class, specs in pairs(BisTooltip_ItemLists) do
         for spec, phases in pairs(specs) do
             for _, phase in ipairs(sortedPhases) do
                 local items = phases[phase]
@@ -106,10 +103,10 @@ function BistooltipAddon:BuildReverseLookup()
                                     end
 
                                     registerId(itemId)
-                                    if Bistooltip_horde_to_ali and Bistooltip_horde_to_ali[itemId] then
-                                        registerId(Bistooltip_horde_to_ali[itemId])
-                                    elseif ali_to_horde[itemId] then
-                                        registerId(ali_to_horde[itemId])
+                                    if BisTooltip_FactionMap and BisTooltip_FactionMap[itemId] then
+                                        registerId(BisTooltip_FactionMap[itemId])
+                                    elseif BisTooltip_AliToHorde and BisTooltip_AliToHorde[itemId] then
+                                        registerId(BisTooltip_AliToHorde[itemId])
                                     end
                                 end
                             end
@@ -129,13 +126,18 @@ function BistooltipAddon:BuildReverseLookup()
     end
 end
 
-function BistooltipAddon:OnInitialize()
+function BisTooltipAddon:OnInitialize()
+    self:BuildFactionMaps()
     createEquipmentWatcher()
-    BistooltipAddon.AceAddonName = "Bis-Tooltip"
-    BistooltipAddon.AddonNameAndVersion = "Bis-Tooltip"
-    BistooltipAddon:initConfig()
-    BistooltipAddon:addMapIcon()
-    BistooltipAddon:initBislists()
-    BistooltipAddon:BuildReverseLookup()
-    BistooltipAddon:initBisTooltip()
+    BisTooltipAddon.AceAddonName = "Bis-Tooltip"
+    BisTooltipAddon.AddonNameAndVersion = "Bis-Tooltip"
+    BisTooltipAddon:initConfig()
+    BisTooltipAddon:addMapIcon()
+    BisTooltipAddon:BuildReverseLookup()
+    BisTooltipAddon:initBisTooltip()
+    
+    -- Initialize Window command
+    LibStub("AceConsole-3.0"):RegisterChatCommand("bistooltip", function()
+        BisTooltipAddon:createMainFrame()
+    end)
 end

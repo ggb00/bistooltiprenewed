@@ -1,0 +1,48 @@
+## Interface: 30300
+## Version: 1.0.5
+## Title: BiS-Tooltip
+## Notes: In-game frame that shows BiS items for all classes & specs (3.3.5a)
+## Author: Gemini AI, Hellixoid, Dweem, Silver
+## SavedVariables: BisTooltipDB
+## OptionalDeps: Ace3, DataStore, DataStore_Inventory
+
+Libs\LibStub\LibStub.lua
+Libs\LibParse\LibParse.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
+Libs\AceAddon-3.0\AceAddon-3.0.xml
+Libs\AceEvent-3.0\AceEvent-3.0.xml
+Libs\AceDB-3.0\AceDB-3.0.xml 
+Libs\AceDBOptions-3.0\AceDBOptions-3.0.xml
+Libs\AceConsole-3.0\AceConsole-3.0.xml
+Libs\AceGUI-3.0\AceGUI-3.0.xml
+Libs\AceConfig-3.0\AceConfig-3.0.xml
+Libs\LibDataBroker\LibDataBroker-1.1.lua
+Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
+
+Bistooltip_wowtbc_bislists.lua
+Bistooltip_wowtbc_bislists_old.lua
+
+# Core
+Core.lua
+Config.lua
+
+# Data
+Data\Classes.lua
+Data\Faction.lua
+Data\LootSources.lua
+
+# Generated BiS Data
+Data\DeathKnight.lua
+Data\Druid.lua
+Data\Hunter.lua
+Data\Mage.lua
+Data\Paladin.lua
+Data\Priest.lua
+Data\Rogue.lua
+Data\Shaman.lua
+Data\Warlock.lua
+Data\Warrior.lua
+
+# Modules
+Tooltip.lua
+Window.lua

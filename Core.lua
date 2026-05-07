@@ -1,7 +1,7 @@
 -- Core.lua
 BisTooltipAddon = LibStub("AceAddon-3.0"):NewAddon("Bis-Tooltip")
 BisTooltip_EquipmentCache = {}
-BisTooltip_AliToHorde = {} -- Generated automatically on load
+BisTooltip_AliToHorde = {}
 
 local function collectItemIDs(bislists)
     local itemIDs = {}
@@ -136,7 +136,6 @@ function BisTooltipAddon:OnInitialize()
     BisTooltipAddon:BuildReverseLookup()
     BisTooltipAddon:initBisTooltip()
     
-    -- Initialize Window command
     LibStub("AceConsole-3.0"):RegisterChatCommand("bistooltip", function()
         BisTooltipAddon:createMainFrame()
     end)

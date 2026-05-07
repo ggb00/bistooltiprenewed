@@ -2,7 +2,12 @@
 local eventFrame = CreateFrame("Frame", nil, UIParent)
 local tooltip_cache = {}
 
-local HARDCODED_CLASS_COLORS = {["DEATHKNIGHT"] = {0.77, 0.12, 0.23}, ["DRUID"]   = {1.00, 0.49, 0.04},["HUNTER"]      = {0.67, 0.83, 0.45},["MAGE"]    = {0.25, 0.78, 0.92},["PALADIN"]     = {0.96, 0.55, 0.73}, ["PRIEST"]  = {1.00, 1.00, 1.00},["ROGUE"]       = {1.00, 0.96, 0.41},["SHAMAN"]  = {0.00, 0.44, 0.87},["WARLOCK"]     = {0.53, 0.53, 0.93},["WARRIOR"] = {0.78, 0.61, 0.43},
+local HARDCODED_CLASS_COLORS = {
+    ["DEATHKNIGHT"] = {0.77, 0.12, 0.23}, ["DRUID"]   = {1.00, 0.49, 0.04},
+    ["HUNTER"]      = {0.67, 0.83, 0.45}, ["MAGE"]    = {0.25, 0.78, 0.92},
+    ["PALADIN"]     = {0.96, 0.55, 0.73}, ["PRIEST"]  = {1.00, 1.00, 1.00},
+    ["ROGUE"]       = {1.00, 0.96, 0.41}, ["SHAMAN"]  = {0.00, 0.44, 0.87},
+    ["WARLOCK"]     = {0.53, 0.53, 0.93}, ["WARRIOR"] = {0.78, 0.61, 0.43},
 }
 
 local highlight_colors = {
@@ -75,6 +80,20 @@ local function OnGameTooltipSetItem(tooltip)
         end
     else
         local itemBisData = BisTooltipAddon.ReverseLookup and BisTooltipAddon.ReverseLookup[itemId]
+        
+        -- Fallback translation lookup safely using new Faction Maps
+        if not itemBisData then
+            local translated = nil
+            if BisTooltip_FactionMap and BisTooltip_FactionMap[itemId] then
+                translated = BisTooltip_FactionMap[itemId]
+            elseif BisTooltip_AliToHorde and BisTooltip_AliToHorde[itemId] then
+                translated = BisTooltip_AliToHorde[itemId]
+            end
+            
+            if translated and BisTooltipAddon.ReverseLookup then
+                itemBisData = BisTooltipAddon.ReverseLookup[translated]
+            end
+        end
 
         if itemBisData then
             local cached_lines = {} 
@@ -103,13 +122,13 @@ local function OnGameTooltipSetItem(tooltip)
                                 r1, g1, b1 = colorRGB[1], colorRGB[2], colorRGB[3]
                                 r2, g2, b2 = colorRGB[1], colorRGB[2], colorRGB[3]
                             else
-                                r2, g2, b2 = 0.8, 0.8, 0.8 
+                                r2, g2, b2 = 0.65, 0.65, 0.65 
                                 if BisTooltipAddon.db.char.use_class_colors then
                                     local classKey = string.upper(string.gsub(class, "%s+", ""))
-                                    local cColor = HARDCODED_CLASS_COLORS[classKey] or {0.8, 0.8, 0.8}
+                                    local cColor = HARDCODED_CLASS_COLORS[classKey] or {0.65, 0.65, 0.65}
                                     r1, g1, b1 = cColor[1], cColor[2], cColor[3]
                                 else
-                                    r1, g1, b1 = 0.8, 0.8, 0.8 
+                                    r1, g1, b1 = 0.65, 0.65, 0.65 
                                 end
                             end
                             

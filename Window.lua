@@ -1,4 +1,5 @@
 -- Window.lua
+local addonName, addonTable = ...
 local AceGUI = LibStub("AceGUI-3.0")
 
 local class = nil
@@ -19,10 +20,13 @@ local specDropdown = nil
 local phaseDropDown = nil
 
 local isHorde = UnitFactionGroup("player") == "Horde"
+
 local missing_widgets = {}
 local query_queue = {}
 local scanner = CreateFrame("GameTooltip", "BisTooltipScanner", UIParent, "GameTooltipTemplate")
 local item_fetch_frame = CreateFrame("Frame")
+
+local checkmark_path = "Interface\\AddOns\\" .. addonName .. "\\checkmark-16.tga"
 
 local function createItemFrame(item_id, size, with_checkmark)
     if item_id < 0 then return AceGUI:Create("Label") end
@@ -36,7 +40,7 @@ local function createItemFrame(item_id, size, with_checkmark)
         item_frame.frame.bisCheckMark:SetWidth(32)
         item_frame.frame.bisCheckMark:SetHeight(32)
         item_frame.frame.bisCheckMark:SetPoint("CENTER", 6, -8)
-        item_frame.frame.bisCheckMark:SetTexture("Interface\\AddOns\\Bis-Tooltip\\checkmark-16.tga") -- NOTE: Match your folder name here!
+        item_frame.frame.bisCheckMark:SetTexture(checkmark_path) 
     end
 
     if not item_frame.frame.bisBoeMark then
@@ -49,7 +53,7 @@ local function createItemFrame(item_id, size, with_checkmark)
 
     if with_checkmark then 
         item_frame.frame.bisCheckMark:Show() 
-        item_frame.image:SetVertexColor(0.3, 0.3, 0.3, 1) -- Slightly darker tint requested
+        item_frame.image:SetVertexColor(0.35, 0.35, 0.35, 1) 
     else 
         item_frame.frame.bisCheckMark:Hide() 
         item_frame.image:SetVertexColor(1, 1, 1, 1)
@@ -98,7 +102,7 @@ item_fetch_frame:SetScript("OnEvent", function(_, _, received_item_id)
                 if widget and widget.frame and widget.frame:IsShown() then
                     widget:SetImage(itemIcon)
                     local isEquipped = BisTooltip_EquipmentCache and BisTooltip_EquipmentCache[received_item_id]
-                    if isEquipped then widget.image:SetVertexColor(0.3, 0.3, 0.3, 1) else widget.image:SetVertexColor(1, 1, 1, 1) end
+                    if isEquipped then widget.image:SetVertexColor(0.35, 0.35, 0.35, 1) else widget.image:SetVertexColor(1, 1, 1, 1) end
                     if bindType == 2 then widget.frame.bisBoeMark:Show() else widget.frame.bisBoeMark:Hide() end
                     widget:SetCallback("OnClick", function() SetItemRef(itemLink, itemLink, "LeftButton") end)
                     widget:SetCallback("OnEnter", function(w)
@@ -160,12 +164,17 @@ local function drawItemSlot(slot)
     f:SetText(slot.slot_name)
     f:SetFont("Fonts\\FRIZQT__.TTF", 14, "")
     spec_frame:AddChild(f)
-    spec_frame:AddChild(createEnhancementsFrame(slot.enhs))
+    
+    local enhs = slot.enhs or {}
+    spec_frame:AddChild(createEnhancementsFrame(enhs))
 
+    local count = 0
     for _, original_item_id in ipairs(slot) do
+        if count >= 6 then break end
+        
         local display_id = original_item_id
         
-        -- Smart Faction Translator (Bulletproof)
+        -- Smart Faction Translator matching new names
         if isHorde and BisTooltip_AliToHorde and BisTooltip_AliToHorde[original_item_id] then
             display_id = BisTooltip_AliToHorde[original_item_id]
         elseif not isHorde and BisTooltip_FactionMap and BisTooltip_FactionMap[original_item_id] then
@@ -174,6 +183,11 @@ local function drawItemSlot(slot)
 
         local isEquipped = display_id and BisTooltip_EquipmentCache and BisTooltip_EquipmentCache[display_id]
         spec_frame:AddChild(createItemFrame(display_id, 40, isEquipped))
+        count = count + 1
+    end
+    
+    for i = count + 1, 6 do
+        spec_frame:AddChild(createItemFrame(-1, 40, false))
     end
 end
 
@@ -231,16 +245,26 @@ local function buildSpecsDict(class_i)
     end
 end
 
+-- Completely bulletproofed Data Loader
 local function loadData()
-    class_index = BisTooltipAddon.db.char.class_index
-    spec_index = BisTooltipAddon.db.char.spec_index
-    phase_index = BisTooltipAddon.db.char.phase_index
-    if class_index then
+    class_index = BisTooltipAddon.db.char.class_index or 1
+    spec_index = BisTooltipAddon.db.char.spec_index or 1
+    phase_index = BisTooltipAddon.db.char.phase_index or 1
+
+    if not class_options[class_index] then class_index = 1 end
+    if class_options[class_index] then
         class = class_options_to_class[class_options[class_index]].name
         buildSpecsDict(class_index)
+    else
+        class = nil; spec = nil; return
     end
-    if spec_index then spec = spec_options_to_spec[spec_options[spec_index]] end
-    if phase_index then phase = BisTooltip_PhaseData[phase_index] end
+
+    if not spec_options[spec_index] then spec_index = 1 end
+    if spec_options[spec_index] then
+        spec = spec_options_to_spec[spec_options[spec_index]]
+    end
+
+    phase = BisTooltip_PhaseData[phase_index] or BisTooltip_PhaseData[1]
 end
 
 local function drawDropdowns()
@@ -317,21 +341,15 @@ end
 
 function BisTooltipAddon:reloadData()
     buildClassDict()
-    class_index = BisTooltipAddon.db.char.class_index
-    spec_index = BisTooltipAddon.db.char.spec_index
-    phase_index = BisTooltipAddon.db.char.phase_index
-
-    class = class_options_to_class[class_options[class_index]].name
-    buildSpecsDict(class_index)
-    spec = spec_options_to_spec[spec_options[spec_index]]
-    phase = BisTooltip_PhaseData[phase_index]
-
+    loadData() -- Force absolute data synchronization
+    
     if main_frame then
         local phase_opts = {}
         for i, p in ipairs(BisTooltip_PhaseData) do phase_opts[i] = p end
         phaseDropDown:SetList(phase_opts)
         classDropdown:SetList(class_options)
         specDropdown:SetList(spec_options)
+        
         classDropdown:SetValue(class_index)
         specDropdown:SetValue(spec_index)
         phaseDropDown:SetValue(phase_index)
@@ -341,6 +359,10 @@ end
 
 function BisTooltipAddon:createMainFrame()
     if main_frame then BisTooltipAddon:closeMainFrame(); return end
+
+    -- Load everything perfectly before rendering
+    buildClassDict()
+    loadData()
 
     main_frame = AceGUI:Create("Frame")
     main_frame:SetWidth(450)

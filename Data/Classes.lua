@@ -17,20 +17,20 @@ BisTooltip_ClassData = {
 BisTooltip_SpecIcons = {
     ["Death Knight"] = {
         ["classIcon"] = "Interface\\Icons\\Achievement_DeathKnight_ClassIcon",
-        ["Blood Tank"] = "Interface\\Icons\\Spell_Deathknight_BloodPresence", -- TODO change capitalization in all files
+        ["Blood Tank"] = "Interface\\Icons\\Spell_Deathknight_BloodPresence",
         ["Frost"] = "Interface\\Icons\\Spell_Deathknight_FrostPresence",
         ["Unholy"] = "Interface\\Icons\\Spell_Deathknight_UnholyPresence"
     },
     ["Druid"] = {
         ["classIcon"] = "Interface\\Icons\\Achievement_Druid_ClassIcon",
         ["Balance"] = "Interface\\Icons\\Spell_Nature_StarFall",
-        ["Feral Tank"] = "Interface\\Icons\\Ability_Racial_BearForm", -- TODO change capitalization in all files
-        ["Feral DPS"] = "Interface\\Icons\\Ability_Druid_CatForm", -- TODO change capitalization in all files
+        ["Feral Tank"] = "Interface\\Icons\\Ability_Racial_BearForm",
+        ["Feral DPS"] = "Interface\\Icons\\Ability_Druid_CatForm",
         ["Restoration"] = "Interface\\Icons\\Spell_Nature_HealingTouch"
     },
     ["Hunter"] = {
         ["classIcon"] = "Interface\\Icons\\Achievement_Hunter_ClassIcon",
-        ["Beast Mastery"] = "Interface\\Icons\\Ability_Hunter_BeastTaming", -- TODO change capitalization in all files
+        ["Beast Mastery"] = "Interface\\Icons\\Ability_Hunter_BeastTaming",
         ["Marksmanship"] = "Interface\\Icons\\Ability_Marksmanship",
         ["Survival"] = "Interface\\Icons\\Ability_Hunter_SurvivalInstincts"
     },

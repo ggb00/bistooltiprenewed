@@ -1,5 +1,5 @@
 ## Interface: 30300
-## Version: 1.0.5
+## Version: 1.0.0
 ## Title: BiS-Tooltip
 ## Notes: In-game frame that shows BiS items for all classes & specs (3.3.5a)
 ## Author: Gemini AI, Hellixoid, Dweem, Silver
@@ -19,9 +19,6 @@ Libs\AceConfig-3.0\AceConfig-3.0.xml
 Libs\LibDataBroker\LibDataBroker-1.1.lua
 Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
 
-Bistooltip_wowtbc_bislists.lua
-Bistooltip_wowtbc_bislists_old.lua
-
 # Core
 Core.lua
 Config.lua
@@ -31,7 +28,7 @@ Data\Classes.lua
 Data\Faction.lua
 Data\LootSources.lua
 
-# Generated BiS Data
+# Classes Data
 Data\DeathKnight.lua
 Data\Druid.lua
 Data\Hunter.lua

@@ -2,8 +2,7 @@
 local eventFrame = CreateFrame("Frame", nil, UIParent)
 local tooltip_cache = {}
 
-local HARDCODED_CLASS_COLORS = {
-    ["DEATHKNIGHT"] = {0.77, 0.12, 0.23}, ["DRUID"]   = {1.00, 0.49, 0.04},
+local HARDCODED_CLASS_COLORS = {["DEATHKNIGHT"] = {0.77, 0.12, 0.23},["DRUID"]   = {1.00, 0.49, 0.04},
     ["HUNTER"]      = {0.67, 0.83, 0.45}, ["MAGE"]    = {0.25, 0.78, 0.92},
     ["PALADIN"]     = {0.96, 0.55, 0.73}, ["PRIEST"]  = {1.00, 1.00, 1.00},
     ["ROGUE"]       = {1.00, 0.96, 0.41}, ["SHAMAN"]  = {0.00, 0.44, 0.87},
@@ -35,32 +34,17 @@ end
 
 local DataStore_Inventory = DataStore_Inventory or nil
 local function GetItemSource(itemId)
-    local source
-    local function formatInstanceName(instance)
-        local tmpInstance = string.lower(instance)
-        if tmpInstance == "the obsidian sanctum (heroic)" then instance = "The Obsidian Sanctum(25)"
-        elseif tmpInstance == "the eye of eternity (heroic)" then instance = "The Eye Of Eternity (25)"
-        elseif tmpInstance == "naxxramas (heroic)" then instance = "Naxxramas (25)"
-        elseif tmpInstance == "ulduar (heroic)" then instance = "Ulduar (25)"
-        end
-        return instance
+    -- INSTANT O(1) LOOKUP
+    if BisTooltip_ItemSources and BisTooltip_ItemSources[itemId] then
+        return "|cFFFFFFFFSource:|r |cFF00FF00" .. BisTooltip_ItemSources[itemId] .. "|r"
     end
 
-    if lootTable then
-        for zone, bosses in pairs(lootTable) do
-            for boss, items in pairs(bosses) do
-                for _, id in ipairs(items) do
-                    if id == itemId then
-                        return "|cFFFFFFFFSource:|r |cFF00FF00[" .. formatInstanceName(zone) .. "] - " .. boss .. "|r"
-                    end
-                end
-            end
-        end
-    end
-
-    if not source and DataStore_Inventory then
+    -- Fallback to Altoholic (DataStore) if wowtbc.gg didn't have source info
+    if DataStore_Inventory then
         local Instance, Boss = DataStore_Inventory:GetSource(itemId)
-        if Instance and Boss then return "|cFFFFFFFFSource:|r |cFF00FF00[" .. formatInstanceName(Instance) .. "] - " .. Boss .. "|r" end
+        if Instance and Boss then 
+            return "|cFFFFFFFFSource:|r |cFF00FF00[" .. Instance .. "] - " .. Boss .. "|r" 
+        end
     end
     return nil
 end
@@ -81,7 +65,7 @@ local function OnGameTooltipSetItem(tooltip)
     else
         local itemBisData = BisTooltipAddon.ReverseLookup and BisTooltipAddon.ReverseLookup[itemId]
         
-        -- Fallback translation lookup safely using new Faction Maps
+        -- Fallback translation lookup safely using Faction Maps
         if not itemBisData then
             local translated = nil
             if BisTooltip_FactionMap and BisTooltip_FactionMap[itemId] then

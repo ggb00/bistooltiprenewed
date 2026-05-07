@@ -396,7 +396,7 @@ function BisTooltipAddon:createMainFrame()
     buttonContainer:AddChild(reloadButton)
 
     local noteLabel = AceGUI:Create("Label")
-    noteLabel:SetText("Fetching un-cached icons... (This bypasses server throttles).")
+    noteLabel:SetText("If the items aren't showing up, click the 'Reload Data' button.")
     noteLabel:SetFont(GameFontNormal:GetFont(), 10)
     buttonContainer:AddChild(noteLabel)
 

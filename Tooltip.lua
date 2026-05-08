@@ -149,6 +149,10 @@ function BisTooltipAddon:initBisTooltip()
             end
         end
     end)
+    
     GameTooltip:HookScript("OnTooltipSetItem", OnGameTooltipSetItem)
     ItemRefTooltip:HookScript("OnTooltipSetItem", OnGameTooltipSetItem)
+    
+    if ShoppingTooltip1 then ShoppingTooltip1:HookScript("OnTooltipSetItem", OnGameTooltipSetItem) end
+    if ShoppingTooltip2 then ShoppingTooltip2:HookScript("OnTooltipSetItem", OnGameTooltipSetItem) end
 end

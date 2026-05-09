@@ -408,8 +408,8 @@ function BisTooltipAddon:createMainFrame()
     
     if not main_frame.frame.darkOverlay then
         main_frame.frame.darkOverlay = main_frame.frame:CreateTexture(nil, "BACKGROUND", nil, -1)
-        main_frame.frame.darkOverlay:SetPoint("TOPLEFT", main_frame.frame, "TOPLEFT", 4, -24) 
-        main_frame.frame.darkOverlay:SetPoint("BOTTOMRIGHT", main_frame.frame, "BOTTOMRIGHT", -4, 4)
+        main_frame.frame.darkOverlay:SetPoint("TOPLEFT", main_frame.frame, "TOPLEFT", 8, -24) 
+        main_frame.frame.darkOverlay:SetPoint("BOTTOMRIGHT", main_frame.frame, "BOTTOMRIGHT", -8, 8)
         main_frame.frame.darkOverlay:SetTexture(0, 0, 0, 0.60) 
     end
 

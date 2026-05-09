@@ -5,11 +5,12 @@
                           some drop from heroics)
 
 ### Enhancements.lua
-- DeathKnight
-    - Blood Tank: PR, T7, T8, T9, T10, RS
-    - Frost: PR, T7, T8, T9, T10, RS
+- Death Knight **fix "Rune of the Stoneskin Gargoyle"** **fix "Rune of Razorice"** **fix "Rune of the Fallen Crusader"** 
+                (not rendering their names, probably because it's skills)
+
+    - Frost: T10, RS
     - Unholy: PR, T7, T8, T9, T10, RS
-    - Blood DPS: **fix why it's not showing up**
+    - Blood DPS: **fix why it's not showing up or delete it altogether**
 
 - Druid
     - Balance: PR, T7, T8, T9, T10, RS
@@ -23,7 +24,7 @@
     - Survival: PR, T7, T8, T9, T10, RS
 
 - Mage
-    - Arcane: T9, T10, RS 
+    - Arcane: T7, T8 T9, T10, RS 
     - Fire: PR, T7, T8, T9, T10, RS
     - Fire FFB: PR, T7, T8, T9, T10, RS
     - Frost: PR, T7, T8, T9, T10, RS

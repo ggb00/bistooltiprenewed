@@ -2,7 +2,8 @@
 local eventFrame = CreateFrame("Frame", nil, UIParent)
 local tooltip_cache = {}
 
-local HARDCODED_CLASS_COLORS = {["DEATHKNIGHT"] = {0.77, 0.12, 0.23},["DRUID"]   = {1.00, 0.49, 0.04},
+local HARDCODED_CLASS_COLORS = {
+    ["DEATHKNIGHT"] = {0.77, 0.12, 0.23}, ["DRUID"]   = {1.00, 0.49, 0.04},
     ["HUNTER"]      = {0.67, 0.83, 0.45}, ["MAGE"]    = {0.25, 0.78, 0.92},
     ["PALADIN"]     = {0.96, 0.55, 0.73}, ["PRIEST"]  = {1.00, 1.00, 1.00},
     ["ROGUE"]       = {1.00, 0.96, 0.41}, ["SHAMAN"]  = {0.00, 0.44, 0.87},
@@ -34,12 +35,10 @@ end
 
 local DataStore_Inventory = DataStore_Inventory or nil
 local function GetItemSource(itemId)
-    -- INSTANT O(1) LOOKUP
     if BisTooltip_ItemSources and BisTooltip_ItemSources[itemId] then
         return "|cFFFFFFFFSource:|r |cFF00FF00" .. BisTooltip_ItemSources[itemId] .. "|r"
     end
 
-    -- Fallback to Altoholic (DataStore) if wowtbc.gg didn't have source info
     if DataStore_Inventory then
         local Instance, Boss = DataStore_Inventory:GetSource(itemId)
         if Instance and Boss then 
@@ -65,7 +64,6 @@ local function OnGameTooltipSetItem(tooltip)
     else
         local itemBisData = BisTooltipAddon.ReverseLookup and BisTooltipAddon.ReverseLookup[itemId]
         
-        -- Fallback translation lookup safely using Faction Maps
         if not itemBisData then
             local translated = nil
             if BisTooltip_FactionMap and BisTooltip_FactionMap[itemId] then
@@ -152,7 +150,6 @@ function BisTooltipAddon:initBisTooltip()
     
     GameTooltip:HookScript("OnTooltipSetItem", OnGameTooltipSetItem)
     ItemRefTooltip:HookScript("OnTooltipSetItem", OnGameTooltipSetItem)
-    
     if ShoppingTooltip1 then ShoppingTooltip1:HookScript("OnTooltipSetItem", OnGameTooltipSetItem) end
     if ShoppingTooltip2 then ShoppingTooltip2:HookScript("OnTooltipSetItem", OnGameTooltipSetItem) end
 end

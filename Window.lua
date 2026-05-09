@@ -29,7 +29,12 @@ local item_fetch_frame = CreateFrame("Frame")
 local checkmark_path = "Interface\\AddOns\\" .. addonName .. "\\checkmark-16.tga"
 
 local function createItemFrame(item_id, size, with_checkmark)
-    if item_id < 0 then return AceGUI:Create("Label") end
+    if item_id < 0 then 
+        local lbl = AceGUI:Create("Label")
+        lbl:SetWidth(40)
+        return lbl 
+    end
+    
     local item_frame = AceGUI:Create("Icon")
     item_frame:SetImageSize(size, size)
 
@@ -122,11 +127,17 @@ local function createSpellFrame(spell_id, size)
     local spell_frame = AceGUI:Create("Icon")
     spell_frame:SetImageSize(size, size)
     spell_frame.image:SetVertexColor(1, 1, 1, 1) 
+    
+    if spell_frame.frame.bisCheckMark then spell_frame.frame.bisCheckMark:Hide() end
+    if spell_frame.frame.bisBoeMark then spell_frame.frame.bisBoeMark:Hide() end
+
     local name, _, icon = GetSpellInfo(spell_id)
     if not name then return spell_frame end
+    
     spell_frame:SetImage(icon)
     local link = GetSpellLink(spell_id)
     if not link then link = "\124cffffd000\124Hspell:" .. spell_id .. "\124h[" .. name .. "]\124h\124r" end
+    
     spell_frame:SetCallback("OnClick", function() SetItemRef(link, link, "LeftButton") end)
     spell_frame:SetCallback("OnEnter", function()
         GameTooltip:SetOwner(spell_frame.frame)
@@ -134,27 +145,32 @@ local function createSpellFrame(spell_id, size)
         GameTooltip:SetHyperlink(link)
     end)
     spell_frame:SetCallback("OnLeave", function() GameTooltip:Hide() end)
+    
     return spell_frame
 end
 
 local function createEnhancementsFrame(enhancements)
     local frame = AceGUI:Create("SimpleGroup")
     frame:SetLayout("Table")
-    frame:SetWidth(40)
-    frame:SetHeight(40)
+    frame:SetWidth(75) 
+    frame:SetHeight(18)
+    
     frame:SetUserData("table", {
-        columns = {{weight = 14}, {width = 14}},
-        spaceV = -10, spaceH = 0, align = "BOTTOMRIGHT"
+        columns = {17, 17, 17, 17},
+        spaceV = 0, spaceH = 1, align = "MIDDLE"
     })
-    frame:SetFullWidth(true)
-    frame:SetFullHeight(true)
-    frame:SetHeight(0)
+    
+    frame:SetFullWidth(false)
+    frame:SetFullHeight(false)
     frame:SetAutoAdjustHeight(false)
+    
     for _, enhancement in ipairs(enhancements) do
         local size = 16
-        if enhancement.type == "none" then frame:AddChild(createItemFrame(-1, size))
-        elseif enhancement.type == "item" then frame:AddChild(createItemFrame(enhancement.id, size))
-        elseif enhancement.type == "spell" then frame:AddChild(createSpellFrame(enhancement.id, size)) end
+        if enhancement.type == "item" then 
+            frame:AddChild(createItemFrame(enhancement.id, size, false)) 
+        elseif enhancement.type == "spell" then 
+            frame:AddChild(createSpellFrame(enhancement.id, size)) 
+        end
     end
     return frame
 end
@@ -163,9 +179,15 @@ local function drawItemSlot(slot)
     local f = AceGUI:Create("Label")
     f:SetText(slot.slot_name)
     f:SetFont("Fonts\\FRIZQT__.TTF", 14, "")
+    f:SetWidth(95) 
+    f.label:SetJustifyH("CENTER")
     spec_frame:AddChild(f)
     
-    local enhs = slot.enhs or {}
+    local enhs = {}
+    if BisTooltip_Enhancements and BisTooltip_Enhancements[class] and BisTooltip_Enhancements[class][spec] and BisTooltip_Enhancements[class][spec][phase] then
+        enhs = BisTooltip_Enhancements[class][spec][phase][slot.slot_name] or {}
+    end
+    
     spec_frame:AddChild(createEnhancementsFrame(enhs))
 
     local count = 0
@@ -173,8 +195,6 @@ local function drawItemSlot(slot)
         if count >= 6 then break end
         
         local display_id = original_item_id
-        
-        -- Smart Faction Translator matching new names
         if isHorde and BisTooltip_AliToHorde and BisTooltip_AliToHorde[original_item_id] then
             display_id = BisTooltip_AliToHorde[original_item_id]
         elseif not isHorde and BisTooltip_FactionMap and BisTooltip_FactionMap[original_item_id] then
@@ -192,18 +212,31 @@ local function drawItemSlot(slot)
 end
 
 local function drawTableHeader(frame)
+    local color = 0.6
+
     local f = AceGUI:Create("Label")
     f:SetText("Slot")
     f:SetFont("Fonts\\FRIZQT__.TTF", 14, "")
-    local color = 0.6
     f:SetColor(color, color, color)
+    f:SetWidth(95) 
+    f.label:SetJustifyH("CENTER") 
     frame:AddChild(f)
-    frame:AddChild(AceGUI:Create("Label"))
+
+    local eLabel = AceGUI:Create("Label")
+    eLabel:SetText("Enchants")
+    eLabel:SetFont("Fonts\\FRIZQT__.TTF", 11, "")
+    eLabel:SetColor(color, color, color)
+    eLabel:SetWidth(75) 
+    eLabel.label:SetJustifyH("CENTER") 
+    frame:AddChild(eLabel)
+
     for i = 1, 6 do
-        f = AceGUI:Create("Label")
-        f:SetText("Top " .. i)
-        f:SetColor(color, color, color)
-        frame:AddChild(f)
+        local topLabel = AceGUI:Create("Label")
+        topLabel:SetText("Top " .. i)
+        topLabel:SetColor(color, color, color)
+        topLabel:SetWidth(42) 
+        topLabel.label:SetJustifyH("CENTER") 
+        frame:AddChild(topLabel)
     end
 end
 
@@ -245,7 +278,6 @@ local function buildSpecsDict(class_i)
     end
 end
 
--- Completely bulletproofed Data Loader
 local function loadData()
     class_index = BisTooltipAddon.db.char.class_index or 1
     spec_index = BisTooltipAddon.db.char.spec_index or 1
@@ -270,8 +302,11 @@ end
 local function drawDropdowns()
     local dropDownGroup = AceGUI:Create("SimpleGroup")
     dropDownGroup:SetLayout("Table")
-    dropDownGroup:SetUserData("table", { columns = {110, 180, 70}, space = 1, align = "BOTTOMRIGHT" })
+    
+    dropDownGroup:SetUserData("table", { columns = {50, 110, 180, 70}, space = 4, align = "BOTTOM" })
     main_frame:AddChild(dropDownGroup)
+
+    local spacerLeft = AceGUI:Create("Label"); spacerLeft:SetText(" "); dropDownGroup:AddChild(spacerLeft)
 
     classDropdown = AceGUI:Create("Dropdown")
     specDropdown = AceGUI:Create("Dropdown")
@@ -313,6 +348,7 @@ local function drawDropdowns()
 
     local fillerFrame = AceGUI:Create("Label")
     fillerFrame:SetText(" ")
+    fillerFrame:SetHeight(5) 
     main_frame:AddChild(fillerFrame)
 
     classDropdown:SetValue(class_index)
@@ -328,12 +364,14 @@ end
 local function createSpecFrame()
     local frame = AceGUI:Create("ScrollFrame")
     frame:SetLayout("Table")
+    
     frame:SetUserData("table", {
-        columns = {{weight = 40}, {width = 44}, {width = 44}, {width = 44}, {width = 44}, {width = 44}, {width = 44}, {width = 44}},
-        space = 1, align = "middle"
+        columns = {{width = 95}, {width = 75}, {width = 42}, {width = 42}, {width = 42}, {width = 42}, {width = 42}, {width = 42}},
+        space = 3, align = "middle"
     })
+    
     frame:SetFullWidth(true)
-    frame:SetHeight(370)
+    frame:SetHeight(420)
     frame:SetAutoAdjustHeight(false)
     main_frame:AddChild(frame)
     spec_frame = frame
@@ -341,7 +379,7 @@ end
 
 function BisTooltipAddon:reloadData()
     buildClassDict()
-    loadData() -- Force absolute data synchronization
+    loadData() 
     
     if main_frame then
         local phase_opts = {}
@@ -360,15 +398,20 @@ end
 function BisTooltipAddon:createMainFrame()
     if main_frame then BisTooltipAddon:closeMainFrame(); return end
 
-    -- Load everything perfectly before rendering
     buildClassDict()
     loadData()
 
-    main_frame = AceGUI:Create("Frame")
-    main_frame:SetWidth(450)
-    main_frame:SetHeight(550) 
-    main_frame.frame:SetMinResize(450, 500)
-    main_frame.frame:SetMaxResize(800, 600)
+    main_frame = AceGUI:Create("Window")
+    main_frame:SetWidth(505) 
+    main_frame:SetHeight(570) 
+    main_frame:EnableResize(false) 
+    
+    if not main_frame.frame.darkOverlay then
+        main_frame.frame.darkOverlay = main_frame.frame:CreateTexture(nil, "BACKGROUND", nil, -1)
+        main_frame.frame.darkOverlay:SetPoint("TOPLEFT", main_frame.frame, "TOPLEFT", 4, -24) 
+        main_frame.frame.darkOverlay:SetPoint("BOTTOMRIGHT", main_frame.frame, "BOTTOMRIGHT", -4, 4)
+        main_frame.frame.darkOverlay:SetTexture(0, 0, 0, 0.60) 
+    end
 
     main_frame:SetCallback("OnClose", function(widget)
         spec_frame = nil
@@ -384,28 +427,46 @@ function BisTooltipAddon:createMainFrame()
     createSpecFrame()
     drawSpecData()
 
+    local sep = AceGUI:Create("Heading")
+    sep:SetText("")
+    sep:SetFullWidth(true)
+    main_frame:AddChild(sep)
+
     local buttonContainer = AceGUI:Create("SimpleGroup")
     buttonContainer:SetFullWidth(true)
     buttonContainer:SetLayout("Table")
-    buttonContainer:SetUserData("table", { columns = {130, 1} })
+    
+    buttonContainer:SetUserData("table", { columns = {105, 120, 120}, space = 15, align = "middle" })
+
+    local bSpacer1 = AceGUI:Create("Label"); bSpacer1:SetText(" "); buttonContainer:AddChild(bSpacer1)
 
     local reloadButton = AceGUI:Create("Button")
     reloadButton:SetText("Reload Data")
     reloadButton:SetWidth(120) 
     reloadButton:SetCallback("OnClick", function() BisTooltipAddon:reloadData() end)
+    
+    reloadButton:SetCallback("OnEnter", function(widget)
+        GameTooltip:SetOwner(widget.frame, "ANCHOR_TOP")
+        GameTooltip:AddLine("Reload Data", 1, 1, 1)
+        GameTooltip:AddLine("If some items are displaying a '?' icon,\nclick this to force the server to fetch them.", 1, 0.82, 0, 1)
+        GameTooltip:Show()
+    end)
+    reloadButton:SetCallback("OnLeave", function() GameTooltip:Hide() end)
+
     buttonContainer:AddChild(reloadButton)
 
-    local noteLabel = AceGUI:Create("Label")
-    noteLabel:SetText("If the items aren't showing up, click the 'Reload Data' button.")
-    noteLabel:SetFont(GameFontNormal:GetFont(), 10)
-    buttonContainer:AddChild(noteLabel)
+    local configButton = AceGUI:Create("Button")
+    configButton:SetText("Config")
+    configButton:SetWidth(120) 
+    configButton:SetCallback("OnClick", function() BisTooltipAddon:openConfigDialog() end)
+    buttonContainer:AddChild(configButton)
 
-    local spacer = AceGUI:Create("Label")
-    spacer:SetFullWidth(true)
-    spacer:SetText(" ")
-
-    main_frame:AddChild(spacer)
     main_frame:AddChild(buttonContainer)
+    
+    local bottomSpacer = AceGUI:Create("Label")
+    bottomSpacer:SetText(" ")
+    bottomSpacer:SetHeight(15)
+    main_frame:AddChild(bottomSpacer)
 end
 
 function BisTooltipAddon:closeMainFrame()

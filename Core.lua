@@ -1,22 +1,19 @@
 -- Core.lua
-BisTooltipAddon = LibStub("AceAddon-3.0"):NewAddon("Bis-Tooltip")
+BisTooltipAddon = LibStub("AceAddon-3.0"):NewAddon("Bis-Tooltip Renewed")
 BisTooltip_EquipmentCache = {}
 BisTooltip_AliToHorde = {}
 
-local function collectItemIDs(bislists)
+local function collectItemIDs()
     local itemIDs = {}
-    for _, classData in pairs(bislists) do
-        for _, specData in pairs(classData) do
-            for _, phaseData in pairs(specData) do
-                for _, itemData in ipairs(phaseData) do
-                    for key, value in pairs(itemData) do
-                        if type(key) == "number" then
-                            itemIDs[value] = true
-                        elseif key == "enhs" then
-                            for _, enhData in pairs(value) do
-                                if enhData.type == "item" and enhData.id then
-                                    itemIDs[enhData.id] = true
-                                end
+    
+    if BisTooltip_ItemLists then
+        for _, classData in pairs(BisTooltip_ItemLists) do
+            for _, specData in pairs(classData) do
+                for _, phaseData in pairs(specData) do
+                    for _, itemData in ipairs(phaseData) do
+                        for key, value in pairs(itemData) do
+                            if type(key) == "number" then
+                                itemIDs[value] = true
                             end
                         end
                     end
@@ -24,7 +21,7 @@ local function collectItemIDs(bislists)
             end
         end
     end
-    
+
     local flatIDs = {}
     for id in pairs(itemIDs) do table.insert(flatIDs, id) end
     return flatIDs
@@ -46,7 +43,7 @@ local function createEquipmentWatcher()
             local collection = {}
 
             if not master_item_list then 
-                master_item_list = collectItemIDs(BisTooltip_ItemLists) 
+                master_item_list = collectItemIDs() 
             end
 
             for _, itemID in ipairs(master_item_list) do
@@ -129,14 +126,13 @@ end
 function BisTooltipAddon:OnInitialize()
     self:BuildFactionMaps()
     createEquipmentWatcher()
-    BisTooltipAddon.AceAddonName = "Bis-Tooltip"
-    BisTooltipAddon.AddonNameAndVersion = "Bis-Tooltip"
+    BisTooltipAddon.AceAddonName = "Bis-Tooltip Renewed"
+    BisTooltipAddon.AddonNameAndVersion = "Bis-Tooltip Renewed"
     BisTooltipAddon:initConfig()
     BisTooltipAddon:addMapIcon()
     BisTooltipAddon:BuildReverseLookup()
     BisTooltipAddon:initBisTooltip()
     
-    LibStub("AceConsole-3.0"):RegisterChatCommand("bistooltip", function()
-        BisTooltipAddon:createMainFrame()
-    end)
+    LibStub("AceConsole-3.0"):RegisterChatCommand("bisrenewed", function() BisTooltipAddon:createMainFrame() end)
+    LibStub("AceConsole-3.0"):RegisterChatCommand("bistooltip", function() BisTooltipAddon:createMainFrame() end)
 end

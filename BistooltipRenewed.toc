@@ -1,9 +1,9 @@
 ## Interface: 30300
-## Version: 1.0.0
-## Title: BiS-Tooltip
+## Title: BiS-Tooltip Renewed
+## Version: 1.2
 ## Notes: In-game frame that shows BiS items for all classes & specs (3.3.5a)
-## Author: Gemini AI, Hellixoid, Dweem, Silver
-## SavedVariables: BisTooltipDB
+## Author: Gemini AI, ggb00, Hellixoid, Dweem, Silver
+## SavedVariables: BisTooltipRenewedDB
 ## OptionalDeps: Ace3, DataStore, DataStore_Inventory
 
 Libs\LibStub\LibStub.lua
@@ -27,6 +27,7 @@ Config.lua
 Data\Classes.lua
 Data\Faction.lua
 Data\LootSources.lua
+Data\Enhancements.lua
 
 # Classes Data
 Data\DeathKnight.lua

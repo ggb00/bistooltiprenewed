@@ -11,11 +11,10 @@ local HARDCODED_CLASS_COLORS = {
 }
 
 local highlight_colors = {
-    ["purple"] = {0.8, 0.3, 1.0},
-    ["green"] = {0.1, 1.0, 0.1},
-    ["red"] = {1.0, 0.2, 0.2},
-    ["lightblue"] = {0.3, 0.8, 1.0},
-    ["yellow"] = {1.0, 0.82, 0.0}
+    ["purple"]    = {0.80, 0.30, 1.00}, ["green"] =     {0.10, 1.00, 0.10},
+    ["red"]       = {1.00, 0.20, 0.20}, ["lightblue"] = {0.30, 0.80, 1.00},
+    ["yellow"]    = {1.00, 0.82, 0.00}, ["orange"] =    {1.00, 0.50, 0.00},
+    ["pink"]      = {1.00, 0.40, 0.70}, ["cyan"] =      {0.00, 1.00, 1.00}
 }
 
 local function specHighlighted(class_name, spec_name)
@@ -86,10 +85,18 @@ local function OnGameTooltipSetItem(tooltip)
                             local r1, g1, b1, r2, g2, b2
                             
                             if specHighlighted(class, spec) then
-                                local selectedColor = BisTooltipAddon.db.char.highlight_color or "purple"
-                                local colorRGB = highlight_colors[selectedColor] or highlight_colors["purple"]
-                                r1, g1, b1 = colorRGB[1], colorRGB[2], colorRGB[3]
-                                r2, g2, b2 = colorRGB[1], colorRGB[2], colorRGB[3]
+                                local selectedColor = BisTooltipAddon.db.char.highlight_color or "class"
+                                
+                                if selectedColor == "class" then
+                                    local classKey = string.upper(string.gsub(class, "%s+", ""))
+                                    local cColor = HARDCODED_CLASS_COLORS[classKey] or {0.8, 0.8, 0.8}
+                                    r1, g1, b1 = cColor[1], cColor[2], cColor[3]
+                                    r2, g2, b2 = cColor[1], cColor[2], cColor[3]
+                                else
+                                    local colorRGB = highlight_colors[selectedColor] or highlight_colors["purple"]
+                                    r1, g1, b1 = colorRGB[1], colorRGB[2], colorRGB[3]
+                                    r2, g2, b2 = colorRGB[1], colorRGB[2], colorRGB[3]
+                                end
                             else
                                 r2, g2, b2 = 0.65, 0.65, 0.65 
                                 if BisTooltipAddon.db.char.use_class_colors then

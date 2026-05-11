@@ -84,13 +84,26 @@ local configTable = {
             get = function(info) return BisTooltipAddon.db.char.highlight_spec.key or "none" end
         },
         highlight_color = {
-            name = "Highlight Color", order = 6, desc = "Changes the text color of your highlighted spec", type = "select",
-            values = { ["purple"] = "Purple",["green"] = "Green", ["red"] = "Red", ["lightblue"] = "Light Blue", ["yellow"] = "Yellow" },
+            name = "Highlight Color",
+            order = 6,
+            desc = "Changes the text color of your highlighted spec",
+            type = "select",
+            values = {
+                ["class"] = "Match Class Color",
+                ["purple"] = "Purple",
+                ["green"] = "Green",
+                ["red"] = "Red",
+                ["lightblue"] = "Light Blue",
+                ["yellow"] = "Yellow",
+                ["orange"] = "Orange",
+                ["pink"] = "Pink",
+                ["cyan"] = "Cyan"
+            },
             set = function(info, val)
                 BisTooltipAddon.db.char.highlight_color = val
                 if BisTooltipAddon.ClearTooltipCache then BisTooltipAddon:ClearTooltipCache() end
             end,
-            get = function(info) return BisTooltipAddon.db.char.highlight_color or "purple" end
+            get = function(info) return BisTooltipAddon.db.char.highlight_color or "class" end
         }
     }
 }

@@ -63,19 +63,6 @@ local function OnGameTooltipSetItem(tooltip)
         end
     else
         local itemBisData = BisTooltipAddon.ReverseLookup and BisTooltipAddon.ReverseLookup[itemId]
-        
-        if not itemBisData then
-            local translated = nil
-            if BisTooltip_FactionMap and BisTooltip_FactionMap[itemId] then
-                translated = BisTooltip_FactionMap[itemId]
-            elseif BisTooltip_AliToHorde and BisTooltip_AliToHorde[itemId] then
-                translated = BisTooltip_AliToHorde[itemId]
-            end
-            
-            if translated and BisTooltipAddon.ReverseLookup then
-                itemBisData = BisTooltipAddon.ReverseLookup[translated]
-            end
-        end
 
         if itemBisData then
             local cached_lines = {} 

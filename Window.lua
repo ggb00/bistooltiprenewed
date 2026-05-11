@@ -30,9 +30,9 @@ local checkmark_path = "Interface\\AddOns\\" .. addonName .. "\\checkmark-16.tga
 
 local function createItemFrame(item_id, size, with_checkmark)
     if item_id < 0 then 
-        local lbl = AceGUI:Create("Label")
-        lbl:SetWidth(40)
-        return lbl 
+        local empty_icon = AceGUI:Create("Icon")
+        empty_icon:SetImageSize(size, size)
+        return empty_icon 
     end
     
     local item_frame = AceGUI:Create("Icon")
@@ -179,8 +179,8 @@ local function drawItemSlot(slot)
     local f = AceGUI:Create("Label")
     f:SetText(slot.slot_name)
     f:SetFont("Fonts\\FRIZQT__.TTF", 14, "")
-    f:SetWidth(95) 
-    f.label:SetJustifyH("CENTER")
+    f:SetWidth(80) 
+    f.label:SetJustifyH("LEFT")
     spec_frame:AddChild(f)
     
     local enhs = {}
@@ -218,8 +218,8 @@ local function drawTableHeader(frame)
     f:SetText("Slot")
     f:SetFont("Fonts\\FRIZQT__.TTF", 14, "")
     f:SetColor(color, color, color)
-    f:SetWidth(95) 
-    f.label:SetJustifyH("CENTER") 
+    f:SetWidth(80) 
+    f.label:SetJustifyH("LEFT")
     frame:AddChild(f)
 
     local eLabel = AceGUI:Create("Label")
@@ -227,7 +227,7 @@ local function drawTableHeader(frame)
     eLabel:SetFont("Fonts\\FRIZQT__.TTF", 11, "")
     eLabel:SetColor(color, color, color)
     eLabel:SetWidth(75) 
-    eLabel.label:SetJustifyH("CENTER") 
+    eLabel.label:SetJustifyH("LEFT") 
     frame:AddChild(eLabel)
 
     for i = 1, 6 do
@@ -303,10 +303,12 @@ local function drawDropdowns()
     local dropDownGroup = AceGUI:Create("SimpleGroup")
     dropDownGroup:SetLayout("Table")
     
-    dropDownGroup:SetUserData("table", { columns = {50, 110, 180, 70}, space = 4, align = "BOTTOM" })
+    dropDownGroup:SetUserData("table", { columns = {42, 110, 180, 70}, space = 4, align = "BOTTOM" })
     main_frame:AddChild(dropDownGroup)
 
-    local spacerLeft = AceGUI:Create("Label"); spacerLeft:SetText(" "); dropDownGroup:AddChild(spacerLeft)
+    local spacerLeft = AceGUI:Create("Label")
+    spacerLeft:SetText(" ")
+    dropDownGroup:AddChild(spacerLeft)
 
     classDropdown = AceGUI:Create("Dropdown")
     specDropdown = AceGUI:Create("Dropdown")
@@ -366,7 +368,7 @@ local function createSpecFrame()
     frame:SetLayout("Table")
     
     frame:SetUserData("table", {
-        columns = {{width = 95}, {width = 75}, {width = 42}, {width = 42}, {width = 42}, {width = 42}, {width = 42}, {width = 42}},
+        columns = {{width = 80}, {width = 75}, {width = 42}, {width = 42}, {width = 42}, {width = 42}, {width = 42}, {width = 42}},
         space = 3, align = "middle"
     })
     
@@ -435,7 +437,6 @@ function BisTooltipAddon:createMainFrame()
     local buttonContainer = AceGUI:Create("SimpleGroup")
     buttonContainer:SetFullWidth(true)
     buttonContainer:SetLayout("Table")
-    
     buttonContainer:SetUserData("table", { columns = {105, 120, 120}, space = 15, align = "middle" })
 
     local bSpacer1 = AceGUI:Create("Label"); bSpacer1:SetText(" "); buttonContainer:AddChild(bSpacer1)
@@ -448,7 +449,7 @@ function BisTooltipAddon:createMainFrame()
     reloadButton:SetCallback("OnEnter", function(widget)
         GameTooltip:SetOwner(widget.frame, "ANCHOR_TOP")
         GameTooltip:AddLine("Reload Items", 1, 1, 1)
-        GameTooltip:AddLine("If some items are displaying a '?' icon,\nclick this to force the server to fetch them.\nThis may take some time.", 1, 0.82, 0, 1)
+        GameTooltip:AddLine("If some items are displaying a '?' icon,\nclick this to force the server to fetch them.\nThis may take a couple of attempts.", 1, 0.82, 0, 1)
         GameTooltip:Show()
     end)
     reloadButton:SetCallback("OnLeave", function() GameTooltip:Hide() end)

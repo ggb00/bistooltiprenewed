@@ -3,30 +3,6 @@ BisTooltipAddon = LibStub("AceAddon-3.0"):NewAddon("Bis-Tooltip Renewed")
 BisTooltip_EquipmentCache = {}
 BisTooltip_AliToHorde = {}
 
-local function collectItemIDs()
-    local itemIDs = {}
-    
-    if BisTooltip_ItemLists then
-        for _, classData in pairs(BisTooltip_ItemLists) do
-            for _, specData in pairs(classData) do
-                for _, phaseData in pairs(specData) do
-                    for _, itemData in ipairs(phaseData) do
-                        for key, value in pairs(itemData) do
-                            if type(key) == "number" then
-                                itemIDs[value] = true
-                            end
-                        end
-                    end
-                end
-            end
-        end
-    end
-
-    local flatIDs = {}
-    for id in pairs(itemIDs) do table.insert(flatIDs, id) end
-    return flatIDs
-end
-
 local function createEquipmentWatcher()
     local frame = CreateFrame("Frame")
     frame:Hide()
@@ -34,7 +10,6 @@ local function createEquipmentWatcher()
     frame:RegisterEvent("BAG_UPDATE")
 
     local flag = false
-    local master_item_list = nil
 
     frame:SetScript("OnUpdate", function(self)
         self:Hide()
@@ -42,12 +17,26 @@ local function createEquipmentWatcher()
             flag = true
             local collection = {}
 
-            if not master_item_list then 
-                master_item_list = collectItemIDs() 
+            if BisTooltipAddon.ReverseLookup then
+                for itemID, _ in pairs(BisTooltipAddon.ReverseLookup) do
+                    if GetItemCount(itemID, true) > 0 then collection[itemID] = 1 end
+                end
             end
-
-            for _, itemID in ipairs(master_item_list) do
-                if GetItemCount(itemID, true) > 0 then collection[itemID] = 1 end
+            
+            if BisTooltip_Enhancements then
+                for _, classData in pairs(BisTooltip_Enhancements) do
+                    for _, specData in pairs(classData) do
+                        for _, phaseData in pairs(specData) do
+                            for _, slotData in pairs(phaseData) do
+                                for _, enhData in ipairs(slotData) do
+                                    if enhData.type == "item" and enhData.id and enhData.id > 0 then
+                                        if GetItemCount(enhData.id, true) > 0 then collection[enhData.id] = 1 end
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
             end
 
             for i = 1, 19 do
@@ -100,6 +89,7 @@ function BisTooltipAddon:BuildReverseLookup()
                                     end
 
                                     registerId(itemId)
+                                    
                                     if BisTooltip_FactionMap and BisTooltip_FactionMap[itemId] then
                                         registerId(BisTooltip_FactionMap[itemId])
                                     elseif BisTooltip_AliToHorde and BisTooltip_AliToHorde[itemId] then

@@ -5,13 +5,13 @@ BisTooltip_ItemLists["Paladin"]["Holy"] = BisTooltip_ItemLists["Paladin"]["Holy"
 BisTooltip_ItemLists["Paladin"]["Holy"]["PR"] = BisTooltip_ItemLists["Paladin"]["Holy"]["PR"] or {}
 BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][1] = {["slot_name"] = "Head", [1] = 44296, [2] = 39260, [3] = 44949, [4] = 37180, [5] = 37182, [6] = 37592 }
 BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40681, [2] = 44657, [3] = 39232, [4] = 42647, [5] = 43285, [6] = 42023 }
-BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 37655, [2] = 39631, [3] = 37673, [4] = 34390, [5] = 37875, [6] = 37376 }
+BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 37655, [2] = 37673, [3] = 34390, [4] = 37875, [5] = 37376, [6] = 37398 }
 BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][4] = {["slot_name"] = "Back", [1] = 41609, [2] = 39425, [3] = 39415, [4] = 34242, [5] = 37291, [6] = 44167 }
 BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][5] = {["slot_name"] = "Chest", [1] = 39629, [2] = 39188, [3] = 44180, [4] = 37258, [5] = 42102, [6] = 37222 }
 BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37788, [2] = 37884, [3] = 37240, [4] = 37590, [5] = 37361, [6] = 37696 }
 BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][7] = {["slot_name"] = "Hands", [1] = 39632, [2] = 42113, [3] = 37825, [4] = 37261, [5] = 37623, [6] = 34240 }
 BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][8] = {["slot_name"] = "Waist", [1] = 40691, [2] = 37643, [3] = 44181, [4] = 44302, [5] = 37242, [6] = 37637 }
-BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37362, [2] = 39630, [3] = 37791, [4] = 37695, [5] = 37854, [6] = 44305 }
+BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37362, [2] = 37791, [3] = 37695, [4] = 37854, [5] = 44305, [6] = 44931 }
 BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44202, [2] = 40519, [3] = 43996, [4] = 43405, [5] = 43469, [6] = 37730 }
 BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 44283, [2] = 39244, [3] = 40585, [4] = 37694, [5] = 42644, [6] = 37192 }
 BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 40585, [2] = 39244, [3] = 44283, [4] = 37694, [5] = 42644, [6] = 37192 }
@@ -112,9 +112,9 @@ BisTooltip_ItemLists["Paladin"]["Holy"]["RS"][16] = {["slot_name"] = "Off hand",
 BisTooltip_ItemLists["Paladin"]["Holy"]["RS"][17] = {["slot_name"] = "Relic", [1] = 40705, [2] = 45436, [3] = 40268, [4] = 50460, [5] = 30063, [6] = 47662 }
 BisTooltip_ItemLists["Paladin"]["Protection"] = BisTooltip_ItemLists["Paladin"]["Protection"] or {}
 BisTooltip_ItemLists["Paladin"]["Protection"]["PR"] = BisTooltip_ItemLists["Paladin"]["Protection"]["PR"] or {}
-BisTooltip_ItemLists["Paladin"]["Protection"]["PR"][1] = {["slot_name"] = "Head", [1] = 41387, [2] = 42549, [3] = 39640, [4] = 37633, [5] = 44902, [6] = 37135 }
+BisTooltip_ItemLists["Paladin"]["Protection"]["PR"][1] = {["slot_name"] = "Head", [1] = 41387, [2] = 42549, [3] = 37633, [4] = 44902, [5] = 37135, [6] = 36969 }
 BisTooltip_ItemLists["Paladin"]["Protection"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40679, [2] = 42646, [3] = 44660, [4] = 39246, [5] = 37646, [6] = 43282 }
-BisTooltip_ItemLists["Paladin"]["Protection"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 37635, [2] = 39267, [3] = 39642, [4] = 37814, [5] = 34389, [6] = 44373 }
+BisTooltip_ItemLists["Paladin"]["Protection"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 37635, [2] = 39267, [3] = 37814, [4] = 34389, [5] = 44373, [6] = 37115 }
 BisTooltip_ItemLists["Paladin"]["Protection"]["PR"][4] = {["slot_name"] = "Back", [1] = 44188, [2] = 43988, [3] = 39225, [4] = 37197, [5] = 37728, [6] = 43565 }
 BisTooltip_ItemLists["Paladin"]["Protection"]["PR"][5] = {["slot_name"] = "Chest", [1] = 39638, [2] = 39398, [3] = 44198, [4] = 37658, [5] = 37735, [6] = 44407 }
 BisTooltip_ItemLists["Paladin"]["Protection"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37620, [2] = 39467, [3] = 39195, [4] = 37682, [5] = 37040, [6] = 37668 }
@@ -223,7 +223,7 @@ BisTooltip_ItemLists["Paladin"]["Retribution"] = BisTooltip_ItemLists["Paladin"]
 BisTooltip_ItemLists["Paladin"]["Retribution"]["PR"] = BisTooltip_ItemLists["Paladin"]["Retribution"]["PR"] or {}
 BisTooltip_ItemLists["Paladin"]["Retribution"]["PR"][1] = {["slot_name"] = "Head", [1] = 41386, [2] = 39399, [3] = 39403, [4] = 44902, [5] = 34244, [6] = 42552 }
 BisTooltip_ItemLists["Paladin"]["Retribution"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40678, [2] = 39146, [3] = 44659, [4] = 39421, [5] = 42021, [6] = 42645 }
-BisTooltip_ItemLists["Paladin"]["Retribution"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 37139, [2] = 39637, [3] = 39249, [4] = 39237, [5] = 34388, [6] = 39534 }
+BisTooltip_ItemLists["Paladin"]["Retribution"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 37139, [2] = 39249, [3] = 39237, [4] = 34388, [5] = 39534, [6] = 43198 }
 BisTooltip_ItemLists["Paladin"]["Retribution"]["PR"][4] = {["slot_name"] = "Back", [1] = 37647, [2] = 39404, [3] = 39297, [4] = 38614, [5] = 42061, [6] = 34241 }
 BisTooltip_ItemLists["Paladin"]["Retribution"]["PR"][5] = {["slot_name"] = "Chest", [1] = 39633, [2] = 43998, [3] = 43990, [4] = 37722, [5] = 37165, [6] = 43310 }
 BisTooltip_ItemLists["Paladin"]["Retribution"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 41355, [2] = 37891, [3] = 37366, [4] = 34431, [5] = 37853, [6] = 44203 }

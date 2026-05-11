@@ -3,9 +3,9 @@ BisTooltip_ItemLists = BisTooltip_ItemLists or {}
 BisTooltip_ItemLists["Warlock"] = BisTooltip_ItemLists["Warlock"] or {}
 BisTooltip_ItemLists["Warlock"]["Affliction"] = BisTooltip_ItemLists["Warlock"]["Affliction"] or {}
 BisTooltip_ItemLists["Warlock"]["Affliction"]["PR"] = BisTooltip_ItemLists["Warlock"]["Affliction"]["PR"] or {}
-BisTooltip_ItemLists["Warlock"]["Affliction"]["PR"][1] = {["slot_name"] = "Head", [1] = 37684, [2] = 43995, [3] = 39496, [4] = 44910, [5] = 42553, [6] = 34340 }
+BisTooltip_ItemLists["Warlock"]["Affliction"]["PR"][1] = {["slot_name"] = "Head", [1] = 37684, [2] = 43995, [3] = 44910, [4] = 42553, [5] = 34340, [6] = 37294 }
 BisTooltip_ItemLists["Warlock"]["Affliction"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40680, [2] = 44658, [3] = 39472, [4] = 40427, [5] = 37595, [6] = 42024 }
-BisTooltip_ItemLists["Warlock"]["Affliction"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 34210, [2] = 39499, [3] = 37673, [4] = 37196, [5] = 37655, [6] = 41550 }
+BisTooltip_ItemLists["Warlock"]["Affliction"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 34210, [2] = 37673, [3] = 37196, [4] = 37655, [5] = 41550, [6] = 44370 }
 BisTooltip_ItemLists["Warlock"]["Affliction"]["PR"][4] = {["slot_name"] = "Back", [1] = 41610, [2] = 39241, [3] = 42057, [4] = 34242, [5] = 37291, [6] = 37799 }
 BisTooltip_ItemLists["Warlock"]["Affliction"]["PR"][5] = {["slot_name"] = "Chest", [1] = 42102, [2] = 40526, [3] = 39396, [4] = 39497, [5] = 43401, [6] = 34399 }
 BisTooltip_ItemLists["Warlock"]["Affliction"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37361, [2] = 39252, [3] = 39390, [4] = 44200, [5] = 37884, [6] = 37725 }
@@ -112,9 +112,9 @@ BisTooltip_ItemLists["Warlock"]["Affliction"]["RS"][16] = {["slot_name"] = "Off 
 BisTooltip_ItemLists["Warlock"]["Affliction"]["RS"][17] = {["slot_name"] = "Ranged", [1] = 50684, [2] = 51852, [3] = 50631, [4] = 45294, [5] = 50033, [6] = 51838 }
 BisTooltip_ItemLists["Warlock"]["Demonology"] = BisTooltip_ItemLists["Warlock"]["Demonology"] or {}
 BisTooltip_ItemLists["Warlock"]["Demonology"]["PR"] = BisTooltip_ItemLists["Warlock"]["Demonology"]["PR"] or {}
-BisTooltip_ItemLists["Warlock"]["Demonology"]["PR"][1] = {["slot_name"] = "Head", [1] = 37684, [2] = 43995, [3] = 44910, [4] = 39496, [5] = 42553, [6] = 34339 }
+BisTooltip_ItemLists["Warlock"]["Demonology"]["PR"][1] = {["slot_name"] = "Head", [1] = 37684, [2] = 43995, [3] = 44910, [4] = 42553, [5] = 34339, [6] = 37294 }
 BisTooltip_ItemLists["Warlock"]["Demonology"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40680, [2] = 44658, [3] = 39472, [4] = 40427, [5] = 37595, [6] = 42024 }
-BisTooltip_ItemLists["Warlock"]["Demonology"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 34210, [2] = 39499, [3] = 37673, [4] = 37196, [5] = 37655, [6] = 44370 }
+BisTooltip_ItemLists["Warlock"]["Demonology"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 34210, [2] = 37673, [3] = 37196, [4] = 37655, [5] = 44370, [6] = 37691 }
 BisTooltip_ItemLists["Warlock"]["Demonology"]["PR"][4] = {["slot_name"] = "Back", [1] = 41610, [2] = 39241, [3] = 42057, [4] = 36983, [5] = 44242, [6] = 34242 }
 BisTooltip_ItemLists["Warlock"]["Demonology"]["PR"][5] = {["slot_name"] = "Chest", [1] = 39497, [2] = 40526, [3] = 39396, [4] = 42102, [5] = 43401, [6] = 34399 }
 BisTooltip_ItemLists["Warlock"]["Demonology"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37361, [2] = 39252, [3] = 44200, [4] = 37725, [5] = 37884, [6] = 36945 }
@@ -223,7 +223,7 @@ BisTooltip_ItemLists["Warlock"]["Destruction"] = BisTooltip_ItemLists["Warlock"]
 BisTooltip_ItemLists["Warlock"]["Destruction"]["PR"] = BisTooltip_ItemLists["Warlock"]["Destruction"]["PR"] or {}
 BisTooltip_ItemLists["Warlock"]["Destruction"]["PR"][1] = {["slot_name"] = "Head", [1] = 37684, [2] = 44910, [3] = 43995, [4] = 41984, [5] = 42553, [6] = 37294 }
 BisTooltip_ItemLists["Warlock"]["Destruction"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40680, [2] = 44658, [3] = 39472, [4] = 40427, [5] = 37595, [6] = 42024 }
-BisTooltip_ItemLists["Warlock"]["Destruction"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 34210, [2] = 39499, [3] = 37196, [4] = 37673, [5] = 37655, [6] = 44370 }
+BisTooltip_ItemLists["Warlock"]["Destruction"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 34210, [2] = 37196, [3] = 37673, [4] = 37655, [5] = 44370, [6] = 37691 }
 BisTooltip_ItemLists["Warlock"]["Destruction"]["PR"][4] = {["slot_name"] = "Back", [1] = 41610, [2] = 39241, [3] = 42057, [4] = 36983, [5] = 44242, [6] = 37799 }
 BisTooltip_ItemLists["Warlock"]["Destruction"]["PR"][5] = {["slot_name"] = "Chest", [1] = 39497, [2] = 40526, [3] = 43401, [4] = 42102, [5] = 34399, [6] = 37222 }
 BisTooltip_ItemLists["Warlock"]["Destruction"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37361, [2] = 39252, [3] = 44200, [4] = 36945, [5] = 37884, [6] = 34436 }

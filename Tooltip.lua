@@ -32,17 +32,9 @@ local function specFiltered(class_name, spec_name)
     return false
 end
 
-local DataStore_Inventory = DataStore_Inventory or nil
 local function GetItemSource(itemId)
     if BisTooltip_ItemSources and BisTooltip_ItemSources[itemId] then
         return "|cFFFFFFFFSource:|r |cFF00FF00" .. BisTooltip_ItemSources[itemId] .. "|r"
-    end
-
-    if DataStore_Inventory then
-        local Instance, Boss = DataStore_Inventory:GetSource(itemId)
-        if Instance and Boss then 
-            return "|cFFFFFFFFSource:|r |cFF00FF00[" .. Instance .. "] - " .. Boss .. "|r" 
-        end
     end
     return nil
 end
@@ -56,74 +48,96 @@ local function OnGameTooltipSetItem(tooltip)
     local itemId = tonumber(string.match(link, "item:(%d+)"))
     if not itemId then return end
 
-    if tooltip_cache[itemId] then
-        for _, line in ipairs(tooltip_cache[itemId]) do
+    local cache = tooltip_cache[itemId]
+    if cache then
+        for _, line in ipairs(cache.bisLines) do
             tooltip:AddDoubleLine(line.left, line.right, line.r1, line.g1, line.b1, line.r2, line.g2, line.b2)
         end
-    else
-        local itemBisData = BisTooltipAddon.ReverseLookup and BisTooltipAddon.ReverseLookup[itemId]
+        if cache.sourceText then
+            tooltip:AddLine(" ", 1, 1, 0)
+            tooltip:AddLine(cache.sourceText, 1, 1, 1)
+            tooltip:AddLine(" ", 1, 1, 0)
+        end
+        return 
+    end
 
-        if itemBisData then
-            local cached_lines = {} 
-            local sortedClasses = {}
-            for class in pairs(itemBisData) do table.insert(sortedClasses, class) end
-            table.sort(sortedClasses)
+    local itemBisData = BisTooltipAddon.ReverseLookup and BisTooltipAddon.ReverseLookup[itemId]
+    
+    if not itemBisData then
+        local translated = nil
+        if BisTooltip_FactionMap and BisTooltip_FactionMap[itemId] then
+            translated = BisTooltip_FactionMap[itemId]
+        elseif BisTooltip_AliToHorde and BisTooltip_AliToHorde[itemId] then
+            translated = BisTooltip_AliToHorde[itemId]
+        end
+        
+        if translated and BisTooltipAddon.ReverseLookup then
+            itemBisData = BisTooltipAddon.ReverseLookup[translated]
+        end
+    end
 
-            for _, class in ipairs(sortedClasses) do
-                local specs = itemBisData[class]
-                local sortedSpecs = {}
-                for spec in pairs(specs) do table.insert(sortedSpecs, spec) end
-                table.sort(sortedSpecs)
+    local new_cache_entry = { bisLines = {}, sourceText = nil }
 
-                for _, spec in ipairs(sortedSpecs) do
-                    if not specFiltered(class, spec) then
-                        local foundPhases = specs[spec]
-                        local icon = BisTooltip_SpecIcons[class] and BisTooltip_SpecIcons[class][spec]
-                        if icon then
-                            local iconString = string.format("|T%s:18|t", icon)
-                            local lineText = BisTooltipAddon.db.char.filter_class_names and string.format("%s %s", iconString, spec) or string.format("%s %s - %s", iconString, class, spec)
-                            local r1, g1, b1, r2, g2, b2
-                            
-                            if specHighlighted(class, spec) then
-                                local selectedColor = BisTooltipAddon.db.char.highlight_color or "class"
-                                
-                                if selectedColor == "class" then
-                                    local classKey = string.upper(string.gsub(class, "%s+", ""))
-                                    local cColor = HARDCODED_CLASS_COLORS[classKey] or {0.8, 0.8, 0.8}
-                                    r1, g1, b1 = cColor[1], cColor[2], cColor[3]
-                                    r2, g2, b2 = cColor[1], cColor[2], cColor[3]
-                                else
-                                    local colorRGB = highlight_colors[selectedColor] or highlight_colors["purple"]
-                                    r1, g1, b1 = colorRGB[1], colorRGB[2], colorRGB[3]
-                                    r2, g2, b2 = colorRGB[1], colorRGB[2], colorRGB[3]
-                                end
+    if itemBisData then
+        local sortedClasses = {}
+        for class in pairs(itemBisData) do table.insert(sortedClasses, class) end
+        table.sort(sortedClasses)
+
+        for _, class in ipairs(sortedClasses) do
+            local specs = itemBisData[class]
+            local sortedSpecs = {}
+            for spec in pairs(specs) do table.insert(sortedSpecs, spec) end
+            table.sort(sortedSpecs)
+
+            for _, spec in ipairs(sortedSpecs) do
+                if not specFiltered(class, spec) then
+                    local foundPhases = specs[spec]
+                    local icon = BisTooltip_SpecIcons[class] and BisTooltip_SpecIcons[class][spec]
+                    if icon then
+                        local iconString = string.format("|T%s:18|t", icon)
+                        local lineText = BisTooltipAddon.db.char.filter_class_names and string.format("%s %s", iconString, spec) or string.format("%s %s - %s", iconString, class, spec)
+                        local r1, g1, b1, r2, g2, b2
+                        
+                        if specHighlighted(class, spec) then
+                            local selectedColor = BisTooltipAddon.db.char.highlight_color or "class"
+                            if selectedColor == "class" then
+                                local classKey = string.upper(string.gsub(class, "%s+", ""))
+                                local cColor = HARDCODED_CLASS_COLORS[classKey] or {0.8, 0.8, 0.8}
+                                r1, g1, b1 = cColor[1], cColor[2], cColor[3]
+                                r2, g2, b2 = cColor[1], cColor[2], cColor[3]
                             else
-                                r2, g2, b2 = 0.65, 0.65, 0.65 
-                                if BisTooltipAddon.db.char.use_class_colors then
-                                    local classKey = string.upper(string.gsub(class, "%s+", ""))
-                                    local cColor = HARDCODED_CLASS_COLORS[classKey] or {0.65, 0.65, 0.65}
-                                    r1, g1, b1 = cColor[1], cColor[2], cColor[3]
-                                else
-                                    r1, g1, b1 = 0.65, 0.65, 0.65 
-                                end
+                                local colorRGB = highlight_colors[selectedColor] or highlight_colors["purple"]
+                                r1, g1, b1 = colorRGB[1], colorRGB[2], colorRGB[3]
+                                r2, g2, b2 = colorRGB[1], colorRGB[2], colorRGB[3]
                             end
-                            
-                            tooltip:AddDoubleLine(lineText, foundPhases, r1, g1, b1, r2, g2, b2)
-                            table.insert(cached_lines, {left=lineText, right=foundPhases, r1=r1, g1=g1, b1=b1, r2=r2, g2=g2, b2=b2})
+                        else
+                            r2, g2, b2 = 0.65, 0.65, 0.65 
+                            if BisTooltipAddon.db.char.use_class_colors then
+                                local classKey = string.upper(string.gsub(class, "%s+", ""))
+                                local cColor = HARDCODED_CLASS_COLORS[classKey] or {0.65, 0.65, 0.65}
+                                r1, g1, b1 = cColor[1], cColor[2], cColor[3]
+                            else
+                                r1, g1, b1 = 0.65, 0.65, 0.65 
+                            end
                         end
+                        
+                        tooltip:AddDoubleLine(lineText, foundPhases, r1, g1, b1, r2, g2, b2)
+                        table.insert(new_cache_entry.bisLines, {left=lineText, right=foundPhases, r1=r1, g1=g1, b1=b1, r2=r2, g2=g2, b2=b2})
                     end
                 end
             end
-            tooltip_cache[itemId] = cached_lines
         end
     end
 
-    local itemSource = GetItemSource(itemId)
-    if itemSource then
+    local sourceText = GetItemSource(itemId)
+    if sourceText then
         tooltip:AddLine(" ", 1, 1, 0)
-        tooltip:AddLine(itemSource, 1, 1, 1)
+        tooltip:AddLine(sourceText, 1, 1, 1)
         tooltip:AddLine(" ", 1, 1, 0)
+        new_cache_entry.sourceText = sourceText
     end
+
+    tooltip_cache[itemId] = new_cache_entry
 end
 
 function BisTooltipAddon:ClearTooltipCache() tooltip_cache = {} end

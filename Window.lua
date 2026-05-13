@@ -32,9 +32,15 @@ local function createItemFrame(item_id, size, with_checkmark)
     if item_id < 0 then 
         local empty_icon = AceGUI:Create("Icon")
         empty_icon:SetImageSize(size, size)
-        return empty_icon 
+        empty_icon.frame:EnableMouse(false) 
+        
+        if empty_icon.frame.bisCheckMark then empty_icon.frame.bisCheckMark:Hide() end
+        if empty_icon.frame.bisBoeMark then empty_icon.frame.bisBoeMark:Hide() end
+        empty_icon:SetImage("")
+        
+        return empty_icon
     end
-    
+
     local item_frame = AceGUI:Create("Icon")
     item_frame:SetImageSize(size, size)
 
@@ -45,7 +51,7 @@ local function createItemFrame(item_id, size, with_checkmark)
         item_frame.frame.bisCheckMark:SetWidth(32)
         item_frame.frame.bisCheckMark:SetHeight(32)
         item_frame.frame.bisCheckMark:SetPoint("CENTER", 6, -8)
-        item_frame.frame.bisCheckMark:SetTexture(checkmark_path) 
+        item_frame.frame.bisCheckMark:SetTexture(checkmark_path)
     end
 
     if not item_frame.frame.bisBoeMark then
@@ -117,13 +123,19 @@ item_fetch_frame:SetScript("OnEvent", function(_, _, received_item_id)
                     end)
                 end
             end
-            missing_widgets[received_item_id] = nil 
+            missing_widgets[received_item_id] = nil
         end
     end
 end)
 
 local function createSpellFrame(spell_id, size)
-    if spell_id < 0 then return AceGUI:Create("Label") end
+    if spell_id < 0 then
+        local empty_spell = AceGUI:Create("Icon")
+        empty_spell:SetImageSize(size, size)
+        empty_spell.frame:EnableMouse(false)
+        return empty_spell
+    end
+    
     local spell_frame = AceGUI:Create("Icon")
     spell_frame:SetImageSize(size, size)
     spell_frame.image:SetVertexColor(1, 1, 1, 1) 
@@ -136,13 +148,23 @@ local function createSpellFrame(spell_id, size)
     
     spell_frame:SetImage(icon)
     local link = GetSpellLink(spell_id)
-    if not link then link = "\124cffffd000\124Hspell:" .. spell_id .. "\124h[" .. name .. "]\124h\124r" end
     
-    spell_frame:SetCallback("OnClick", function() SetItemRef(link, link, "LeftButton") end)
+    spell_frame:SetCallback("OnClick", function()
+        if link then SetItemRef(link, link, "LeftButton") end
+    end)
+    
     spell_frame:SetCallback("OnEnter", function()
-        GameTooltip:SetOwner(spell_frame.frame)
+        GameTooltip:SetOwner(spell_frame.frame, "ANCHOR_NONE")
         GameTooltip:SetPoint("TOPRIGHT", spell_frame.frame, "TOPRIGHT", 220, -13)
-        GameTooltip:SetHyperlink(link)
+        GameTooltip:ClearLines()
+        
+        if name == "Rune of the Stoneskin Gargoyle" or name == "Rune of Razorice" or name == "Rune of the Fallen Crusader" then
+            GameTooltip:AddLine("|T" .. icon .. ":16|t " .. name, 1, 1, 1)
+        elseif link then
+            GameTooltip:SetHyperlink(link)
+        end
+        
+        GameTooltip:Show()
     end)
     spell_frame:SetCallback("OnLeave", function() GameTooltip:Hide() end)
     
@@ -152,12 +174,12 @@ end
 local function createEnhancementsFrame(enhancements)
     local frame = AceGUI:Create("SimpleGroup")
     frame:SetLayout("Table")
-    frame:SetWidth(75) 
+    frame:SetWidth(75)
     frame:SetHeight(18)
     
     frame:SetUserData("table", {
-        columns = {17, 17, 17, 17},
-        spaceV = 0, spaceH = 1, align = "MIDDLE"
+        columns = {16, 16, 16, 16},
+        spaceV = 0, spaceH = 2, align = "MIDDLE"
     })
     
     frame:SetFullWidth(false)
@@ -166,10 +188,10 @@ local function createEnhancementsFrame(enhancements)
     
     for _, enhancement in ipairs(enhancements) do
         local size = 16
-        if enhancement.type == "item" then 
-            frame:AddChild(createItemFrame(enhancement.id, size, false)) 
-        elseif enhancement.type == "spell" then 
-            frame:AddChild(createSpellFrame(enhancement.id, size)) 
+        if enhancement.type == "item" then
+            frame:AddChild(createItemFrame(enhancement.id, size, false))
+        elseif enhancement.type == "spell" then
+            frame:AddChild(createSpellFrame(enhancement.id, size))
         end
     end
     return frame
@@ -179,7 +201,7 @@ local function drawItemSlot(slot)
     local f = AceGUI:Create("Label")
     f:SetText(slot.slot_name)
     f:SetFont("Fonts\\FRIZQT__.TTF", 14, "")
-    f:SetWidth(80) 
+    f:SetWidth(85)
     f.label:SetJustifyH("LEFT")
     spec_frame:AddChild(f)
     
@@ -195,6 +217,7 @@ local function drawItemSlot(slot)
         if count >= 6 then break end
         
         local display_id = original_item_id
+        
         if isHorde and BisTooltip_AliToHorde and BisTooltip_AliToHorde[original_item_id] then
             display_id = BisTooltip_AliToHorde[original_item_id]
         elseif not isHorde and BisTooltip_FactionMap and BisTooltip_FactionMap[original_item_id] then
@@ -218,7 +241,7 @@ local function drawTableHeader(frame)
     f:SetText("Slot")
     f:SetFont("Fonts\\FRIZQT__.TTF", 14, "")
     f:SetColor(color, color, color)
-    f:SetWidth(80) 
+    f:SetWidth(85)
     f.label:SetJustifyH("LEFT")
     frame:AddChild(f)
 
@@ -226,16 +249,16 @@ local function drawTableHeader(frame)
     eLabel:SetText("Enchants")
     eLabel:SetFont("Fonts\\FRIZQT__.TTF", 11, "")
     eLabel:SetColor(color, color, color)
-    eLabel:SetWidth(75) 
-    eLabel.label:SetJustifyH("LEFT") 
+    eLabel:SetWidth(75)
+    eLabel.label:SetJustifyH("LEFT")
     frame:AddChild(eLabel)
 
     for i = 1, 6 do
         local topLabel = AceGUI:Create("Label")
         topLabel:SetText("Top " .. i)
         topLabel:SetColor(color, color, color)
-        topLabel:SetWidth(42) 
-        topLabel.label:SetJustifyH("CENTER") 
+        topLabel:SetWidth(44)
+        topLabel.label:SetJustifyH("CENTER")
         frame:AddChild(topLabel)
     end
 end
@@ -302,7 +325,7 @@ end
 local function drawDropdowns()
     local dropDownGroup = AceGUI:Create("SimpleGroup")
     dropDownGroup:SetLayout("Table")
-    
+
     dropDownGroup:SetUserData("table", { columns = {42, 110, 180, 70}, space = 4, align = "BOTTOM" })
     main_frame:AddChild(dropDownGroup)
 
@@ -350,7 +373,7 @@ local function drawDropdowns()
 
     local fillerFrame = AceGUI:Create("Label")
     fillerFrame:SetText(" ")
-    fillerFrame:SetHeight(5) 
+    fillerFrame:SetHeight(5)
     main_frame:AddChild(fillerFrame)
 
     classDropdown:SetValue(class_index)
@@ -368,7 +391,7 @@ local function createSpecFrame()
     frame:SetLayout("Table")
     
     frame:SetUserData("table", {
-        columns = {{width = 80}, {width = 75}, {width = 42}, {width = 42}, {width = 42}, {width = 42}, {width = 42}, {width = 42}},
+        columns = {{width = 95}, {width = 75}, {width = 44}, {width = 44}, {width = 44}, {width = 44}, {width = 44}, {width = 44}},
         space = 3, align = "middle"
     })
     
@@ -381,7 +404,7 @@ end
 
 function BisTooltipAddon:reloadData()
     buildClassDict()
-    loadData() 
+    loadData()
     
     if main_frame then
         local phase_opts = {}
@@ -404,15 +427,18 @@ function BisTooltipAddon:createMainFrame()
     loadData()
 
     main_frame = AceGUI:Create("Window")
-    main_frame:SetWidth(505) 
-    main_frame:SetHeight(570) 
-    main_frame:EnableResize(false) 
+    main_frame:SetWidth(505)
+    main_frame:SetHeight(570)
+    main_frame:EnableResize(false)
+    
+    _G["BisTooltipRenewed_MainWindow"] = main_frame.frame
+    tinsert(UISpecialFrames, "BisTooltipRenewed_MainWindow")
     
     if not main_frame.frame.darkOverlay then
         main_frame.frame.darkOverlay = main_frame.frame:CreateTexture(nil, "BACKGROUND", nil, -1)
         main_frame.frame.darkOverlay:SetPoint("TOPLEFT", main_frame.frame, "TOPLEFT", 8, -24) 
         main_frame.frame.darkOverlay:SetPoint("BOTTOMRIGHT", main_frame.frame, "BOTTOMRIGHT", -8, 8)
-        main_frame.frame.darkOverlay:SetTexture(0, 0, 0, 0.60) 
+        main_frame.frame.darkOverlay:SetTexture(0, 0, 0, 0.60)
     end
 
     main_frame:SetCallback("OnClose", function(widget)
@@ -473,7 +499,13 @@ end
 function BisTooltipAddon:closeMainFrame()
     if main_frame then
         AceGUI:Release(main_frame)
-        classDropdown = nil; specDropdown = nil; phaseDropDown = nil; missing_widgets = {}; query_queue = {}
+        classDropdown = nil
+        specDropdown = nil
+        phaseDropDown = nil
+        missing_widgets = {}
+        query_queue = {}
+        
+        main_frame = nil 
     end
 end
 

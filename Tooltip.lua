@@ -1,4 +1,6 @@
 -- Tooltip.lua
+local eventFrame = CreateFrame("Frame")
+
 local HARDCODED_CLASS_COLORS = {
     ["DEATHKNIGHT"] = {0.77, 0.12, 0.23}, ["DRUID"]   = {1.00, 0.49, 0.04},
     ["HUNTER"]      = {0.67, 0.83, 0.45}, ["MAGE"]    = {0.25, 0.78, 0.92},
@@ -121,4 +123,19 @@ function BisTooltipAddon:initBisTooltip()
     ItemRefTooltip:HookScript("OnTooltipCleared", OnTooltipCleared)
     if ShoppingTooltip1 then ShoppingTooltip1:HookScript("OnTooltipCleared", OnTooltipCleared) end
     if ShoppingTooltip2 then ShoppingTooltip2:HookScript("OnTooltipCleared", OnTooltipCleared) end
+
+    eventFrame:RegisterEvent("MODIFIER_STATE_CHANGED")
+    eventFrame:SetScript("OnEvent", function(_, _, key)
+        if key == "LALT" or key == "RALT" or key == "LCTRL" or key == "RCTRL" then
+            for _, tooltip in ipairs({GameTooltip, ItemRefTooltip}) do
+                if tooltip:IsShown() then
+                    local _, link = tooltip:GetItem()
+                    if link then
+                        tooltip:SetHyperlink("item:3299:0:0:0:0:0:0:0:0")
+                        tooltip:SetHyperlink(link)
+                    end
+                end
+            end
+        end
+    end)
 end

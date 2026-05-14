@@ -10,7 +10,7 @@ local db_defaults = {
     char = {
         class_index = 1, spec_index = 1, phase_index = 1,
         filter_specs = {}, highlight_spec = {},
-        highlight_color = "purple", use_class_colors = true, 
+        highlight_color = "purple", use_class_colors = true,
         minimap_icon = true, tooltip_with_ctrl = false
     }
 }
@@ -28,9 +28,9 @@ local configTable = {
         },
         filter_class_names = {
             name = "Hide class names", order = 1, desc = "Removes class name separators from item tooltips", type = "toggle",
-            set = function(info, val) 
+            set = function(info, val)
                 BisTooltipAddon.db.char.filter_class_names = val
-                if BisTooltipAddon.ClearTooltipCache then BisTooltipAddon:ClearTooltipCache() end 
+                if BisTooltipAddon.ClearTooltipCache then BisTooltipAddon:ClearTooltipCache() end
             end,
             get = function(info) return BisTooltipAddon.db.char.filter_class_names end
         },
@@ -41,13 +41,13 @@ local configTable = {
         },
         use_class_colors = {
             name = "Use Class Colors", order = 3, desc = "Colorize class/spec text with WoW class colors", type = "toggle",
-            set = function(info, val) 
+            set = function(info, val)
                 BisTooltipAddon.db.char.use_class_colors = val
-                if BisTooltipAddon.ClearTooltipCache then BisTooltipAddon:ClearTooltipCache() end 
+                if BisTooltipAddon.ClearTooltipCache then BisTooltipAddon:ClearTooltipCache() end
             end,
-            get = function(info) 
+            get = function(info)
                 if BisTooltipAddon.db.char.use_class_colors == nil then return true end
-                return BisTooltipAddon.db.char.use_class_colors 
+                return BisTooltipAddon.db.char.use_class_colors
             end
         },
         filter_specs = {
@@ -127,7 +127,7 @@ end
 
 local function migrateAddonDB()
     if not BisTooltipAddon.db.char.version or BisTooltipAddon.db.char.version < 7.0 then
-        BisTooltipAddon.db.char.version = 7.0 
+        BisTooltipAddon.db.char.version = 7.0
         BisTooltipAddon.db.char.highlight_spec = {}
         BisTooltipAddon.db.char.filter_specs = {}
         BisTooltipAddon.db.char.class_index = 1
@@ -170,7 +170,7 @@ end
 function BisTooltipAddon:initConfig()
     BisTooltipAddon.db = LibStub("AceDB-3.0"):New("BisTooltipRenewedDB", db_defaults, "Default")
     migrateAddonDB()
-    buildFilterSpecOptions() 
+    buildFilterSpecOptions()
     LibStub("AceConfig-3.0"):RegisterOptionsTable(BisTooltipAddon.AceAddonName, configTable)
     AceConfigDialog:AddToBlizOptions(BisTooltipAddon.AceAddonName, BisTooltipAddon.AceAddonName)
 end

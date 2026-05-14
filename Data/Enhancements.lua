@@ -1891,7 +1891,7 @@ BisTooltip_Enhancements["Hunter"]["Marksmanship"]["T7"] = {
     ["Feet"] = BisTooltip_Enhancements["Druid"]["Feral DPS"]["PR"]["Feet"],
     ["Weapon"] = BisTooltip_Enhancements["Hunter"]["Beast Mastery"]["PR"]["Weapon"],
     ["Ranged"] = BisTooltip_Enhancements["Hunter"]["Beast Mastery"]["PR"]["Ranged"]
-} 
+}
 
 BisTooltip_Enhancements["Hunter"]["Marksmanship"]["T8"] = {
     ["Head"] = BisTooltip_Enhancements["Death Knight"]["Frost"]["PR"]["Head"],
@@ -1925,7 +1925,7 @@ BisTooltip_Enhancements["Hunter"]["Marksmanship"]["T9"] = {
     ["Finger 2"] = BisTooltip_Enhancements["Hunter"]["Beast Mastery"]["T9"]["Finger 2"],
     ["Weapon"] = BisTooltip_Enhancements["Hunter"]["Beast Mastery"]["T9"]["Weapon"],
     ["Ranged"] = BisTooltip_Enhancements["Hunter"]["Beast Mastery"]["T9"]["Ranged"]
-} 
+}
 
 BisTooltip_Enhancements["Hunter"]["Marksmanship"]["T10"] = {
     ["Head"] = BisTooltip_Enhancements["Death Knight"]["Frost"]["T10"]["Head"],
@@ -2187,7 +2187,7 @@ BisTooltip_Enhancements["Mage"]["Arcane"]["T7"] = {
         {type = "spell", id = 55631}, -- Brilliant Spellthread
         {type = "item", id = 39998}, -- Runed Scarlet Ruby
         {type = "item", id = 40051} -- Reckless Monarch Topaz
-    }, 
+    },
     ["Feet"] = BisTooltip_Enhancements["Death Knight"]["Blood Tank"]["PR"]["Feet"],
     ["Weapon"] = BisTooltip_Enhancements["Druid"]["Balance"]["PR"]["Weapon"]
 }
@@ -2544,7 +2544,7 @@ BisTooltip_Enhancements["Mage"]["Fire FFB"]["T8"] = {
     ["Finger 1"] = BisTooltip_Enhancements["Druid"]["Balance"]["T8"]["Finger 1"],
     ["Finger 2"] = BisTooltip_Enhancements["Mage"]["Fire"]["T8"]["Finger 2"],
     ["Weapon"] = BisTooltip_Enhancements["Druid"]["Balance"]["T8"]["Weapon"],
-    ["Ranged"] = BisTooltip_Enhancements["Mage"]["Arcane"]["T8"]["Ranged"]  
+    ["Ranged"] = BisTooltip_Enhancements["Mage"]["Arcane"]["T8"]["Ranged"]
 }
 
 BisTooltip_Enhancements["Mage"]["Fire FFB"]["T9"] = {
@@ -3481,7 +3481,7 @@ BisTooltip_Enhancements["Priest"]["Holy"]["PR"] = {
     },
     ["Legs"] = BisTooltip_Enhancements["Druid"]["Balance"]["PR"]["Legs"],
     ["Feet"] = BisTooltip_Enhancements["Druid"]["Restoration"]["PR"]["Feet"],
-    ["Weapon"] = BisTooltip_Enhancements["Druid"]["Restoration"]["PR"]["Weapon"]  
+    ["Weapon"] = BisTooltip_Enhancements["Druid"]["Restoration"]["PR"]["Weapon"]
 }
 
 BisTooltip_Enhancements["Priest"]["Holy"]["T7"] = {
@@ -4010,7 +4010,7 @@ BisTooltip_Enhancements["Rogue"]["Assassination"]["RS"] = {
     ["Finger 2"] = BisTooltip_Enhancements["Rogue"]["Assassination"]["T10"]["Finger 2"],
     ["Weapon"] = BisTooltip_Enhancements["Rogue"]["Assassination"]["T10"]["Weapon"],
     ["Off hand"] = BisTooltip_Enhancements["Rogue"]["Assassination"]["T10"]["Off hand"],
-    ["Ranged"] = BisTooltip_Enhancements["Rogue"]["Assassination"]["T10"]["Ranged"] 
+    ["Ranged"] = BisTooltip_Enhancements["Rogue"]["Assassination"]["T10"]["Ranged"]
 }
 
 -- -- Combat (Rogue)
@@ -4101,7 +4101,7 @@ BisTooltip_Enhancements["Rogue"]["Combat"]["T9"] = {
     ["Finger 2"] = BisTooltip_Enhancements["Rogue"]["Assassination"]["T9"]["Finger 2"],
     ["Weapon"] = BisTooltip_Enhancements["Rogue"]["Assassination"]["T9"]["Weapon"],
     ["Off hand"] = BisTooltip_Enhancements["Rogue"]["Assassination"]["T9"]["Off hand"],
-    ["Ranged"] = BisTooltip_Enhancements["Rogue"]["Assassination"]["T9"]["Ranged"] 
+    ["Ranged"] = BisTooltip_Enhancements["Rogue"]["Assassination"]["T9"]["Ranged"]
 }
 
 BisTooltip_Enhancements["Rogue"]["Combat"]["T10"] = {

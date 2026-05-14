@@ -23,21 +23,22 @@ local isHorde = UnitFactionGroup("player") == "Horde"
 
 local missing_widgets = {}
 local query_queue = {}
+local pending_widget_update = false
 local scanner = CreateFrame("GameTooltip", "BisTooltipScanner", UIParent, "GameTooltipTemplate")
 local item_fetch_frame = CreateFrame("Frame")
 
 local checkmark_path = "Interface\\AddOns\\" .. addonName .. "\\checkmark-16.tga"
 
 local function createItemFrame(item_id, size, with_checkmark)
-    if item_id < 0 then 
+    if item_id < 0 then
         local empty_icon = AceGUI:Create("Icon")
         empty_icon:SetImageSize(size, size)
-        empty_icon.frame:EnableMouse(false) 
-        
+        empty_icon.frame:EnableMouse(false)
+
         if empty_icon.frame.bisCheckMark then empty_icon.frame.bisCheckMark:Hide() end
         if empty_icon.frame.bisBoeMark then empty_icon.frame.bisBoeMark:Hide() end
         empty_icon:SetImage("")
-        
+
         return empty_icon
     end
 
@@ -62,14 +63,14 @@ local function createItemFrame(item_id, size, with_checkmark)
         item_frame.frame.bisBoeMark:SetTexture("Interface\\Icons\\INV_Misc_Coin_01")
     end
 
-    if with_checkmark then 
-        item_frame.frame.bisCheckMark:Show() 
-        item_frame.image:SetVertexColor(0.35, 0.35, 0.35, 1) 
-    else 
-        item_frame.frame.bisCheckMark:Hide() 
+    if with_checkmark then
+        item_frame.frame.bisCheckMark:Show()
+        item_frame.image:SetVertexColor(0.35, 0.35, 0.35, 1)
+    else
+        item_frame.frame.bisCheckMark:Hide()
         item_frame.image:SetVertexColor(1, 1, 1, 1)
     end
-    
+
     if not itemName then
         item_frame:SetImage("Interface\\Icons\\INV_Misc_QuestionMark")
         item_frame.frame.bisBoeMark:Hide()
@@ -84,7 +85,7 @@ local function createItemFrame(item_id, size, with_checkmark)
 
     item_frame:SetCallback("OnClick", function() SetItemRef(itemLink, itemLink, "LeftButton") end)
     item_frame:SetCallback("OnEnter", function(widget)
-        GameTooltip:SetOwner(item_frame.frame)
+        GameTooltip:SetOwner(item_frame.frame, "ANCHOR_NONE")
         GameTooltip:SetPoint("TOPRIGHT", item_frame.frame, "TOPRIGHT", 220, -13)
         GameTooltip:SetHyperlink(itemLink)
     end)
@@ -93,37 +94,43 @@ local function createItemFrame(item_id, size, with_checkmark)
     return item_frame
 end
 
+item_fetch_frame:RegisterEvent("GET_ITEM_INFO_RECEIVED")
+item_fetch_frame:SetScript("OnEvent", function()
+    pending_widget_update = true
+end)
+
 item_fetch_frame:SetScript("OnUpdate", function()
     for i = 1, 5 do
         local next_id = next(query_queue)
         if next_id then
             scanner:SetOwner(UIParent, "ANCHOR_NONE")
             scanner:SetHyperlink("item:" .. next_id .. ":0:0:0:0:0:0:0")
+            scanner:ClearLines()
             query_queue[next_id] = nil
         else break end
     end
-end)
 
-item_fetch_frame:RegisterEvent("GET_ITEM_INFO_RECEIVED")
-item_fetch_frame:SetScript("OnEvent", function(_, _, received_item_id)
-    if received_item_id and missing_widgets[received_item_id] then
-        local itemName, itemLink, _, _, _, _, _, _, _, itemIcon, _, _, _, bindType = GetItemInfo(received_item_id)
-        if itemName then
-            for _, widget in ipairs(missing_widgets[received_item_id]) do
-                if widget and widget.frame and widget.frame:IsShown() then
-                    widget:SetImage(itemIcon)
-                    local isEquipped = BisTooltip_EquipmentCache and BisTooltip_EquipmentCache[received_item_id]
-                    if isEquipped then widget.image:SetVertexColor(0.35, 0.35, 0.35, 1) else widget.image:SetVertexColor(1, 1, 1, 1) end
-                    if bindType == 2 then widget.frame.bisBoeMark:Show() else widget.frame.bisBoeMark:Hide() end
-                    widget:SetCallback("OnClick", function() SetItemRef(itemLink, itemLink, "LeftButton") end)
-                    widget:SetCallback("OnEnter", function(w)
-                        GameTooltip:SetOwner(w.frame)
-                        GameTooltip:SetPoint("TOPRIGHT", w.frame, "TOPRIGHT", 220, -13)
-                        GameTooltip:SetHyperlink(itemLink)
-                    end)
+    if pending_widget_update then
+        pending_widget_update = false
+        for item_id, widgets in pairs(missing_widgets) do
+            local itemName, itemLink, _, _, _, _, _, _, _, itemIcon, _, _, _, bindType = GetItemInfo(item_id)
+            if itemName then
+                for _, widget in ipairs(widgets) do
+                    if widget and widget.frame and widget.frame:IsShown() then
+                        widget:SetImage(itemIcon)
+                        local isEquipped = BisTooltipAddon:IsItemOwned(item_id)
+                        if isEquipped then widget.image:SetVertexColor(0.35, 0.35, 0.35, 1) else widget.image:SetVertexColor(1, 1, 1, 1) end
+                        if bindType == 2 then widget.frame.bisBoeMark:Show() else widget.frame.bisBoeMark:Hide() end
+                        widget:SetCallback("OnClick", function() SetItemRef(itemLink, itemLink, "LeftButton") end)
+                        widget:SetCallback("OnEnter", function(w)
+                            GameTooltip:SetOwner(w.frame, "ANCHOR_NONE")
+                            GameTooltip:SetPoint("TOPRIGHT", w.frame, "TOPRIGHT", 220, -13)
+                            GameTooltip:SetHyperlink(itemLink)
+                        end)
+                    end
                 end
+                missing_widgets[item_id] = nil
             end
-            missing_widgets[received_item_id] = nil
         end
     end
 end)
@@ -135,39 +142,39 @@ local function createSpellFrame(spell_id, size)
         empty_spell.frame:EnableMouse(false)
         return empty_spell
     end
-    
+
     local spell_frame = AceGUI:Create("Icon")
     spell_frame:SetImageSize(size, size)
-    spell_frame.image:SetVertexColor(1, 1, 1, 1) 
-    
+    spell_frame.image:SetVertexColor(1, 1, 1, 1)
+
     if spell_frame.frame.bisCheckMark then spell_frame.frame.bisCheckMark:Hide() end
     if spell_frame.frame.bisBoeMark then spell_frame.frame.bisBoeMark:Hide() end
 
     local name, _, icon = GetSpellInfo(spell_id)
     if not name then return spell_frame end
-    
+
     spell_frame:SetImage(icon)
     local link = GetSpellLink(spell_id)
-    
+
     spell_frame:SetCallback("OnClick", function()
         if link then SetItemRef(link, link, "LeftButton") end
     end)
-    
+
     spell_frame:SetCallback("OnEnter", function()
         GameTooltip:SetOwner(spell_frame.frame, "ANCHOR_NONE")
         GameTooltip:SetPoint("TOPRIGHT", spell_frame.frame, "TOPRIGHT", 220, -13)
         GameTooltip:ClearLines()
-        
+
         if name == "Rune of the Stoneskin Gargoyle" or name == "Rune of Razorice" or name == "Rune of the Fallen Crusader" then
             GameTooltip:AddLine("|T" .. icon .. ":16|t " .. name, 1, 1, 1)
         elseif link then
             GameTooltip:SetHyperlink(link)
         end
-        
+
         GameTooltip:Show()
     end)
     spell_frame:SetCallback("OnLeave", function() GameTooltip:Hide() end)
-    
+
     return spell_frame
 end
 
@@ -176,16 +183,16 @@ local function createEnhancementsFrame(enhancements)
     frame:SetLayout("Table")
     frame:SetWidth(75)
     frame:SetHeight(18)
-    
+
     frame:SetUserData("table", {
         columns = {16, 16, 16, 16},
         spaceV = 0, spaceH = 2, align = "MIDDLE"
     })
-    
+
     frame:SetFullWidth(false)
     frame:SetFullHeight(false)
     frame:SetAutoAdjustHeight(false)
-    
+
     for _, enhancement in ipairs(enhancements) do
         local size = 16
         if enhancement.type == "item" then
@@ -204,31 +211,31 @@ local function drawItemSlot(slot)
     f:SetWidth(85)
     f.label:SetJustifyH("LEFT")
     spec_frame:AddChild(f)
-    
+
     local enhs = {}
     if BisTooltip_Enhancements and BisTooltip_Enhancements[class] and BisTooltip_Enhancements[class][spec] and BisTooltip_Enhancements[class][spec][phase] then
         enhs = BisTooltip_Enhancements[class][spec][phase][slot.slot_name] or {}
     end
-    
+
     spec_frame:AddChild(createEnhancementsFrame(enhs))
 
     local count = 0
     for _, original_item_id in ipairs(slot) do
         if count >= 6 then break end
-        
+
         local display_id = original_item_id
-        
+
         if isHorde and BisTooltip_AliToHorde and BisTooltip_AliToHorde[original_item_id] then
             display_id = BisTooltip_AliToHorde[original_item_id]
         elseif not isHorde and BisTooltip_FactionMap and BisTooltip_FactionMap[original_item_id] then
             display_id = BisTooltip_FactionMap[original_item_id]
         end
 
-        local isEquipped = display_id and BisTooltip_EquipmentCache and BisTooltip_EquipmentCache[display_id]
+        local isEquipped = display_id and BisTooltipAddon:IsItemOwned(display_id)
         spec_frame:AddChild(createItemFrame(display_id, 40, isEquipped))
         count = count + 1
     end
-    
+
     for i = count + 1, 6 do
         spec_frame:AddChild(createItemFrame(-1, 40, false))
     end
@@ -272,7 +279,7 @@ local function drawSpecData()
     query_queue = {}
     spec_frame:ReleaseChildren()
     drawTableHeader(spec_frame)
-    
+
     if not spec or not phase or not BisTooltip_ItemLists[class] or not BisTooltip_ItemLists[class][spec] then return end
     local slots = BisTooltip_ItemLists[class][spec][phase]
     if not slots then return end
@@ -325,7 +332,6 @@ end
 local function drawDropdowns()
     local dropDownGroup = AceGUI:Create("SimpleGroup")
     dropDownGroup:SetLayout("Table")
-
     dropDownGroup:SetUserData("table", { columns = {42, 110, 180, 70}, space = 4, align = "BOTTOM" })
     main_frame:AddChild(dropDownGroup)
 
@@ -389,12 +395,12 @@ end
 local function createSpecFrame()
     local frame = AceGUI:Create("ScrollFrame")
     frame:SetLayout("Table")
-    
+
     frame:SetUserData("table", {
-        columns = {{width = 95}, {width = 75}, {width = 44}, {width = 44}, {width = 44}, {width = 44}, {width = 44}, {width = 44}},
+        columns = {{width = 95}, {width = 75}, {width = 42}, {width = 42}, {width = 42}, {width = 42}, {width = 42}, {width = 42}},
         space = 3, align = "middle"
     })
-    
+
     frame:SetFullWidth(true)
     frame:SetHeight(420)
     frame:SetAutoAdjustHeight(false)
@@ -405,14 +411,14 @@ end
 function BisTooltipAddon:reloadData()
     buildClassDict()
     loadData()
-    
+
     if main_frame then
         local phase_opts = {}
         for i, p in ipairs(BisTooltip_PhaseData) do phase_opts[i] = p end
         phaseDropDown:SetList(phase_opts)
         classDropdown:SetList(class_options)
         specDropdown:SetList(spec_options)
-        
+
         classDropdown:SetValue(class_index)
         specDropdown:SetValue(spec_index)
         phaseDropDown:SetValue(phase_index)
@@ -430,13 +436,13 @@ function BisTooltipAddon:createMainFrame()
     main_frame:SetWidth(505)
     main_frame:SetHeight(570)
     main_frame:EnableResize(false)
-    
+
     _G["BisTooltipRenewed_MainWindow"] = main_frame.frame
     tinsert(UISpecialFrames, "BisTooltipRenewed_MainWindow")
-    
+
     if not main_frame.frame.darkOverlay then
         main_frame.frame.darkOverlay = main_frame.frame:CreateTexture(nil, "BACKGROUND", nil, -1)
-        main_frame.frame.darkOverlay:SetPoint("TOPLEFT", main_frame.frame, "TOPLEFT", 8, -24) 
+        main_frame.frame.darkOverlay:SetPoint("TOPLEFT", main_frame.frame, "TOPLEFT", 8, -24)
         main_frame.frame.darkOverlay:SetPoint("BOTTOMRIGHT", main_frame.frame, "BOTTOMRIGHT", -8, 8)
         main_frame.frame.darkOverlay:SetTexture(0, 0, 0, 0.60)
     end
@@ -469,9 +475,9 @@ function BisTooltipAddon:createMainFrame()
 
     local reloadButton = AceGUI:Create("Button")
     reloadButton:SetText("Reload Items")
-    reloadButton:SetWidth(120) 
+    reloadButton:SetWidth(120)
     reloadButton:SetCallback("OnClick", function() BisTooltipAddon:reloadData() end)
-    
+
     reloadButton:SetCallback("OnEnter", function(widget)
         GameTooltip:SetOwner(widget.frame, "ANCHOR_TOP")
         GameTooltip:AddLine("Reload Items", 1, 1, 1)
@@ -484,12 +490,12 @@ function BisTooltipAddon:createMainFrame()
 
     local configButton = AceGUI:Create("Button")
     configButton:SetText("Config")
-    configButton:SetWidth(120) 
+    configButton:SetWidth(120)
     configButton:SetCallback("OnClick", function() BisTooltipAddon:openConfigDialog() end)
     buttonContainer:AddChild(configButton)
 
     main_frame:AddChild(buttonContainer)
-    
+
     local bottomSpacer = AceGUI:Create("Label")
     bottomSpacer:SetText(" ")
     bottomSpacer:SetHeight(15)
@@ -504,8 +510,8 @@ function BisTooltipAddon:closeMainFrame()
         phaseDropDown = nil
         missing_widgets = {}
         query_queue = {}
-        
-        main_frame = nil 
+
+        main_frame = nil
     end
 end
 

@@ -1,5 +1,5 @@
 -- Tooltip.lua
-local eventFrame = CreateFrame("Frame")
+local eventFrame = CreateFrame("Frame", nil, UIParent)
 
 local HARDCODED_CLASS_COLORS = {
     ["DEATHKNIGHT"] = {0.77, 0.12, 0.23}, ["DRUID"]   = {1.00, 0.49, 0.04},
@@ -126,14 +126,33 @@ function BisTooltipAddon:initBisTooltip()
 
     eventFrame:RegisterEvent("MODIFIER_STATE_CHANGED")
     eventFrame:SetScript("OnEvent", function(_, _, key)
-        if key == "LALT" or key == "RALT" or key == "LCTRL" or key == "RCTRL" then
-            for _, tooltip in ipairs({GameTooltip, ItemRefTooltip}) do
-                if tooltip:IsShown() then
-                    local _, link = tooltip:GetItem()
+        if key == "LALT" or key == "RALT" or key == "LCTRL" or key == "RCTRL" or key == "LSHIFT" or key == "RSHIFT" then
+            if GameTooltip:IsShown() then
+                local owner = GameTooltip:GetOwner()
+
+                if owner and owner:GetScript("OnEnter") then
+                    owner:GetScript("OnEnter")(owner)
+                else
+                    local _, link = GameTooltip:GetItem()
                     if link then
-                        tooltip:SetHyperlink("item:3299:0:0:0:0:0:0:0:0")
-                        tooltip:SetHyperlink(link)
+                        GameTooltip:SetHyperlink("item:3299:0:0:0:0:0:0:0:0")
+                        GameTooltip:SetHyperlink(link)
                     end
+                end
+
+                if IsShiftKeyDown() then
+                    GameTooltip_ShowCompareItem()
+                else
+                    if ShoppingTooltip1 then ShoppingTooltip1:Hide() end
+                    if ShoppingTooltip2 then ShoppingTooltip2:Hide() end
+                end
+            end
+
+            if ItemRefTooltip:IsShown() then
+                local _, link = ItemRefTooltip:GetItem()
+                if link then
+                    ItemRefTooltip:SetHyperlink("item:3299:0:0:0:0:0:0:0:0")
+                    ItemRefTooltip:SetHyperlink(link)
                 end
             end
         end

@@ -83,13 +83,27 @@ local function createItemFrame(item_id, size, with_checkmark)
     item_frame:SetImage(itemIcon)
     if bindType == 2 then item_frame.frame.bisBoeMark:Show() else item_frame.frame.bisBoeMark:Hide() end
 
-    item_frame:SetCallback("OnClick", function() SetItemRef(itemLink, itemLink, "LeftButton") end)
+    item_frame:SetCallback("OnClick", function()
+        if IsModifiedClick() then
+            HandleModifiedItemClick(itemLink)
+        else
+            SetItemRef(itemLink, itemLink, "LeftButton")
+        end
+    end)
+
     item_frame:SetCallback("OnEnter", function(widget)
         GameTooltip:SetOwner(item_frame.frame, "ANCHOR_NONE")
         GameTooltip:SetPoint("TOPRIGHT", item_frame.frame, "TOPRIGHT", 220, -13)
         GameTooltip:SetHyperlink(itemLink)
+        GameTooltip:Show()
+
+        if IsShiftKeyDown() then
+            GameTooltip_ShowCompareItem()
+        end
     end)
-    item_frame:SetCallback("OnLeave", function() GameTooltip:Hide() end)
+    item_frame:SetCallback("OnLeave", function()
+        GameTooltip:Hide()
+    end)
 
     return item_frame
 end
@@ -121,11 +135,23 @@ item_fetch_frame:SetScript("OnUpdate", function()
                         local isEquipped = BisTooltipAddon:IsItemOwned(item_id)
                         if isEquipped then widget.image:SetVertexColor(0.35, 0.35, 0.35, 1) else widget.image:SetVertexColor(1, 1, 1, 1) end
                         if bindType == 2 then widget.frame.bisBoeMark:Show() else widget.frame.bisBoeMark:Hide() end
-                        widget:SetCallback("OnClick", function() SetItemRef(itemLink, itemLink, "LeftButton") end)
+
+                        widget:SetCallback("OnClick", function()
+                            if IsModifiedClick() then
+                                HandleModifiedItemClick(itemLink)
+                            else
+                                SetItemRef(itemLink, itemLink, "LeftButton")
+                            end
+                        end)
+
                         widget:SetCallback("OnEnter", function(w)
                             GameTooltip:SetOwner(w.frame, "ANCHOR_NONE")
                             GameTooltip:SetPoint("TOPRIGHT", w.frame, "TOPRIGHT", 220, -13)
                             GameTooltip:SetHyperlink(itemLink)
+                            GameTooltip:Show()
+                            if IsShiftKeyDown() then
+                                GameTooltip_ShowCompareItem()
+                            end
                         end)
                     end
                 end
@@ -157,7 +183,13 @@ local function createSpellFrame(spell_id, size)
     local link = GetSpellLink(spell_id)
 
     spell_frame:SetCallback("OnClick", function()
-        if link then SetItemRef(link, link, "LeftButton") end
+        if link then
+            if IsModifiedClick() then
+                HandleModifiedItemClick(link)
+            else
+                SetItemRef(link, link, "LeftButton")
+            end
+        end
     end)
 
     spell_frame:SetCallback("OnEnter", function()

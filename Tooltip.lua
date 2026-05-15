@@ -16,9 +16,29 @@ local highlight_colors = {
     ["pink"]      = {1.00, 0.40, 0.70}, ["cyan"] =      {0.00, 1.00, 1.00}
 }
 
-local function GetItemSource(itemId)
-    if BisTooltip_ItemSources and BisTooltip_ItemSources[itemId] then
-        return "|cFFFFFFFFSource:|r |cFF00FF00" .. BisTooltip_ItemSources[itemId] .. "|r"
+local function specHighlighted(class_name, spec_name)
+    if not BisTooltipAddon.db.char.highlight_spec then return false end
+    return (BisTooltipAddon.db.char.highlight_spec.spec_name == spec_name and
+            BisTooltipAddon.db.char.highlight_spec.class_name == class_name)
+end
+
+local function specFiltered(class_name, spec_name)
+    if specHighlighted(class_name, spec_name) then return false end
+    if IsAltKeyDown() then return false end
+    if BisTooltipAddon.db.char.filter_specs and BisTooltipAddon.db.char.filter_specs[class_name] then
+        return BisTooltipAddon.db.char.filter_specs[class_name][spec_name] == true
+    end
+    return false
+end
+
+local function GetItemSource(itemId, translatedId)
+    local source = BisTooltip_ItemSources and BisTooltip_ItemSources[itemId]
+    if not source and translatedId and BisTooltip_ItemSources then
+        source = BisTooltip_ItemSources[translatedId]
+    end
+
+    if source then
+        return "|cFFFFFFFFSource:|r |cFF00FF00" .. source .. "|r"
     end
     return nil
 end
@@ -40,20 +60,14 @@ local function OnGameTooltipSetItem(tooltip)
     if tooltip.BisTooltipRendered == itemId then return end
     tooltip.BisTooltipRendered = itemId
 
-    local itemBisData = BisTooltipAddon.ReverseLookup and BisTooltipAddon.ReverseLookup[itemId]
-
-    if not itemBisData then
-        local translated = nil
-        if BisTooltip_FactionMap and BisTooltip_FactionMap[itemId] then
-            translated = BisTooltip_FactionMap[itemId]
-        elseif BisTooltip_AliToHorde and BisTooltip_AliToHorde[itemId] then
-            translated = BisTooltip_AliToHorde[itemId]
-        end
-
-        if translated and BisTooltipAddon.ReverseLookup then
-            itemBisData = BisTooltipAddon.ReverseLookup[translated]
-        end
+    local translated_id = nil
+    if BisTooltip_FactionMap and BisTooltip_FactionMap[itemId] then
+        translated_id = BisTooltip_FactionMap[itemId]
+    elseif BisTooltip_AliToHorde and BisTooltip_AliToHorde[itemId] then
+        translated_id = BisTooltip_AliToHorde[itemId]
     end
+
+    local itemBisData = BisTooltipAddon.ReverseLookup and (BisTooltipAddon.ReverseLookup[itemId] or (translated_id and BisTooltipAddon.ReverseLookup[translated_id]))
 
     if itemBisData then
         local isAltDown = IsAltKeyDown()
@@ -103,11 +117,9 @@ local function OnGameTooltipSetItem(tooltip)
         end
     end
 
-    local sourceText = GetItemSource(itemId)
+    local sourceText = GetItemSource(itemId, translated_id)
     if sourceText then
-        tooltip:AddLine(" ", 1, 1, 0)
-        tooltip:AddLine(sourceText, 1, 1, 1)
-        tooltip:AddLine(" ", 1, 1, 0)
+        tooltip:AddLine(sourceText, 1, 1, 1, true)
     end
 end
 

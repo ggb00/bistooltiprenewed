@@ -16,21 +16,6 @@ local highlight_colors = {
     ["pink"]      = {1.00, 0.40, 0.70}, ["cyan"] =      {0.00, 1.00, 1.00}
 }
 
-local function specHighlighted(class_name, spec_name)
-    if not BisTooltipAddon.db.char.highlight_spec then return false end
-    return (BisTooltipAddon.db.char.highlight_spec.spec_name == spec_name and
-            BisTooltipAddon.db.char.highlight_spec.class_name == class_name)
-end
-
-local function specFiltered(class_name, spec_name)
-    if specHighlighted(class_name, spec_name) then return false end
-    if IsAltKeyDown() then return false end
-    if BisTooltipAddon.db.char.filter_specs and BisTooltipAddon.db.char.filter_specs[class_name] then
-        return BisTooltipAddon.db.char.filter_specs[class_name][spec_name] == true
-    end
-    return false
-end
-
 local function GetItemSource(itemId, translatedId)
     local source = BisTooltip_ItemSources and BisTooltip_ItemSources[itemId]
     if not source and translatedId and BisTooltip_ItemSources then
@@ -47,11 +32,13 @@ local function OnTooltipCleared(tooltip)
     tooltip.BisTooltipRendered = nil
 end
 
-local function OnGameTooltipSetItem(tooltip)
+local function ProcessTooltip(tooltip, link)
     local db = BisTooltipAddon.db.char
     if db.tooltip_with_ctrl and not IsControlKeyDown() then return end
 
-    local _, link = tooltip:GetItem()
+    if not link then
+        _, link = tooltip:GetItem()
+    end
     if not link then return end
 
     local itemId = tonumber(string.match(link, "item:(%d+)"))
@@ -121,20 +108,40 @@ local function OnGameTooltipSetItem(tooltip)
     if sourceText then
         tooltip:AddLine(sourceText, 1, 1, 1, true)
     end
+
+    tooltip:Show()
+end
+
+local function OnTooltipSetItem(tooltip)
+    ProcessTooltip(tooltip, nil)
+end
+
+local function HookSetInventoryItem(tooltip, unit, slot)
+    if unit and slot then
+        local link = GetInventoryItemLink(unit, slot)
+        if link then
+            ProcessTooltip(tooltip, link)
+        end
+    end
 end
 
 function BisTooltipAddon:ClearTooltipCache() end
 
 function BisTooltipAddon:initBisTooltip()
-    GameTooltip:HookScript("OnTooltipSetItem", OnGameTooltipSetItem)
-    ItemRefTooltip:HookScript("OnTooltipSetItem", OnGameTooltipSetItem)
-    if ShoppingTooltip1 then ShoppingTooltip1:HookScript("OnTooltipSetItem", OnGameTooltipSetItem) end
-    if ShoppingTooltip2 then ShoppingTooltip2:HookScript("OnTooltipSetItem", OnGameTooltipSetItem) end
+    GameTooltip:HookScript("OnTooltipSetItem", OnTooltipSetItem)
+    ItemRefTooltip:HookScript("OnTooltipSetItem", OnTooltipSetItem)
+    if ShoppingTooltip1 then ShoppingTooltip1:HookScript("OnTooltipSetItem", OnTooltipSetItem) end
+    if ShoppingTooltip2 then ShoppingTooltip2:HookScript("OnTooltipSetItem", OnTooltipSetItem) end
 
     GameTooltip:HookScript("OnTooltipCleared", OnTooltipCleared)
     ItemRefTooltip:HookScript("OnTooltipCleared", OnTooltipCleared)
     if ShoppingTooltip1 then ShoppingTooltip1:HookScript("OnTooltipCleared", OnTooltipCleared) end
     if ShoppingTooltip2 then ShoppingTooltip2:HookScript("OnTooltipCleared", OnTooltipCleared) end
+
+    hooksecurefunc(GameTooltip, "SetInventoryItem", HookSetInventoryItem)
+    if ShoppingTooltip1 then hooksecurefunc(ShoppingTooltip1, "SetInventoryItem", HookSetInventoryItem) end
+    if ShoppingTooltip2 then hooksecurefunc(ShoppingTooltip2, "SetInventoryItem", HookSetInventoryItem) end
+    if ItemRefTooltip then hooksecurefunc(ItemRefTooltip, "SetInventoryItem", HookSetInventoryItem) end
 
     eventFrame:RegisterEvent("MODIFIER_STATE_CHANGED")
     eventFrame:SetScript("OnEvent", function(_, _, key)
@@ -153,7 +160,7 @@ function BisTooltipAddon:initBisTooltip()
                 end
 
                 if IsShiftKeyDown() then
-                    GameTooltip_ShowCompareItem()
+                    GameTooltip_ShowCompareItem(GameTooltip)
                 else
                     if ShoppingTooltip1 then ShoppingTooltip1:Hide() end
                     if ShoppingTooltip2 then ShoppingTooltip2:Hide() end

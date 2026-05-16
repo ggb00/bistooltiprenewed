@@ -16,9 +16,14 @@ local highlight_colors = {
     ["pink"]      = {1.00, 0.40, 0.70}, ["cyan"] =      {0.00, 1.00, 1.00}
 }
 
-local function GetItemSource(itemId)
-    if BisTooltip_ItemSources and BisTooltip_ItemSources[itemId] then
-        return "|cFFFFFFFFSource:|r |cFF00FF00" .. BisTooltip_ItemSources[itemId] .. "|r"
+local function GetItemSource(itemId, translatedId)
+    local source = BisTooltip_ItemSources and BisTooltip_ItemSources[itemId]
+    if not source and translatedId and BisTooltip_ItemSources then
+        source = BisTooltip_ItemSources[translatedId]
+    end
+
+    if source then
+        return "|cFFFFFFFFSource:|r |cFF00FF00" .. source .. "|r"
     end
     return nil
 end
@@ -27,11 +32,13 @@ local function OnTooltipCleared(tooltip)
     tooltip.BisTooltipRendered = nil
 end
 
-local function OnGameTooltipSetItem(tooltip)
+local function ProcessTooltip(tooltip, link)
     local db = BisTooltipAddon.db.char
     if db.tooltip_with_ctrl and not IsControlKeyDown() then return end
 
-    local _, link = tooltip:GetItem()
+    if not link then
+        _, link = tooltip:GetItem()
+    end
     if not link then return end
 
     local itemId = tonumber(string.match(link, "item:(%d+)"))
@@ -40,20 +47,14 @@ local function OnGameTooltipSetItem(tooltip)
     if tooltip.BisTooltipRendered == itemId then return end
     tooltip.BisTooltipRendered = itemId
 
-    local itemBisData = BisTooltipAddon.ReverseLookup and BisTooltipAddon.ReverseLookup[itemId]
-
-    if not itemBisData then
-        local translated = nil
-        if BisTooltip_FactionMap and BisTooltip_FactionMap[itemId] then
-            translated = BisTooltip_FactionMap[itemId]
-        elseif BisTooltip_AliToHorde and BisTooltip_AliToHorde[itemId] then
-            translated = BisTooltip_AliToHorde[itemId]
-        end
-
-        if translated and BisTooltipAddon.ReverseLookup then
-            itemBisData = BisTooltipAddon.ReverseLookup[translated]
-        end
+    local translated_id = nil
+    if BisTooltip_FactionMap and BisTooltip_FactionMap[itemId] then
+        translated_id = BisTooltip_FactionMap[itemId]
+    elseif BisTooltip_AliToHorde and BisTooltip_AliToHorde[itemId] then
+        translated_id = BisTooltip_AliToHorde[itemId]
     end
+
+    local itemBisData = BisTooltipAddon.ReverseLookup and (BisTooltipAddon.ReverseLookup[itemId] or (translated_id and BisTooltipAddon.ReverseLookup[translated_id]))
 
     if itemBisData then
         local isAltDown = IsAltKeyDown()
@@ -103,26 +104,44 @@ local function OnGameTooltipSetItem(tooltip)
         end
     end
 
-    local sourceText = GetItemSource(itemId)
+    local sourceText = GetItemSource(itemId, translated_id)
     if sourceText then
-        tooltip:AddLine(" ", 1, 1, 0)
-        tooltip:AddLine(sourceText, 1, 1, 1)
-        tooltip:AddLine(" ", 1, 1, 0)
+        tooltip:AddLine(sourceText, 1, 1, 1, true)
+    end
+
+    tooltip:Show()
+end
+
+local function OnTooltipSetItem(tooltip)
+    ProcessTooltip(tooltip, nil)
+end
+
+local function HookSetInventoryItem(tooltip, unit, slot)
+    if unit and slot then
+        local link = GetInventoryItemLink(unit, slot)
+        if link then
+            ProcessTooltip(tooltip, link)
+        end
     end
 end
 
 function BisTooltipAddon:ClearTooltipCache() end
 
 function BisTooltipAddon:initBisTooltip()
-    GameTooltip:HookScript("OnTooltipSetItem", OnGameTooltipSetItem)
-    ItemRefTooltip:HookScript("OnTooltipSetItem", OnGameTooltipSetItem)
-    if ShoppingTooltip1 then ShoppingTooltip1:HookScript("OnTooltipSetItem", OnGameTooltipSetItem) end
-    if ShoppingTooltip2 then ShoppingTooltip2:HookScript("OnTooltipSetItem", OnGameTooltipSetItem) end
+    GameTooltip:HookScript("OnTooltipSetItem", OnTooltipSetItem)
+    ItemRefTooltip:HookScript("OnTooltipSetItem", OnTooltipSetItem)
+    if ShoppingTooltip1 then ShoppingTooltip1:HookScript("OnTooltipSetItem", OnTooltipSetItem) end
+    if ShoppingTooltip2 then ShoppingTooltip2:HookScript("OnTooltipSetItem", OnTooltipSetItem) end
 
     GameTooltip:HookScript("OnTooltipCleared", OnTooltipCleared)
     ItemRefTooltip:HookScript("OnTooltipCleared", OnTooltipCleared)
     if ShoppingTooltip1 then ShoppingTooltip1:HookScript("OnTooltipCleared", OnTooltipCleared) end
     if ShoppingTooltip2 then ShoppingTooltip2:HookScript("OnTooltipCleared", OnTooltipCleared) end
+
+    hooksecurefunc(GameTooltip, "SetInventoryItem", HookSetInventoryItem)
+    if ShoppingTooltip1 then hooksecurefunc(ShoppingTooltip1, "SetInventoryItem", HookSetInventoryItem) end
+    if ShoppingTooltip2 then hooksecurefunc(ShoppingTooltip2, "SetInventoryItem", HookSetInventoryItem) end
+    if ItemRefTooltip then hooksecurefunc(ItemRefTooltip, "SetInventoryItem", HookSetInventoryItem) end
 
     eventFrame:RegisterEvent("MODIFIER_STATE_CHANGED")
     eventFrame:SetScript("OnEvent", function(_, _, key)
@@ -141,7 +160,7 @@ function BisTooltipAddon:initBisTooltip()
                 end
 
                 if IsShiftKeyDown() then
-                    GameTooltip_ShowCompareItem()
+                    GameTooltip_ShowCompareItem(GameTooltip)
                 else
                     if ShoppingTooltip1 then ShoppingTooltip1:Hide() end
                     if ShoppingTooltip2 then ShoppingTooltip2:Hide() end

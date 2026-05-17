@@ -3,22 +3,22 @@ BisTooltip_ItemLists = BisTooltip_ItemLists or {}
 BisTooltip_ItemLists["Warrior"] = BisTooltip_ItemLists["Warrior"] or {}
 BisTooltip_ItemLists["Warrior"]["Arms"] = BisTooltip_ItemLists["Warrior"]["Arms"] or {}
 BisTooltip_ItemLists["Warrior"]["Arms"]["PR"] = BisTooltip_ItemLists["Warrior"]["Arms"]["PR"] or {}
-BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][1] = {["slot_name"] = "Head", [1] = 41386, [2] = 39399, [3] = 42552, [4] = 44902, [5] = 34333, [6] = 37188 }
-BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][2] = {["slot_name"] = "Neck", [1] = 42645, [2] = 44659, [3] = 39421, [4] = 40678, [5] = 37861, [6] = 42021 }
-BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 34392, [2] = 39249, [3] = 37139, [4] = 37373, [5] = 44195, [6] = 37679 }
-BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][4] = {["slot_name"] = "Back", [1] = 37647, [2] = 39404, [3] = 39297, [4] = 38614, [5] = 43406, [6] = 42061 }
-BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][5] = {["slot_name"] = "Chest", [1] = 39606, [2] = 43998, [3] = 37722, [4] = 44295, [5] = 37165, [6] = 44303 }
-BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 44203, [2] = 39278, [3] = 34441, [4] = 41355, [5] = 37891, [6] = 37366 }
-BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][7] = {["slot_name"] = "Hands", [1] = 39609, [2] = 37409, [3] = 39194, [4] = 37363, [5] = 37639, [6] = 37886 }
+BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][1] = {["slot_name"] = "Head", [1] = 41386, [2] = 42552, [3] = 44902, [4] = 34333, [5] = 37188, [6] = 37237 }
+BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][2] = {["slot_name"] = "Neck", [1] = 42645, [2] = 40678, [3] = 37861, [4] = 42021, [5] = 37397, [6] = 44033 }
+BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 34392, [2] = 37139, [3] = 37373, [4] = 44195, [5] = 37679, [6] = 39534 }
+BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][4] = {["slot_name"] = "Back", [1] = 37647, [2] = 38614, [3] = 43406, [4] = 42061, [5] = 34241, [6] = 43566 }
+BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][5] = {["slot_name"] = "Chest", [1] = 37722, [2] = 44295, [3] = 37165, [4] = 44303, [5] = 43310 }
+BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 44203, [2] = 34441, [3] = 41355, [4] = 37891, [5] = 37366, [6] = 37170 }
+BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][7] = {["slot_name"] = "Hands", [1] = 37409, [2] = 37363, [3] = 37639, [4] = 37886, [5] = 34341 }
 BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][8] = {["slot_name"] = "Waist", [1] = 40692, [2] = 37407, [3] = 37088, [4] = 37826, [5] = 37243, [6] = 37171 }
-BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37263, [2] = 43994, [3] = 37193, [4] = 37644, [5] = 34188, [6] = 37669 }
+BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37263, [2] = 37193, [3] = 37644, [4] = 34188, [5] = 37669, [6] = 44205 }
 BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44306, [2] = 44297, [3] = 34569, [4] = 37666, [5] = 43402, [6] = 44895 }
-BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 42642, [2] = 40474, [3] = 43993, [4] = 43251, [5] = 40586, [6] = 37685 }
-BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 40586, [2] = 40474, [3] = 43993, [4] = 43251, [5] = 42642, [6] = 37685 }
-BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 37166, [3] = 39257, [4] = 40684, [5] = 37723, [6] = 42990 }
-BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40684, [2] = 42987, [3] = 37166, [4] = 39257, [5] = 37723, [6] = 42990 }
-BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37852, [2] = 40497, [3] = 39417, [4] = 39221, [5] = 37653, [6] = 43409 }
-BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][16] = {["slot_name"] = "Ranged", [1] = 37191, [2] = 43612, [3] = 39296, [4] = 44504, [5] = 37692, [6] = 44245 }
+BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 42642, [2] = 43251, [3] = 40586, [4] = 37685, [5] = 37642, [6] = 44935 }
+BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 40586, [2] = 43251, [3] = 42642, [4] = 37685, [5] = 37642, [6] = 44935 }
+BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 37166, [3] = 40684, [4] = 37723, [5] = 42990, [6] = 37390 }
+BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40684, [2] = 42987, [3] = 37166, [4] = 37723, [5] = 42990, [6] = 37390 }
+BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37852, [2] = 37653, [3] = 43409, [4] = 43281, [5] = 44249, [6] = 41257 }
+BisTooltip_ItemLists["Warrior"]["Arms"]["PR"][16] = {["slot_name"] = "Ranged", [1] = 37191, [2] = 43612, [3] = 44504, [4] = 37692, [5] = 44245, [6] = 40716 }
 BisTooltip_ItemLists["Warrior"]["Arms"]["T7"] = BisTooltip_ItemLists["Warrior"]["Arms"]["T7"] or {}
 BisTooltip_ItemLists["Warrior"]["Arms"]["T7"][1] = {["slot_name"] = "Head", [1] = 40528, [2] = 41386, [3] = 40543, [4] = 40344, [5] = 44006, [6] = 39399 }
 BisTooltip_ItemLists["Warrior"]["Arms"]["T7"][2] = {["slot_name"] = "Neck", [1] = 44664, [2] = 40065, [3] = 44659, [4] = 39421, [5] = 40369, [6] = 42645 }
@@ -107,22 +107,22 @@ BisTooltip_ItemLists["Warrior"]["Arms"]["RS"][16] = {["slot_name"] = "Ranged", [
 BisTooltip_ItemLists["Warrior"]["Fury"] = BisTooltip_ItemLists["Warrior"]["Fury"] or {}
 BisTooltip_ItemLists["Warrior"]["Fury"]["PR"] = BisTooltip_ItemLists["Warrior"]["Fury"]["PR"] or {}
 BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][1] = {["slot_name"] = "Head", [1] = 41386, [2] = 42552, [3] = 44902, [4] = 37293, [5] = 37188, [6] = 37237 }
-BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40678, [2] = 44659, [3] = 39421, [4] = 39146, [5] = 37861, [6] = 42645 }
-BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 34388, [2] = 39249, [3] = 37139, [4] = 44195, [5] = 39534, [6] = 43481 }
-BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][4] = {["slot_name"] = "Back", [1] = 37647, [2] = 39404, [3] = 39297, [4] = 38614, [5] = 43406, [6] = 37840 }
-BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][5] = {["slot_name"] = "Chest", [1] = 39606, [2] = 43998, [3] = 37722, [4] = 37219, [5] = 37165, [6] = 36950 }
+BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40678, [2] = 37861, [3] = 42645, [4] = 37397, [5] = 44033, [6] = 37096 }
+BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 34388, [2] = 37139, [3] = 44195, [4] = 39534, [5] = 43481, [6] = 43198 }
+BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][4] = {["slot_name"] = "Back", [1] = 37647, [2] = 38614, [3] = 43406, [4] = 37840, [5] = 34241, [6] = 43566 }
+BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][5] = {["slot_name"] = "Chest", [1] = 37722, [2] = 37219, [3] = 37165, [4] = 36950, [5] = 43310 }
 BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 44203, [2] = 41355, [3] = 34441, [4] = 37891, [5] = 37366, [6] = 37170 }
-BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][7] = {["slot_name"] = "Hands", [1] = 39609, [2] = 37409, [3] = 37363, [4] = 37639, [5] = 37886, [6] = 34341 }
+BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][7] = {["slot_name"] = "Hands", [1] = 37409, [2] = 37363, [3] = 37639, [4] = 37886, [5] = 34341 }
 BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][8] = {["slot_name"] = "Waist", [1] = 40694, [2] = 37088, [3] = 37407, [4] = 37826, [5] = 37171, [6] = 37194 }
-BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][9] = {["slot_name"] = "Legs", [1] = 34180, [2] = 43994, [3] = 37263, [4] = 37193, [5] = 37644, [6] = 37669 }
+BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][9] = {["slot_name"] = "Legs", [1] = 34180, [2] = 37263, [3] = 37193, [4] = 37644, [5] = 37669, [6] = 44179 }
 BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44306, [2] = 44297, [3] = 34569, [4] = 37666, [5] = 44895, [6] = 37367 }
-BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 40586, [2] = 40474, [3] = 43993, [4] = 39401, [5] = 43251, [6] = 44935 }
-BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 37642, [2] = 40474, [3] = 43993, [4] = 39401, [5] = 43251, [6] = 40586 }
-BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 40684, [3] = 39257, [4] = 37166, [5] = 37390, [6] = 37723 }
-BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40684, [2] = 42987, [3] = 39257, [4] = 37166, [5] = 37390, [6] = 37723 }
-BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37852, [2] = 39417, [3] = 41257, [4] = 37653, [5] = 44249, [6] = 37733 }
-BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 37852, [2] = 40497, [3] = 39417, [4] = 41257, [5] = 37653, [6] = 44249 }
-BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][17] = {["slot_name"] = "Ranged", [1] = 37191, [2] = 39296, [3] = 39419, [4] = 43612, [5] = 44504, [6] = 44245 }
+BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 40586, [2] = 43251, [3] = 44935, [4] = 37642, [5] = 37685, [6] = 42642 }
+BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 37642, [2] = 43251, [3] = 40586, [4] = 44935, [5] = 37685, [6] = 42642 }
+BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 40684, [3] = 37166, [4] = 37390, [5] = 37723, [6] = 42990 }
+BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40684, [2] = 42987, [3] = 37166, [4] = 37390, [5] = 37723, [6] = 42990 }
+BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37852, [2] = 41257, [3] = 37653, [4] = 44249, [5] = 37733 }
+BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 37852, [2] = 41257, [3] = 37653, [4] = 44249, [5] = 37733, [6] = 43409 }
+BisTooltip_ItemLists["Warrior"]["Fury"]["PR"][17] = {["slot_name"] = "Ranged", [1] = 37191, [2] = 43612, [3] = 44504, [4] = 44245, [5] = 40716, [6] = 43284 }
 BisTooltip_ItemLists["Warrior"]["Fury"]["T7"] = BisTooltip_ItemLists["Warrior"]["Fury"]["T7"] or {}
 BisTooltip_ItemLists["Warrior"]["Fury"]["T7"][1] = {["slot_name"] = "Head", [1] = 44006, [2] = 41386, [3] = 40528, [4] = 40543, [5] = 40344, [6] = 39605 }
 BisTooltip_ItemLists["Warrior"]["Fury"]["T7"][2] = {["slot_name"] = "Neck", [1] = 44664, [2] = 40065, [3] = 44659, [4] = 39421, [5] = 40369, [6] = 39146 }
@@ -215,23 +215,23 @@ BisTooltip_ItemLists["Warrior"]["Fury"]["RS"][16] = {["slot_name"] = "Off hand",
 BisTooltip_ItemLists["Warrior"]["Fury"]["RS"][17] = {["slot_name"] = "Ranged", [1] = 50733, [2] = 51940, [3] = 51845, [4] = 51880, [5] = 45296, [6] = 51927 }
 BisTooltip_ItemLists["Warrior"]["Protection"] = BisTooltip_ItemLists["Warrior"]["Protection"] or {}
 BisTooltip_ItemLists["Warrior"]["Protection"]["PR"] = BisTooltip_ItemLists["Warrior"]["Protection"]["PR"] or {}
-BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][1] = {["slot_name"] = "Head", [1] = 41387, [2] = 42549, [3] = 39395, [4] = 44902, [5] = 34401, [6] = 37633 }
-BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40679, [2] = 39470, [3] = 44660, [4] = 37646, [5] = 42646, [6] = 37689 }
-BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 34389, [2] = 39267, [3] = 44312, [4] = 37814, [5] = 37635, [6] = 39534 }
-BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][4] = {["slot_name"] = "Back", [1] = 37728, [2] = 43988, [3] = 37197, [4] = 39225, [5] = 43565, [6] = 44188 }
-BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][5] = {["slot_name"] = "Chest", [1] = 39611, [2] = 39398, [3] = 44198, [4] = 37658, [5] = 37735, [6] = 34394 }
-BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37620, [2] = 39467, [3] = 37682, [4] = 40887, [5] = 37040, [6] = 34442 }
-BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][7] = {["slot_name"] = "Hands", [1] = 39622, [2] = 39197, [3] = 37645, [4] = 44183, [5] = 37862, [6] = 43213 }
-BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][8] = {["slot_name"] = "Waist", [1] = 40689, [2] = 39298, [3] = 34547, [4] = 37379, [5] = 37241, [6] = 37801 }
-BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][9] = {["slot_name"] = "Legs", [1] = 43500, [2] = 39258, [3] = 37292, [4] = 37688, [5] = 34381, [6] = 44240 }
-BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44201, [2] = 39234, [3] = 37082, [4] = 44243, [5] = 44895, [6] = 40878 }
-BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 34213, [2] = 40426, [3] = 39141, [4] = 37186, [5] = 42643, [6] = 37784 }
-BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 37784, [2] = 40426, [3] = 39141, [4] = 37186, [5] = 34213, [6] = 42643 }
-BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 37220, [2] = 44063, [3] = 42341, [4] = 39292, [5] = 36993, [6] = 44323 }
-BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 36993, [2] = 44063, [3] = 37220, [4] = 42341, [5] = 39292, [6] = 44323 }
-BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37401, [2] = 40491, [3] = 39270, [4] = 39344, [5] = 37260, [6] = 37255 }
-BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 40701, [2] = 40475, [3] = 39276, [4] = 43085, [5] = 42508, [6] = 37162 }
-BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][17] = {["slot_name"] = "Ranged", [1] = 41168, [2] = 39419, [3] = 43612, [4] = 40716, [5] = 44118, [6] = 37615 }
+BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][1] = {["slot_name"] = "Head", [1] = 41387, [2] = 42549, [3] = 44902, [4] = 34401, [5] = 37633, [6] = 37135 }
+BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40679, [2] = 37646, [3] = 42646, [4] = 37689, [5] = 43282, [6] = 42021 }
+BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 34389, [2] = 44312, [3] = 37814, [4] = 37635, [5] = 39534, [6] = 37115 }
+BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][4] = {["slot_name"] = "Back", [1] = 37728, [2] = 37197, [3] = 43565, [4] = 44188, [5] = 42061, [6] = 43363 }
+BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][5] = {["slot_name"] = "Chest", [1] = 44198, [2] = 37658, [3] = 37735, [4] = 34394, [5] = 44407 }
+BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37620, [2] = 37682, [3] = 40887, [4] = 37040, [5] = 34442, [6] = 44341 }
+BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][7] = {["slot_name"] = "Hands", [1] = 37645, [2] = 44183, [3] = 37862, [4] = 43213, [5] = 44120 }
+BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][8] = {["slot_name"] = "Waist", [1] = 40689, [2] = 34547, [3] = 37379, [4] = 37241, [5] = 37801, [6] = 40877 }
+BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][9] = {["slot_name"] = "Legs", [1] = 43500, [2] = 37292, [3] = 37688, [4] = 34381, [5] = 44240, [6] = 41345 }
+BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44201, [2] = 37082, [3] = 44243, [4] = 44895, [5] = 40878, [6] = 37618 }
+BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 34213, [2] = 37186, [3] = 42643, [4] = 37784, [5] = 38617, [6] = 36961 }
+BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 37784, [2] = 37186, [3] = 34213, [4] = 42643, [5] = 38617, [6] = 36961 }
+BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 37220, [2] = 44063, [3] = 42341, [4] = 36993, [5] = 44323, [6] = 40767 }
+BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 36993, [2] = 44063, [3] = 37220, [4] = 42341, [5] = 44323, [6] = 40767 }
+BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37401, [2] = 37260, [3] = 37255, [4] = 44187, [5] = 36984, [6] = 37081 }
+BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 40701, [2] = 43085, [3] = 42508, [4] = 37162, [5] = 35642, [6] = 37107 }
+BisTooltip_ItemLists["Warrior"]["Protection"]["PR"][17] = {["slot_name"] = "Ranged", [1] = 41168, [2] = 43612, [3] = 40716, [4] = 44118, [5] = 37615, [6] = 37410 }
 BisTooltip_ItemLists["Warrior"]["Protection"]["T7"] = BisTooltip_ItemLists["Warrior"]["Protection"]["T7"] or {}
 BisTooltip_ItemLists["Warrior"]["Protection"]["T7"][1] = {["slot_name"] = "Head", [1] = 40546, [2] = 44006, [3] = 39610, [4] = 40328, [5] = 42549, [6] = 39395 }
 BisTooltip_ItemLists["Warrior"]["Protection"]["T7"][2] = {["slot_name"] = "Neck", [1] = 40387, [2] = 44665, [3] = 40069, [4] = 39470, [5] = 44660, [6] = 40679 }

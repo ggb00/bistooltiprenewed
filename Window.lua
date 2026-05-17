@@ -45,6 +45,8 @@ local function createItemFrame(item_id, size, with_checkmark)
     local item_frame = AceGUI:Create("Icon")
     item_frame:SetImageSize(size, size)
 
+    item_frame.frame:EnableMouse(true)
+
     local itemName, itemLink, _, _, _, _, _, _, _, itemIcon, _, _, _, bindType = GetItemInfo(item_id)
 
     if not item_frame.frame.bisCheckMark then
@@ -171,6 +173,8 @@ local function createSpellFrame(spell_id, size)
 
     local spell_frame = AceGUI:Create("Icon")
     spell_frame:SetImageSize(size, size)
+
+    spell_frame.frame:EnableMouse(true)
     spell_frame.image:SetVertexColor(1, 1, 1, 1)
 
     if spell_frame.frame.bisCheckMark then spell_frame.frame.bisCheckMark:Hide() end

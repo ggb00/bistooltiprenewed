@@ -3,22 +3,22 @@ BisTooltip_ItemLists = BisTooltip_ItemLists or {}
 BisTooltip_ItemLists["Druid"] = BisTooltip_ItemLists["Druid"] or {}
 BisTooltip_ItemLists["Druid"]["Balance"] = BisTooltip_ItemLists["Druid"]["Balance"] or {}
 BisTooltip_ItemLists["Druid"]["Balance"]["PR"] = BisTooltip_ItemLists["Druid"]["Balance"]["PR"] or {}
-BisTooltip_ItemLists["Druid"]["Balance"]["PR"][1] = {["slot_name"] = "Head", [1] = 37180, [2] = 43995, [3] = 44907, [4] = 42554, [5] = 41984, [6] = 34340 }
-BisTooltip_ItemLists["Druid"]["Balance"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40680, [2] = 44658, [3] = 39472, [4] = 40427, [5] = 37595, [6] = 42024 }
+BisTooltip_ItemLists["Druid"]["Balance"]["PR"][1] = {["slot_name"] = "Head", [1] = 37180, [2] = 44907, [3] = 42554, [4] = 41984, [5] = 34340, [6] = 37149 }
+BisTooltip_ItemLists["Druid"]["Balance"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40680, [2] = 37595, [3] = 42024, [4] = 42647, [5] = 44017, [6] = 43285 }
 BisTooltip_ItemLists["Druid"]["Balance"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 34210, [2] = 37673, [3] = 37655, [4] = 37196, [5] = 37652 }
-BisTooltip_ItemLists["Druid"]["Balance"]["PR"][4] = {["slot_name"] = "Back", [1] = 41610, [2] = 39241, [3] = 42057, [4] = 36983, [5] = 44242, [6] = 34242 }
-BisTooltip_ItemLists["Druid"]["Balance"]["PR"][5] = {["slot_name"] = "Chest", [1] = 39547, [2] = 40526, [3] = 39396, [4] = 43401, [5] = 42102, [6] = 34399 }
-BisTooltip_ItemLists["Druid"]["Balance"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37361, [2] = 39252, [3] = 37884, [4] = 37696, [5] = 37725, [6] = 44200 }
-BisTooltip_ItemLists["Druid"]["Balance"]["PR"][7] = {["slot_name"] = "Hands", [1] = 39544, [2] = 39192, [3] = 34344, [4] = 42113, [5] = 37172, [6] = 37825 }
+BisTooltip_ItemLists["Druid"]["Balance"]["PR"][4] = {["slot_name"] = "Back", [1] = 41610, [2] = 42057, [3] = 36983, [4] = 44242, [5] = 34242, [6] = 37291 }
+BisTooltip_ItemLists["Druid"]["Balance"]["PR"][5] = {["slot_name"] = "Chest", [1] = 43401, [2] = 42102, [3] = 34399, [4] = 37258, [5] = 37236 }
+BisTooltip_ItemLists["Druid"]["Balance"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37361, [2] = 37884, [3] = 37696, [4] = 37725, [5] = 44200, [6] = 34446 }
+BisTooltip_ItemLists["Druid"]["Balance"]["PR"][7] = {["slot_name"] = "Hands", [1] = 34344, [2] = 42113, [3] = 37172, [4] = 37825, [5] = 37261 }
 BisTooltip_ItemLists["Druid"]["Balance"]["PR"][8] = {["slot_name"] = "Waist", [1] = 40696, [2] = 37408, [3] = 37680, [4] = 37850, [5] = 44181, [6] = 37643 }
 BisTooltip_ItemLists["Druid"]["Balance"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37791, [2] = 37854, [3] = 44931, [4] = 34181, [5] = 37389, [6] = 37369 }
-BisTooltip_ItemLists["Druid"]["Balance"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44202, [2] = 40519, [3] = 44930, [4] = 37730, [5] = 37218, [6] = 37629 }
-BisTooltip_ItemLists["Druid"]["Balance"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 40585, [2] = 39389, [3] = 43253, [4] = 42644, [5] = 44283, [6] = 37694 }
-BisTooltip_ItemLists["Druid"]["Balance"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 43253, [2] = 39389, [3] = 40585, [4] = 42644, [5] = 44283, [6] = 37694 }
-BisTooltip_ItemLists["Druid"]["Balance"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 37873, [2] = 42395, [3] = 40682, [4] = 39229, [5] = 37660, [6] = 32483 }
-BisTooltip_ItemLists["Druid"]["Balance"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40682, [2] = 37873, [3] = 42395, [4] = 39229, [5] = 37660, [6] = 32483 }
-BisTooltip_ItemLists["Druid"]["Balance"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 41384, [2] = 40489, [3] = 39424, [4] = 39423, [5] = 37169, [6] = 44173 }
-BisTooltip_ItemLists["Druid"]["Balance"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 40698, [2] = 39199, [3] = 37134, [4] = 44210, [5] = 37718, [6] = 37051 }
+BisTooltip_ItemLists["Druid"]["Balance"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44202, [2] = 44930, [3] = 37730, [4] = 37218, [5] = 37629, [6] = 44892 }
+BisTooltip_ItemLists["Druid"]["Balance"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 40585, [2] = 43253, [3] = 42644, [4] = 44283, [5] = 37694, [6] = 37192 }
+BisTooltip_ItemLists["Druid"]["Balance"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 43253, [2] = 40585, [3] = 42644, [4] = 44283, [5] = 37694, [6] = 37192 }
+BisTooltip_ItemLists["Druid"]["Balance"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 37873, [2] = 42395, [3] = 40682, [4] = 37660, [5] = 32483, [6] = 36972 }
+BisTooltip_ItemLists["Druid"]["Balance"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40682, [2] = 37873, [3] = 42395, [4] = 37660, [5] = 32483, [6] = 36972 }
+BisTooltip_ItemLists["Druid"]["Balance"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 41384, [2] = 37169, [3] = 44173, [4] = 37360, [5] = 37377, [6] = 44199 }
+BisTooltip_ItemLists["Druid"]["Balance"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 40698, [2] = 37134, [3] = 44210, [4] = 37718, [5] = 37051, [6] = 37086 }
 BisTooltip_ItemLists["Druid"]["Balance"]["PR"][17] = {["slot_name"] = "Relic", [1] = 40712, [2] = 32387, [3] = 38360 }
 BisTooltip_ItemLists["Druid"]["Balance"]["T7"] = BisTooltip_ItemLists["Druid"]["Balance"]["T7"] or {}
 BisTooltip_ItemLists["Druid"]["Balance"]["T7"][1] = {["slot_name"] = "Head", [1] = 40467, [2] = 39545, [3] = 40562, [4] = 44007, [5] = 40339, [6] = 43995 }
@@ -39,7 +39,7 @@ BisTooltip_ItemLists["Druid"]["Balance"]["T7"][15] = {["slot_name"] = "Weapon", 
 BisTooltip_ItemLists["Druid"]["Balance"]["T7"][16] = {["slot_name"] = "Off hand", [1] = 40192, [2] = 40273, [3] = 40698, [4] = 39199, [5] = 37134, [6] = 39766 }
 BisTooltip_ItemLists["Druid"]["Balance"]["T7"][17] = {["slot_name"] = "Relic", [1] = 40321, [2] = 40712, [3] = 32387, [4] = 38360 }
 BisTooltip_ItemLists["Druid"]["Balance"]["T8"] = BisTooltip_ItemLists["Druid"]["Balance"]["T8"] or {}
-BisTooltip_ItemLists["Druid"]["Balance"]["T8"][1] = {["slot_name"] = "Head", [1] = 45497, [2] = 45150, [3] = 46191, [4] = 45464, [5] = 45350, [6] = 40467 }
+BisTooltip_ItemLists["Druid"]["Balance"]["T8"][1] = {["slot_name"] = "Head", [1] = 45497, [2] = 45150, [3] = 46191, [4] = 45350, [5] = 40467, [6] = 39545 }
 BisTooltip_ItemLists["Druid"]["Balance"]["T8"][2] = {["slot_name"] = "Neck", [1] = 45133, [2] = 45699, [3] = 45539, [4] = 44661, [5] = 44658, [6] = 45933 }
 BisTooltip_ItemLists["Druid"]["Balance"]["T8"][3] = {["slot_name"] = "Shoulder", [1] = 46196, [2] = 45186, [3] = 46068, [4] = 45136, [5] = 40470, [6] = 40286 }
 BisTooltip_ItemLists["Druid"]["Balance"]["T8"][4] = {["slot_name"] = "Back", [1] = 45242, [2] = 46042, [3] = 45618, [4] = 44005, [5] = 45486, [6] = 46321 }
@@ -112,21 +112,21 @@ BisTooltip_ItemLists["Druid"]["Balance"]["RS"][16] = {["slot_name"] = "Off hand"
 BisTooltip_ItemLists["Druid"]["Balance"]["RS"][17] = {["slot_name"] = "Relic", [1] = 50457, [2] = 47670, [3] = 40321, [4] = 40712, [5] = 32387, [6] = 45270 }
 BisTooltip_ItemLists["Druid"]["Feral Tank"] = BisTooltip_ItemLists["Druid"]["Feral Tank"] or {}
 BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"] = BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"] or {}
-BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][1] = {["slot_name"] = "Head", [1] = 37293, [2] = 39399, [3] = 44908, [4] = 42550, [5] = 43403, [6] = 34244 }
-BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][2] = {["slot_name"] = "Neck", [1] = 42646, [2] = 39246, [3] = 44659, [4] = 40679, [5] = 42021, [6] = 40678 }
+BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][1] = {["slot_name"] = "Head", [1] = 37293, [2] = 44908, [3] = 42550, [4] = 43403, [5] = 34244, [6] = 37636 }
+BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][2] = {["slot_name"] = "Neck", [1] = 42646, [2] = 40679, [3] = 42021, [4] = 40678, [5] = 35680, [6] = 43282 }
 BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 43481, [2] = 37139, [3] = 37593, [4] = 34392, [5] = 44190, [6] = 43433 }
-BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][4] = {["slot_name"] = "Back", [1] = 43565, [2] = 43988, [3] = 43406, [4] = 42061, [5] = 37840, [6] = 37728 }
-BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][5] = {["slot_name"] = "Chest", [1] = 43590, [2] = 43990, [3] = 37165, [4] = 34211, [5] = 44303, [6] = 44405 }
-BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37183, [2] = 41830, [3] = 39247, [4] = 37853, [5] = 44203, [6] = 37366 }
-BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][7] = {["slot_name"] = "Hands", [1] = 39557, [2] = 39299, [3] = 37409, [4] = 37846, [5] = 37678, [6] = 44397 }
+BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][4] = {["slot_name"] = "Back", [1] = 43565, [2] = 43406, [3] = 42061, [4] = 37840, [5] = 37728, [6] = 44188 }
+BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][5] = {["slot_name"] = "Chest", [1] = 43590, [2] = 37165, [3] = 34211, [4] = 44303, [5] = 44405 }
+BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37183, [2] = 41830, [3] = 37853, [4] = 44203, [5] = 37366, [6] = 34444 }
+BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][7] = {["slot_name"] = "Hands", [1] = 37409, [2] = 37846, [3] = 37678, [4] = 44397, [5] = 34408 }
 BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][8] = {["slot_name"] = "Waist", [1] = 43591, [2] = 37194, [3] = 41827, [4] = 40694, [5] = 43484, [6] = 37243 }
 BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][9] = {["slot_name"] = "Legs", [1] = 43286, [2] = 37644, [3] = 37374, [4] = 37890, [5] = 44179, [6] = 34385 }
 BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][10] = {["slot_name"] = "Feet", [1] = 43592, [2] = 44893, [3] = 41828, [4] = 37841, [5] = 43312, [6] = 44297 }
-BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 37784, [2] = 43993, [3] = 43582, [4] = 42643, [5] = 37591, [6] = 37257 }
-BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 43582, [2] = 37784, [3] = 43993, [4] = 42643, [5] = 37591, [6] = 37257 }
+BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 37784, [2] = 43582, [3] = 42643, [4] = 37591, [5] = 37257, [6] = 44935 }
+BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 43582, [2] = 37784, [3] = 42643, [4] = 37591, [5] = 37257, [6] = 44935 }
 BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 44063, [3] = 37220, [4] = 42341, [5] = 40767, [6] = 44323 }
 BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 37220, [2] = 42987, [3] = 44063, [4] = 42341, [5] = 40767, [6] = 44323 }
-BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37883, [2] = 39422, [3] = 40497, [4] = 37190, [5] = 41257, [6] = 43409 }
+BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37883, [2] = 37190, [3] = 41257, [4] = 43409, [5] = 44174, [6] = 37848 }
 BisTooltip_ItemLists["Druid"]["Feral Tank"]["PR"][16] = {["slot_name"] = "Relic", [1] = 38365, [2] = 33509 }
 BisTooltip_ItemLists["Druid"]["Feral Tank"]["T7"] = BisTooltip_ItemLists["Druid"]["Feral Tank"]["T7"] or {}
 BisTooltip_ItemLists["Druid"]["Feral Tank"]["T7"][1] = {["slot_name"] = "Head", [1] = 40329, [2] = 40473, [3] = 39399, [4] = 44908, [5] = 39553, [6] = 42550 }
@@ -215,21 +215,21 @@ BisTooltip_ItemLists["Druid"]["Feral Tank"]["RS"][15] = {["slot_name"] = "Weapon
 BisTooltip_ItemLists["Druid"]["Feral Tank"]["RS"][16] = {["slot_name"] = "Relic", [1] = 50456, [2] = 45509, [3] = 47668, [4] = 38365, [5] = 33509 }
 BisTooltip_ItemLists["Druid"]["Feral DPS"] = BisTooltip_ItemLists["Druid"]["Feral DPS"] or {}
 BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"] = BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"] or {}
-BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][1] = {["slot_name"] = "Head", [1] = 37293, [2] = 39399, [3] = 42550, [4] = 34244, [5] = 34404, [6] = 44908 }
-BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40678, [2] = 44659, [3] = 39146, [4] = 39421, [5] = 42645, [6] = 37861 }
-BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 37139, [2] = 39237, [3] = 43481, [4] = 34392, [5] = 37593, [6] = 35591 }
-BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][4] = {["slot_name"] = "Back", [1] = 43406, [2] = 39404, [3] = 39297, [4] = 37647, [5] = 38614, [6] = 37840 }
-BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][5] = {["slot_name"] = "Chest", [1] = 43990, [2] = 37219, [3] = 44303, [4] = 37165, [5] = 34397, [6] = 37057 }
-BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 44203, [2] = 39247, [3] = 37366, [4] = 37853, [5] = 41830, [6] = 37117 }
-BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][7] = {["slot_name"] = "Hands", [1] = 39557, [2] = 37409, [3] = 39299, [4] = 34370, [5] = 37846, [6] = 37678 }
-BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][8] = {["slot_name"] = "Waist", [1] = 40694, [2] = 43484, [3] = 37194, [4] = 39279, [5] = 37243, [6] = 37714 }
-BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37644, [2] = 39224, [3] = 44179, [4] = 34188, [5] = 37374, [6] = 44117 }
-BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44297, [2] = 39196, [3] = 37666, [4] = 37841, [5] = 44893, [6] = 43312 }
-BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 40586, [2] = 40474, [3] = 43993, [4] = 39401, [5] = 37642, [6] = 44935 }
-BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 42642, [2] = 40474, [3] = 43993, [4] = 39401, [5] = 40586, [6] = 37642 }
-BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 40684, [3] = 39257, [4] = 37166, [5] = 37723, [6] = 37390 }
-BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40684, [2] = 42987, [3] = 39257, [4] = 37166, [5] = 37723, [6] = 37390 }
-BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37883, [2] = 40497, [3] = 39422, [4] = 41257, [5] = 37848, [6] = 37733 }
+BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][1] = {["slot_name"] = "Head", [1] = 37293, [2] = 42550, [3] = 34244, [4] = 34404, [5] = 44908, [6] = 43403 }
+BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40678, [2] = 42645, [3] = 37861, [4] = 37096, [5] = 44033, [6] = 37397 }
+BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 37139, [2] = 43481, [3] = 34392, [4] = 37593, [5] = 35591, [6] = 43433 }
+BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][4] = {["slot_name"] = "Back", [1] = 43406, [2] = 37647, [3] = 38614, [4] = 37840, [5] = 34241, [6] = 43566 }
+BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][5] = {["slot_name"] = "Chest", [1] = 37219, [2] = 44303, [3] = 37165, [4] = 34397, [5] = 37057 }
+BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 44203, [2] = 37366, [3] = 37853, [4] = 41830, [5] = 37117, [6] = 37183 }
+BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][7] = {["slot_name"] = "Hands", [1] = 37409, [2] = 34370, [3] = 37846, [4] = 37678, [5] = 44397 }
+BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][8] = {["slot_name"] = "Waist", [1] = 40694, [2] = 43484, [3] = 37194, [4] = 37243, [5] = 37714, [6] = 41827 }
+BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37644, [2] = 44179, [3] = 34188, [4] = 37374, [5] = 44117, [6] = 37890 }
+BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44297, [2] = 37666, [3] = 37841, [4] = 44893, [5] = 43312, [6] = 44024 }
+BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 40586, [2] = 37642, [3] = 44935, [4] = 42642, [5] = 43251, [6] = 37685 }
+BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 42642, [2] = 40586, [3] = 37642, [4] = 44935, [5] = 43251, [6] = 37685 }
+BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 40684, [3] = 37166, [4] = 37723, [5] = 37390, [6] = 34427 }
+BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40684, [2] = 42987, [3] = 37166, [4] = 37723, [5] = 37390, [6] = 34427 }
+BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37883, [2] = 41257, [3] = 37848, [4] = 37733, [5] = 43409, [6] = 44244 }
 BisTooltip_ItemLists["Druid"]["Feral DPS"]["PR"][16] = {["slot_name"] = "Relic", [1] = 40713, [2] = 38365 }
 BisTooltip_ItemLists["Druid"]["Feral DPS"]["T7"] = BisTooltip_ItemLists["Druid"]["Feral DPS"]["T7"] or {}
 BisTooltip_ItemLists["Druid"]["Feral DPS"]["T7"][1] = {["slot_name"] = "Head", [1] = 40473, [2] = 40329, [3] = 39399, [4] = 39553, [5] = 42550, [6] = 37293 }
@@ -318,21 +318,21 @@ BisTooltip_ItemLists["Druid"]["Feral DPS"]["RS"][15] = {["slot_name"] = "Weapon"
 BisTooltip_ItemLists["Druid"]["Feral DPS"]["RS"][16] = {["slot_name"] = "Relic", [1] = 50456, [2] = 47668, [3] = 40713, [4] = 39757, [5] = 38365 }
 BisTooltip_ItemLists["Druid"]["Restoration"] = BisTooltip_ItemLists["Druid"]["Restoration"] or {}
 BisTooltip_ItemLists["Druid"]["Restoration"]["PR"] = BisTooltip_ItemLists["Druid"]["Restoration"]["PR"] or {}
-BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][1] = {["slot_name"] = "Head", [1] = 37149, [2] = 39240, [3] = 43995, [4] = 34339, [5] = 37684, [6] = 44906 }
-BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][2] = {["slot_name"] = "Neck", [1] = 37683, [2] = 39392, [3] = 44658, [4] = 39232, [5] = 42023, [6] = 33281 }
+BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][1] = {["slot_name"] = "Head", [1] = 37149, [2] = 34339, [3] = 37684, [4] = 44906, [5] = 37294, [6] = 42554 }
+BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][2] = {["slot_name"] = "Neck", [1] = 37683, [2] = 42023, [3] = 33281, [4] = 37290, [5] = 42339, [6] = 36988 }
 BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 34209, [2] = 37673, [3] = 37368, [4] = 37196, [5] = 37655, [6] = 44370 }
-BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][4] = {["slot_name"] = "Back", [1] = 37799, [2] = 41610, [3] = 39272, [4] = 37291, [5] = 42056, [6] = 43283 }
-BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][5] = {["slot_name"] = "Chest", [1] = 42102, [2] = 39538, [3] = 44180, [4] = 34398, [5] = 37236, [6] = 37258 }
-BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37361, [2] = 39390, [3] = 37725, [4] = 34445, [5] = 44200, [6] = 37724 }
-BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][7] = {["slot_name"] = "Hands", [1] = 42113, [2] = 39543, [3] = 34342, [4] = 37798, [5] = 37261, [6] = 37858 }
-BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][8] = {["slot_name"] = "Waist", [1] = 37643, [2] = 39190, [3] = 39308, [4] = 44302, [5] = 40697, [6] = 37842 }
-BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37791, [2] = 39408, [3] = 39191, [4] = 43495, [5] = 34386, [6] = 37189 }
-BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44202, [2] = 39215, [3] = 39254, [4] = 37730, [5] = 43502, [6] = 37640 }
-BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 37694, [2] = 39250, [3] = 37192, [4] = 44283, [5] = 44934, [6] = 43408 }
-BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 37192, [2] = 39250, [3] = 37694, [4] = 44283, [5] = 44934, [6] = 43408 }
+BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][4] = {["slot_name"] = "Back", [1] = 37799, [2] = 41610, [3] = 37291, [4] = 42056, [5] = 43283, [6] = 44167 }
+BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][5] = {["slot_name"] = "Chest", [1] = 42102, [2] = 44180, [3] = 34398, [4] = 37236, [5] = 37258 }
+BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37361, [2] = 37725, [3] = 34445, [4] = 44200, [5] = 37724, [6] = 37696 }
+BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][7] = {["slot_name"] = "Hands", [1] = 42113, [2] = 34342, [3] = 37798, [4] = 37261, [5] = 37858 }
+BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][8] = {["slot_name"] = "Waist", [1] = 37643, [2] = 44302, [3] = 40697, [4] = 37842, [5] = 37761, [6] = 37289 }
+BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37791, [2] = 43495, [3] = 34386, [4] = 37189, [5] = 37876, [6] = 37731 }
+BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44202, [2] = 39254, [3] = 37730, [4] = 43502, [5] = 37640, [6] = 44892 }
+BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 37694, [2] = 37192, [3] = 44283, [4] = 44934, [5] = 43408, [6] = 37371 }
+BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 37192, [2] = 37694, [3] = 44283, [4] = 44934, [5] = 43408, [6] = 37371 }
 BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 37111, [2] = 44322, [3] = 37657, [4] = 42988, [5] = 37835, [6] = 36972 }
 BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 37657, [2] = 44322, [3] = 37111, [4] = 42988, [5] = 37835, [6] = 36972 }
-BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37360, [2] = 40488, [3] = 39423, [4] = 41384, [5] = 37169, [6] = 37384 }
+BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37360, [2] = 41384, [3] = 37169, [4] = 37384, [5] = 37617, [6] = 44199 }
 BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 40699, [2] = 37718, [3] = 44210, [4] = 37051, [5] = 37889 }
 BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][17] = {["slot_name"] = "Relic", [1] = 33508, [2] = 25643, [3] = 38366 }
 BisTooltip_ItemLists["Druid"]["Restoration"]["T7"] = BisTooltip_ItemLists["Druid"]["Restoration"]["T7"] or {}

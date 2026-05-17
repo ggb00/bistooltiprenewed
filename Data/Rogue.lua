@@ -7,9 +7,9 @@ BisTooltip_ItemLists["Rogue"]["Assassination"]["PR"][1] = {["slot_name"] = "Head
 BisTooltip_ItemLists["Rogue"]["Assassination"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40678, [2] = 42645, [3] = 37861, [4] = 37096, [5] = 42021, [6] = 44033 }
 BisTooltip_ItemLists["Rogue"]["Assassination"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 37139, [2] = 43481, [3] = 37593, [4] = 34195, [5] = 35591, [6] = 44190 }
 BisTooltip_ItemLists["Rogue"]["Assassination"]["PR"][4] = {["slot_name"] = "Back", [1] = 43566, [2] = 38614, [3] = 43406, [4] = 37840, [5] = 34241, [6] = 42061 }
-BisTooltip_ItemLists["Rogue"]["Assassination"]["PR"][5] = {["slot_name"] = "Chest", [1] = 39558, [2] = 37219, [3] = 37165, [4] = 44303, [5] = 34397, [6] = 37057 }
+BisTooltip_ItemLists["Rogue"]["Assassination"]["PR"][5] = {["slot_name"] = "Chest", [1] = 37219, [2] = 37165, [3] = 44303, [4] = 34397, [5] = 37057 }
 BisTooltip_ItemLists["Rogue"]["Assassination"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 34448, [2] = 44203, [3] = 37366, [4] = 37853, [5] = 41830, [6] = 37183 }
-BisTooltip_ItemLists["Rogue"]["Assassination"]["PR"][7] = {["slot_name"] = "Hands", [1] = 39560, [2] = 37409, [3] = 37846, [4] = 34370, [5] = 37678, [6] = 44397 }
+BisTooltip_ItemLists["Rogue"]["Assassination"]["PR"][7] = {["slot_name"] = "Hands", [1] = 37409, [2] = 37846, [3] = 34370, [4] = 37678, [5] = 44397 }
 BisTooltip_ItemLists["Rogue"]["Assassination"]["PR"][8] = {["slot_name"] = "Waist", [1] = 40694, [2] = 37194, [3] = 43484, [4] = 34558, [5] = 37243, [6] = 37714 }
 BisTooltip_ItemLists["Rogue"]["Assassination"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37644, [2] = 44179, [3] = 44117, [4] = 34188, [5] = 37374, [6] = 37890 }
 BisTooltip_ItemLists["Rogue"]["Assassination"]["PR"][10] = {["slot_name"] = "Feet", [1] = 34575, [2] = 44297, [3] = 37666, [4] = 44024, [5] = 37841, [6] = 41828 }
@@ -112,23 +112,23 @@ BisTooltip_ItemLists["Rogue"]["Assassination"]["RS"][16] = {["slot_name"] = "Off
 BisTooltip_ItemLists["Rogue"]["Assassination"]["RS"][17] = {["slot_name"] = "Ranged", [1] = 50733, [2] = 51880, [3] = 51927, [4] = 51940, [5] = 51845, [6] = 48022 }
 BisTooltip_ItemLists["Rogue"]["Combat"] = BisTooltip_ItemLists["Rogue"]["Combat"] or {}
 BisTooltip_ItemLists["Rogue"]["Combat"]["PR"] = BisTooltip_ItemLists["Rogue"]["Combat"]["PR"] or {}
-BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][1] = {["slot_name"] = "Head", [1] = 37293, [2] = 39399, [3] = 42550, [4] = 34244, [5] = 32235, [6] = 44908 }
-BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40678, [2] = 39146, [3] = 39421, [4] = 44659, [5] = 42645, [6] = 37861 }
-BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 37139, [2] = 39237, [3] = 43481, [4] = 34195, [5] = 37593, [6] = 35591 }
-BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][4] = {["slot_name"] = "Back", [1] = 43566, [2] = 39404, [3] = 39297, [4] = 38614, [5] = 43406, [6] = 34241 }
-BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][5] = {["slot_name"] = "Chest", [1] = 39558, [2] = 43990, [3] = 39386, [4] = 37219, [5] = 37165, [6] = 44303 }
-BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 34448, [2] = 39247, [3] = 44203, [4] = 37366, [5] = 37853, [6] = 41830 }
-BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][7] = {["slot_name"] = "Hands", [1] = 39560, [2] = 37409, [3] = 34370, [4] = 37846, [5] = 36951, [6] = 37678 }
-BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][8] = {["slot_name"] = "Waist", [1] = 40694, [2] = 39279, [3] = 37194, [4] = 43484, [5] = 34558, [6] = 37243 }
-BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37644, [2] = 39224, [3] = 34188, [4] = 44117, [5] = 44179, [6] = 37374 }
-BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][10] = {["slot_name"] = "Feet", [1] = 34575, [2] = 44297, [3] = 39196, [4] = 37666, [5] = 43312, [6] = 44024 }
-BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 40586, [2] = 40474, [3] = 43993, [4] = 39277, [5] = 37642, [6] = 43251 }
-BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 42642, [2] = 40474, [3] = 43993, [4] = 39277, [5] = 40586, [6] = 37642 }
+BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][1] = {["slot_name"] = "Head", [1] = 37293, [2] = 42550, [3] = 34244, [4] = 32235, [5] = 44908, [6] = 43403 }
+BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40678, [2] = 42645, [3] = 37861, [4] = 37096, [5] = 42021, [6] = 44033 }
+BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 37139, [2] = 43481, [3] = 34195, [4] = 37593, [5] = 35591, [6] = 44190 }
+BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][4] = {["slot_name"] = "Back", [1] = 43566, [2] = 38614, [3] = 43406, [4] = 34241, [5] = 37840, [6] = 42061 }
+BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][5] = {["slot_name"] = "Chest", [1] = 37219, [2] = 37165, [3] = 44303, [4] = 34397, [5] = 37057 }
+BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 34448, [2] = 44203, [3] = 37366, [4] = 37853, [5] = 41830, [6] = 37117 }
+BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][7] = {["slot_name"] = "Hands", [1] = 37409, [2] = 34370, [3] = 37846, [4] = 36951, [5] = 37678 }
+BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][8] = {["slot_name"] = "Waist", [1] = 40694, [2] = 37194, [3] = 43484, [4] = 34558, [5] = 37243, [6] = 37714 }
+BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37644, [2] = 34188, [3] = 44117, [4] = 44179, [5] = 37374, [6] = 37890 }
+BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][10] = {["slot_name"] = "Feet", [1] = 34575, [2] = 44297, [3] = 37666, [4] = 43312, [5] = 44024, [6] = 37841 }
+BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 40586, [2] = 37642, [3] = 43251, [4] = 37685, [5] = 42642, [6] = 37624 }
+BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 42642, [2] = 40586, [3] = 37642, [4] = 43251, [5] = 37685, [6] = 37624 }
 BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 40684, [3] = 37166, [4] = 34427, [5] = 37390, [6] = 43573 }
 BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40684, [2] = 42987, [3] = 37166, [4] = 34427, [5] = 37390, [6] = 43573 }
-BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37693, [2] = 39416, [3] = 39291, [4] = 40429, [5] = 43611, [6] = 32837 }
-BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 37856, [2] = 42248, [3] = 40491, [4] = 39427, [5] = 44311, [6] = 32838 }
-BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][17] = {["slot_name"] = "Ranged", [1] = 37191, [2] = 39296, [3] = 43612, [4] = 44504, [5] = 43284, [6] = 40716 }
+BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37693, [2] = 43611, [3] = 32837, [4] = 44250, [5] = 37631, [6] = 37235 }
+BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 37856, [2] = 42248, [3] = 44311, [4] = 32838, [5] = 44187, [6] = 44166 }
+BisTooltip_ItemLists["Rogue"]["Combat"]["PR"][17] = {["slot_name"] = "Ranged", [1] = 37191, [2] = 43612, [3] = 44504, [4] = 43284, [5] = 40716, [6] = 44245 }
 BisTooltip_ItemLists["Rogue"]["Combat"]["T7"] = BisTooltip_ItemLists["Rogue"]["Combat"]["T7"] or {}
 BisTooltip_ItemLists["Rogue"]["Combat"]["T7"][1] = {["slot_name"] = "Head", [1] = 40499, [2] = 39399, [3] = 40329, [4] = 39561, [5] = 42550, [6] = 34244 }
 BisTooltip_ItemLists["Rogue"]["Combat"]["T7"][2] = {["slot_name"] = "Neck", [1] = 44664, [2] = 40065, [3] = 39146, [4] = 40369, [5] = 39421, [6] = 44659 }

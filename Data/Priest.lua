@@ -3,23 +3,23 @@ BisTooltip_ItemLists = BisTooltip_ItemLists or {}
 BisTooltip_ItemLists["Priest"] = BisTooltip_ItemLists["Priest"] or {}
 BisTooltip_ItemLists["Priest"]["Discipline"] = BisTooltip_ItemLists["Priest"]["Discipline"] or {}
 BisTooltip_ItemLists["Priest"]["Discipline"]["PR"] = BisTooltip_ItemLists["Priest"]["Discipline"]["PR"] or {}
-BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][1] = {["slot_name"] = "Head", [1] = 37294, [2] = 39295, [3] = 42553, [4] = 44909, [5] = 34339, [6] = 37684 }
-BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40681, [2] = 44657, [3] = 39232, [4] = 42647, [5] = 42023, [6] = 37683 }
+BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][1] = {["slot_name"] = "Head", [1] = 37294, [2] = 42553, [3] = 44909, [4] = 34339, [5] = 37684, [6] = 37594 }
+BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40681, [2] = 42647, [3] = 42023, [4] = 37683, [5] = 33281, [6] = 37141 }
 BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 37196, [2] = 39310, [3] = 37673, [4] = 37655, [5] = 34202, [6] = 41550 }
-BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][4] = {["slot_name"] = "Back", [1] = 41609, [2] = 39425, [3] = 37291, [4] = 34242, [5] = 42056, [6] = 44167 }
-BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][5] = {["slot_name"] = "Chest", [1] = 39515, [2] = 42102, [3] = 44180, [4] = 37258, [5] = 37222, [6] = 34399 }
+BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][4] = {["slot_name"] = "Back", [1] = 41609, [2] = 37291, [3] = 34242, [4] = 42056, [5] = 44167, [6] = 37630 }
+BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][5] = {["slot_name"] = "Chest", [1] = 42102, [2] = 44180, [3] = 37258, [4] = 37222, [5] = 34399 }
 BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37361, [2] = 37725, [3] = 37884, [4] = 41555, [5] = 37613, [6] = 34435 }
-BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][7] = {["slot_name"] = "Hands", [1] = 39519, [2] = 42113, [3] = 39285, [4] = 37825, [5] = 37172, [6] = 43287 }
-BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][8] = {["slot_name"] = "Waist", [1] = 40697, [2] = 39190, [3] = 44302, [4] = 37289, [5] = 37242, [6] = 37637 }
-BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37854, [2] = 39408, [3] = 39309, [4] = 37622, [5] = 34386, [6] = 41553 }
+BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][7] = {["slot_name"] = "Hands", [1] = 42113, [2] = 37825, [3] = 37172, [4] = 43287, [5] = 34406 }
+BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][8] = {["slot_name"] = "Waist", [1] = 40697, [2] = 44302, [3] = 37289, [4] = 37242, [5] = 37637, [6] = 34528 }
+BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37854, [2] = 37622, [3] = 34386, [4] = 41553, [5] = 37369, [6] = 37189 }
 BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44202, [2] = 37730, [3] = 36954, [4] = 44900, [5] = 37218, [6] = 37867 }
 BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 44283, [2] = 37694, [3] = 37192, [4] = 40585, [5] = 43408, [6] = 42644 }
 BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 42644, [2] = 44283, [3] = 37694, [4] = 37192, [5] = 40585, [6] = 43408 }
 BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42988, [2] = 37835, [3] = 42413, [4] = 42987, [5] = 44322, [6] = 40685 }
 BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40685, [2] = 42988, [3] = 37835, [4] = 42413, [5] = 42987, [6] = 44322 }
-BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37169, [2] = 39423, [3] = 40488, [4] = 39424, [5] = 37360, [6] = 41384 }
-BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 44210, [2] = 40699, [3] = 39311, [4] = 37718, [5] = 37051, [6] = 37889 }
-BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][17] = {["slot_name"] = "Ranged", [1] = 37238, [2] = 39426, [3] = 39473, [4] = 37619, [5] = 34348, [6] = 37626 }
+BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37169, [2] = 37360, [3] = 41384, [4] = 37384, [5] = 37617, [6] = 44199 }
+BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 44210, [2] = 40699, [3] = 37718, [4] = 37051, [5] = 37889, [6] = 37364 }
+BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][17] = {["slot_name"] = "Ranged", [1] = 37238, [2] = 37619, [3] = 34348, [4] = 37626, [5] = 37038, [6] = 35617 }
 BisTooltip_ItemLists["Priest"]["Discipline"]["T7"] = BisTooltip_ItemLists["Priest"]["Discipline"]["T7"] or {}
 BisTooltip_ItemLists["Priest"]["Discipline"]["T7"][1] = {["slot_name"] = "Head", [1] = 40562, [2] = 40447, [3] = 40287, [4] = 40339, [5] = 39295, [6] = 39514 }
 BisTooltip_ItemLists["Priest"]["Discipline"]["T7"][2] = {["slot_name"] = "Neck", [1] = 44662, [2] = 40374, [3] = 40071, [4] = 44657, [5] = 39232, [6] = 40378 }
@@ -112,23 +112,23 @@ BisTooltip_ItemLists["Priest"]["Discipline"]["RS"][16] = {["slot_name"] = "Off h
 BisTooltip_ItemLists["Priest"]["Discipline"]["RS"][17] = {["slot_name"] = "Ranged", [1] = 50631, [2] = 50684, [3] = 51838, [4] = 50472, [5] = 50033, [6] = 51852 }
 BisTooltip_ItemLists["Priest"]["Holy"] = BisTooltip_ItemLists["Priest"]["Holy"] or {}
 BisTooltip_ItemLists["Priest"]["Holy"]["PR"] = BisTooltip_ItemLists["Priest"]["Holy"]["PR"] or {}
-BisTooltip_ItemLists["Priest"]["Holy"]["PR"][1] = {["slot_name"] = "Head", [1] = 37294, [2] = 43995, [3] = 42553, [4] = 37684, [5] = 34339, [6] = 44909 }
-BisTooltip_ItemLists["Priest"]["Holy"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40681, [2] = 44657, [3] = 39392, [4] = 40486, [5] = 42647, [6] = 37683 }
+BisTooltip_ItemLists["Priest"]["Holy"]["PR"][1] = {["slot_name"] = "Head", [1] = 37294, [2] = 42553, [3] = 37684, [4] = 34339, [5] = 44909, [6] = 37594 }
+BisTooltip_ItemLists["Priest"]["Holy"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40681, [2] = 42647, [3] = 37683, [4] = 37290, [5] = 43285, [6] = 42023 }
 BisTooltip_ItemLists["Priest"]["Holy"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 37655, [2] = 39310, [3] = 37673, [4] = 37196, [5] = 37691, [6] = 34202 }
-BisTooltip_ItemLists["Priest"]["Holy"]["PR"][4] = {["slot_name"] = "Back", [1] = 41609, [2] = 39425, [3] = 37630, [4] = 37799, [5] = 37291, [6] = 34242 }
-BisTooltip_ItemLists["Priest"]["Holy"]["PR"][5] = {["slot_name"] = "Chest", [1] = 42102, [2] = 44180, [3] = 39515, [4] = 37258, [5] = 37222, [6] = 34233 }
-BisTooltip_ItemLists["Priest"]["Holy"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37361, [2] = 39390, [3] = 37884, [4] = 37725, [5] = 44200, [6] = 37613 }
-BisTooltip_ItemLists["Priest"]["Holy"]["PR"][7] = {["slot_name"] = "Hands", [1] = 42113, [2] = 39519, [3] = 39285, [4] = 37172, [5] = 37798, [6] = 37825 }
-BisTooltip_ItemLists["Priest"]["Holy"]["PR"][8] = {["slot_name"] = "Waist", [1] = 40697, [2] = 39190, [3] = 44302, [4] = 37242, [5] = 37637, [6] = 37289 }
-BisTooltip_ItemLists["Priest"]["Holy"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37854, [2] = 39408, [3] = 39309, [4] = 37622, [5] = 37189, [6] = 37369 }
+BisTooltip_ItemLists["Priest"]["Holy"]["PR"][4] = {["slot_name"] = "Back", [1] = 41609, [2] = 37630, [3] = 37799, [4] = 37291, [5] = 34242, [6] = 42056 }
+BisTooltip_ItemLists["Priest"]["Holy"]["PR"][5] = {["slot_name"] = "Chest", [1] = 42102, [2] = 44180, [3] = 37258, [4] = 37222, [5] = 34233 }
+BisTooltip_ItemLists["Priest"]["Holy"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37361, [2] = 37884, [3] = 37725, [4] = 44200, [5] = 37613, [6] = 34435 }
+BisTooltip_ItemLists["Priest"]["Holy"]["PR"][7] = {["slot_name"] = "Hands", [1] = 42113, [2] = 37172, [3] = 37798, [4] = 37825, [5] = 34406 }
+BisTooltip_ItemLists["Priest"]["Holy"]["PR"][8] = {["slot_name"] = "Waist", [1] = 40697, [2] = 44302, [3] = 37242, [4] = 37637, [5] = 37289, [6] = 34527 }
+BisTooltip_ItemLists["Priest"]["Holy"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37854, [2] = 37622, [3] = 37189, [4] = 37369, [5] = 37876, [6] = 34386 }
 BisTooltip_ItemLists["Priest"]["Holy"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44202, [2] = 39254, [3] = 37730, [4] = 37867, [5] = 37218, [6] = 37629 }
-BisTooltip_ItemLists["Priest"]["Holy"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 44283, [2] = 39250, [3] = 40585, [4] = 37694, [5] = 37192, [6] = 42647 }
-BisTooltip_ItemLists["Priest"]["Holy"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 40585, [2] = 39250, [3] = 44283, [4] = 37694, [5] = 37192, [6] = 42647 }
-BisTooltip_ItemLists["Priest"]["Holy"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 37111, [3] = 42413, [4] = 40430, [5] = 44322, [6] = 28823 }
-BisTooltip_ItemLists["Priest"]["Holy"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 37111, [2] = 42987, [3] = 42413, [4] = 40430, [5] = 44322, [6] = 28823 }
-BisTooltip_ItemLists["Priest"]["Holy"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37360, [2] = 40488, [3] = 39423, [4] = 39424, [5] = 37169, [6] = 41384 }
+BisTooltip_ItemLists["Priest"]["Holy"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 44283, [2] = 40585, [3] = 37694, [4] = 37192, [5] = 42647, [6] = 43408 }
+BisTooltip_ItemLists["Priest"]["Holy"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 40585, [2] = 44283, [3] = 37694, [4] = 37192, [5] = 42647, [6] = 43408 }
+BisTooltip_ItemLists["Priest"]["Holy"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 37111, [3] = 42413, [4] = 44322, [5] = 28823, [6] = 40685 }
+BisTooltip_ItemLists["Priest"]["Holy"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 37111, [2] = 42987, [3] = 42413, [4] = 44322, [5] = 28823, [6] = 40685 }
+BisTooltip_ItemLists["Priest"]["Holy"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37360, [2] = 37169, [3] = 41384, [4] = 37377, [5] = 44199, [6] = 37384 }
 BisTooltip_ItemLists["Priest"]["Holy"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 44210, [2] = 40699, [3] = 37718, [4] = 37051, [5] = 37889 }
-BisTooltip_ItemLists["Priest"]["Holy"]["PR"][17] = {["slot_name"] = "Ranged", [1] = 37619, [2] = 39426, [3] = 39473, [4] = 37238, [5] = 34348, [6] = 37626 }
+BisTooltip_ItemLists["Priest"]["Holy"]["PR"][17] = {["slot_name"] = "Ranged", [1] = 37619, [2] = 37238, [3] = 34348, [4] = 37626, [5] = 37038, [6] = 43186 }
 BisTooltip_ItemLists["Priest"]["Holy"]["T7"] = BisTooltip_ItemLists["Priest"]["Holy"]["T7"] or {}
 BisTooltip_ItemLists["Priest"]["Holy"]["T7"][1] = {["slot_name"] = "Head", [1] = 40447, [2] = 40562, [3] = 40287, [4] = 43995, [5] = 39514, [6] = 40339 }
 BisTooltip_ItemLists["Priest"]["Holy"]["T7"][2] = {["slot_name"] = "Neck", [1] = 44662, [2] = 40374, [3] = 40071, [4] = 44657, [5] = 39392, [6] = 40486 }
@@ -221,23 +221,23 @@ BisTooltip_ItemLists["Priest"]["Holy"]["RS"][16] = {["slot_name"] = "Off hand", 
 BisTooltip_ItemLists["Priest"]["Holy"]["RS"][17] = {["slot_name"] = "Ranged", [1] = 50684, [2] = 50631, [3] = 50033, [4] = 50472, [5] = 51838, [6] = 51852 }
 BisTooltip_ItemLists["Priest"]["Shadow"] = BisTooltip_ItemLists["Priest"]["Shadow"] or {}
 BisTooltip_ItemLists["Priest"]["Shadow"]["PR"] = BisTooltip_ItemLists["Priest"]["Shadow"]["PR"] or {}
-BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][1] = {["slot_name"] = "Head", [1] = 34340, [2] = 43995, [3] = 44910, [4] = 42553, [5] = 41984, [6] = 37294 }
-BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40680, [2] = 44658, [3] = 39472, [4] = 40427, [5] = 37595, [6] = 42024 }
+BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][1] = {["slot_name"] = "Head", [1] = 34340, [2] = 44910, [3] = 42553, [4] = 41984, [5] = 37294, [6] = 37684 }
+BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40680, [2] = 37595, [3] = 42024, [4] = 42647, [5] = 44017, [6] = 37683 }
 BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 34210, [2] = 37673, [3] = 37655, [4] = 37196, [5] = 41550, [6] = 37691 }
-BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][4] = {["slot_name"] = "Back", [1] = 41610, [2] = 39241, [3] = 42057, [4] = 36983, [5] = 44242, [6] = 37291 }
-BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][5] = {["slot_name"] = "Chest", [1] = 39523, [2] = 40526, [3] = 39396, [4] = 43401, [5] = 42102, [6] = 37258 }
-BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37361, [2] = 39252, [3] = 39390, [4] = 37884, [5] = 37725, [6] = 44200 }
-BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][7] = {["slot_name"] = "Hands", [1] = 39530, [2] = 39192, [3] = 42113, [4] = 34344, [5] = 37172, [6] = 37825 }
+BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][4] = {["slot_name"] = "Back", [1] = 41610, [2] = 42057, [3] = 36983, [4] = 44242, [5] = 37291, [6] = 34242 }
+BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][5] = {["slot_name"] = "Chest", [1] = 43401, [2] = 42102, [3] = 37258, [4] = 34399, [5] = 37222 }
+BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37361, [2] = 37884, [3] = 37725, [4] = 44200, [5] = 34434, [6] = 36945 }
+BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][7] = {["slot_name"] = "Hands", [1] = 42113, [2] = 34344, [3] = 37172, [4] = 37825, [5] = 37798 }
 BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][8] = {["slot_name"] = "Waist", [1] = 40696, [2] = 37408, [3] = 37850, [4] = 37680, [5] = 44302, [6] = 37242 }
 BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37854, [2] = 34386, [3] = 37189, [4] = 37369, [5] = 43375, [6] = 37876 }
 BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44202, [2] = 44899, [3] = 37730, [4] = 37218, [5] = 37867, [6] = 34563 }
-BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 40585, [2] = 39389, [3] = 43253, [4] = 44283, [5] = 37694, [6] = 37192 }
-BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 43253, [2] = 39389, [3] = 40585, [4] = 44283, [5] = 37694, [6] = 37192 }
-BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 37873, [2] = 42395, [3] = 39229, [4] = 40682, [5] = 36972, [6] = 32483 }
-BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40682, [2] = 37873, [3] = 42395, [4] = 39229, [5] = 36972, [6] = 32483 }
-BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 41384, [2] = 40489, [3] = 39424, [4] = 39423, [5] = 37169, [6] = 44173 }
-BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 40698, [2] = 39199, [3] = 37134, [4] = 44210, [5] = 37718, [6] = 37051 }
-BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][17] = {["slot_name"] = "Ranged", [1] = 37177, [2] = 39426, [3] = 36989, [4] = 37238, [5] = 34347, [6] = 38206 }
+BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 40585, [2] = 43253, [3] = 44283, [4] = 37694, [5] = 37192, [6] = 42644 }
+BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 43253, [2] = 40585, [3] = 44283, [4] = 37694, [5] = 37192, [6] = 42644 }
+BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 37873, [2] = 42395, [3] = 40682, [4] = 36972, [5] = 32483, [6] = 37835 }
+BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40682, [2] = 37873, [3] = 42395, [4] = 36972, [5] = 32483, [6] = 37835 }
+BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 41384, [2] = 37169, [3] = 44173, [4] = 37360, [5] = 37377, [6] = 44199 }
+BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 40698, [2] = 37134, [3] = 44210, [4] = 37718, [5] = 37051, [6] = 37889 }
+BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][17] = {["slot_name"] = "Ranged", [1] = 37177, [2] = 36989, [3] = 37238, [4] = 34347, [5] = 38206, [6] = 37619 }
 BisTooltip_ItemLists["Priest"]["Shadow"]["T7"] = BisTooltip_ItemLists["Priest"]["Shadow"]["T7"] or {}
 BisTooltip_ItemLists["Priest"]["Shadow"]["T7"][1] = {["slot_name"] = "Head", [1] = 40562, [2] = 40456, [3] = 43995, [4] = 40287, [5] = 40339, [6] = 39521 }
 BisTooltip_ItemLists["Priest"]["Shadow"]["T7"][2] = {["slot_name"] = "Neck", [1] = 44661, [2] = 44658, [3] = 39472, [4] = 40064, [5] = 40427, [6] = 40374 }
@@ -257,7 +257,7 @@ BisTooltip_ItemLists["Priest"]["Shadow"]["T7"][15] = {["slot_name"] = "Weapon", 
 BisTooltip_ItemLists["Priest"]["Shadow"]["T7"][16] = {["slot_name"] = "Off hand", [1] = 40273, [2] = 40698, [3] = 39199, [4] = 40192, [5] = 39766, [6] = 37134 }
 BisTooltip_ItemLists["Priest"]["Shadow"]["T7"][17] = {["slot_name"] = "Ranged", [1] = 39712, [2] = 39426, [3] = 40284, [4] = 37177, [5] = 36989, [6] = 37238 }
 BisTooltip_ItemLists["Priest"]["Shadow"]["T8"] = BisTooltip_ItemLists["Priest"]["Shadow"]["T8"] or {}
-BisTooltip_ItemLists["Priest"]["Shadow"]["T8"][1] = {["slot_name"] = "Head", [1] = 46172, [2] = 45150, [3] = 45464, [4] = 45497, [5] = 45391, [6] = 45532 }
+BisTooltip_ItemLists["Priest"]["Shadow"]["T8"][1] = {["slot_name"] = "Head", [1] = 46172, [2] = 45150, [3] = 45497, [4] = 45391, [5] = 45532, [6] = 40562 }
 BisTooltip_ItemLists["Priest"]["Shadow"]["T8"][2] = {["slot_name"] = "Neck", [1] = 45133, [2] = 45699, [3] = 45539, [4] = 44661, [5] = 45933, [6] = 45243 }
 BisTooltip_ItemLists["Priest"]["Shadow"]["T8"][3] = {["slot_name"] = "Shoulder", [1] = 46165, [2] = 45186, [3] = 46068, [4] = 40459, [5] = 40286, [6] = 39529 }
 BisTooltip_ItemLists["Priest"]["Shadow"]["T8"][4] = {["slot_name"] = "Back", [1] = 45618, [2] = 45242, [3] = 46042, [4] = 46321, [5] = 44005, [6] = 45493 }

@@ -16,6 +16,14 @@ local highlight_colors = {
     ["pink"]      = {1.00, 0.40, 0.70}, ["cyan"] =      {0.00, 1.00, 1.00}
 }
 
+local source_hex_colors = {
+    ["purple"]    = "CC4CFF", ["green"]     = "19FF19",
+    ["red"]       = "FF3333", ["lightblue"] = "4CCCFF",
+    ["yellow"]    = "FFD100", ["orange"]    = "FF7F00",
+    ["pink"]      = "FF66B2", ["cyan"]      = "00FFFF",
+    ["white"]     = "FFFFFF",
+}
+
 local function GetItemSource(itemId, translatedId)
     local source = BisTooltip_ItemSources and BisTooltip_ItemSources[itemId]
     if not source and translatedId and BisTooltip_ItemSources then
@@ -23,16 +31,66 @@ local function GetItemSource(itemId, translatedId)
     end
 
     if source then
-        return "|cFFFFFFFFSource:|r |cFF00FF00" .. source .. "|r"
+        local db = BisTooltipAddon.db.char
+        local colorKey = db.source_color or "green"
+        local hexColor = source_hex_colors[colorKey] or "19FF19"
+
+        if db.hide_source_prefix then
+            return string.format("|cFF%s%s|r", hexColor, source)
+        else
+            return string.format("|cFFFFFFFFSource:|r |cFF%s%s|r", hexColor, source)
+        end
     end
     return nil
 end
 
+local function StyleTooltip(tooltip, isForcedItem)
+    if not tooltip then return end
+    local bd = tooltip:GetBackdrop()
+    if not bd then return end
+
+    local isItem = isForcedItem
+    if isItem == nil then
+        local _, link = tooltip:GetItem()
+        isItem = (link ~= nil) or tooltip.BisIsCompareItem
+    end
+
+    if isItem and BisTooltipAddon.db.char.dark_tooltips then
+        if bd.bgFile ~= "Interface\\ChatFrame\\ChatFrameBackground" then
+            if not tooltip.BisOrigBg then
+                tooltip.BisOrigBg = bd.bgFile
+                tooltip.BisOrigInsets = bd.insets
+            end
+            bd.bgFile = "Interface\\ChatFrame\\ChatFrameBackground"
+            bd.insets = { left = 2, right = 2, top = 2, bottom = 2 }
+            tooltip:SetBackdrop(bd)
+        end
+        tooltip:SetBackdropColor(0, 0, 0, 0.92)
+    else
+        if tooltip.BisOrigBg and bd.bgFile ~= tooltip.BisOrigBg then
+            bd.bgFile = tooltip.BisOrigBg
+            bd.insets = tooltip.BisOrigInsets
+            tooltip:SetBackdrop(bd)
+
+            local defaultColor = TOOLTIP_DEFAULT_BACKGROUND_COLOR
+            if defaultColor then
+                tooltip:SetBackdropColor(defaultColor.r, defaultColor.g, defaultColor.b, 1)
+            else
+                tooltip:SetBackdropColor(0.09, 0.09, 0.19, 1)
+            end
+        end
+    end
+end
+
 local function OnTooltipCleared(tooltip)
     tooltip.BisTooltipRendered = nil
+    tooltip.BisIsCompareItem = nil
+    StyleTooltip(tooltip, false)
 end
 
 local function ProcessTooltip(tooltip, link)
+    StyleTooltip(tooltip, true)
+
     local db = BisTooltipAddon.db.char
     if db.tooltip_with_ctrl and not IsControlKeyDown() then return end
 
@@ -43,6 +101,8 @@ local function ProcessTooltip(tooltip, link)
 
     local itemId = tonumber(string.match(link, "item:(%d+)"))
     if not itemId then return end
+
+    if not GetItemInfo(itemId) then return end
 
     if tooltip.BisTooltipRendered == itemId then return end
     tooltip.BisTooltipRendered = itemId
@@ -73,8 +133,15 @@ local function ProcessTooltip(tooltip, link)
             end
 
             if not isFiltered then
-                local lineText = filterClassNames and BisTooltipAddon.FormattedNames[data.class][data.spec].withoutClass
-                                                   or BisTooltipAddon.FormattedNames[data.class][data.spec].withClass
+                local fData = BisTooltipAddon.FormattedNames[data.class]
+                local fSpec = fData and fData[data.spec]
+                local lineText
+
+                if fSpec then
+                    lineText = filterClassNames and fSpec.withoutClass or fSpec.withClass
+                else
+                    lineText = string.format("%s %s", data.class or "Unknown", data.spec or "Unknown")
+                end
 
                 local r1, g1, b1, r2, g2, b2
                 if isHighlighted then
@@ -128,6 +195,11 @@ end
 function BisTooltipAddon:ClearTooltipCache() end
 
 function BisTooltipAddon:initBisTooltip()
+    GameTooltip:HookScript("OnShow", StyleTooltip)
+    ItemRefTooltip:HookScript("OnShow", StyleTooltip)
+    if ShoppingTooltip1 then ShoppingTooltip1:HookScript("OnShow", StyleTooltip) end
+    if ShoppingTooltip2 then ShoppingTooltip2:HookScript("OnShow", StyleTooltip) end
+
     GameTooltip:HookScript("OnTooltipSetItem", OnTooltipSetItem)
     ItemRefTooltip:HookScript("OnTooltipSetItem", OnTooltipSetItem)
     if ShoppingTooltip1 then ShoppingTooltip1:HookScript("OnTooltipSetItem", OnTooltipSetItem) end
@@ -139,9 +211,20 @@ function BisTooltipAddon:initBisTooltip()
     if ShoppingTooltip2 then ShoppingTooltip2:HookScript("OnTooltipCleared", OnTooltipCleared) end
 
     hooksecurefunc(GameTooltip, "SetInventoryItem", HookSetInventoryItem)
+    if ItemRefTooltip then hooksecurefunc(ItemRefTooltip, "SetInventoryItem", HookSetInventoryItem) end
     if ShoppingTooltip1 then hooksecurefunc(ShoppingTooltip1, "SetInventoryItem", HookSetInventoryItem) end
     if ShoppingTooltip2 then hooksecurefunc(ShoppingTooltip2, "SetInventoryItem", HookSetInventoryItem) end
-    if ItemRefTooltip then hooksecurefunc(ItemRefTooltip, "SetInventoryItem", HookSetInventoryItem) end
+
+    hooksecurefunc("GameTooltip_ShowCompareItem", function()
+        if ShoppingTooltip1 and ShoppingTooltip1:IsShown() then
+            ShoppingTooltip1.BisIsCompareItem = true
+            StyleTooltip(ShoppingTooltip1, true)
+        end
+        if ShoppingTooltip2 and ShoppingTooltip2:IsShown() then
+            ShoppingTooltip2.BisIsCompareItem = true
+            StyleTooltip(ShoppingTooltip2, true)
+        end
+    end)
 
     eventFrame:RegisterEvent("MODIFIER_STATE_CHANGED")
     eventFrame:SetScript("OnEvent", function(_, _, key)

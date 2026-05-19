@@ -22,10 +22,10 @@ local phaseDropDown = nil
 local isHorde = UnitFactionGroup("player") == "Horde"
 
 local missing_widgets = {}
-local query_queue = {}
 local pending_widget_update = false
 local scanner = CreateFrame("GameTooltip", "BisTooltipScanner", UIParent, "GameTooltipTemplate")
 local item_fetch_frame = CreateFrame("Frame")
+local fetch_timer = 0
 
 local checkmark_path = "Interface\\AddOns\\" .. addonName .. "\\checkmark-16.tga"
 
@@ -47,8 +47,6 @@ local function createItemFrame(item_id, size, with_checkmark)
 
     item_frame.frame:EnableMouse(true)
 
-    local itemName, itemLink, _, _, _, _, _, _, _, itemIcon, _, _, _, bindType = GetItemInfo(item_id)
-
     if not item_frame.frame.bisCheckMark then
         item_frame.frame.bisCheckMark = item_frame.frame:CreateTexture(nil, "OVERLAY")
         item_frame.frame.bisCheckMark:SetWidth(32)
@@ -65,6 +63,47 @@ local function createItemFrame(item_id, size, with_checkmark)
         item_frame.frame.bisBoeMark:SetTexture("Interface\\Icons\\INV_Misc_Coin_01")
     end
 
+    local itemName, itemLink, _, _, _, _, _, _, _, itemIcon, _, _, _, bindType = GetItemInfo(item_id)
+
+    if not itemName then
+        item_frame:SetImage("Interface\\Icons\\INV_Misc_QuestionMark")
+        item_frame.frame.bisBoeMark:Hide()
+
+        if with_checkmark then
+            item_frame.frame.bisCheckMark:Show()
+            item_frame.image:SetVertexColor(0.35, 0.35, 0.35, 1)
+        else
+            item_frame.frame.bisCheckMark:Hide()
+            item_frame.image:SetVertexColor(1, 1, 1, 1)
+        end
+
+        item_frame:SetCallback("OnClick", function()
+            local _, link = GetItemInfo(item_id)
+            local validLink = link or ("item:" .. item_id .. ":0:0:0:0:0:0:0")
+            if IsModifiedClick() then
+                HandleModifiedItemClick(validLink)
+            else
+                SetItemRef(validLink, validLink, "LeftButton")
+            end
+        end)
+
+        item_frame:SetCallback("OnEnter", function(widget)
+            GameTooltip:SetOwner(item_frame.frame, "ANCHOR_NONE")
+            GameTooltip:SetPoint("TOPRIGHT", item_frame.frame, "TOPRIGHT", 220, -13)
+            local _, link = GetItemInfo(item_id)
+            GameTooltip:SetHyperlink(link or ("item:" .. item_id .. ":0:0:0:0:0:0:0"))
+            GameTooltip:Show()
+            if IsShiftKeyDown() then GameTooltip_ShowCompareItem() end
+        end)
+
+        item_frame:SetCallback("OnLeave", function() GameTooltip:Hide() end)
+
+        if not missing_widgets[item_id] then missing_widgets[item_id] = {} end
+        table.insert(missing_widgets[item_id], item_frame)
+        return item_frame
+    end
+
+    item_frame:SetImage(itemIcon)
     if with_checkmark then
         item_frame.frame.bisCheckMark:Show()
         item_frame.image:SetVertexColor(0.35, 0.35, 0.35, 1)
@@ -72,17 +111,6 @@ local function createItemFrame(item_id, size, with_checkmark)
         item_frame.frame.bisCheckMark:Hide()
         item_frame.image:SetVertexColor(1, 1, 1, 1)
     end
-
-    if not itemName then
-        item_frame:SetImage("Interface\\Icons\\INV_Misc_QuestionMark")
-        item_frame.frame.bisBoeMark:Hide()
-        if not missing_widgets[item_id] then missing_widgets[item_id] = {} end
-        table.insert(missing_widgets[item_id], item_frame)
-        query_queue[item_id] = true
-        return item_frame
-    end
-
-    item_frame:SetImage(itemIcon)
     if bindType == 2 then item_frame.frame.bisBoeMark:Show() else item_frame.frame.bisBoeMark:Hide() end
 
     item_frame:SetCallback("OnClick", function()
@@ -103,9 +131,8 @@ local function createItemFrame(item_id, size, with_checkmark)
             GameTooltip_ShowCompareItem()
         end
     end)
-    item_frame:SetCallback("OnLeave", function()
-        GameTooltip:Hide()
-    end)
+
+    item_frame:SetCallback("OnLeave", function() GameTooltip:Hide() end)
 
     return item_frame
 end
@@ -115,27 +142,26 @@ item_fetch_frame:SetScript("OnEvent", function()
     pending_widget_update = true
 end)
 
-item_fetch_frame:SetScript("OnUpdate", function()
-    for i = 1, 5 do
-        local next_id = next(query_queue)
-        if next_id then
-            scanner:SetOwner(UIParent, "ANCHOR_NONE")
-            scanner:SetHyperlink("item:" .. next_id .. ":0:0:0:0:0:0:0")
-            scanner:ClearLines()
-            query_queue[next_id] = nil
-        else break end
-    end
-
-    if pending_widget_update then
-        pending_widget_update = false
+item_fetch_frame:SetScript("OnUpdate", function(self, elapsed)
+    fetch_timer = fetch_timer + elapsed
+    if fetch_timer > 0.25 then
+        fetch_timer = 0
         for item_id, widgets in pairs(missing_widgets) do
             local itemName, itemLink, _, _, _, _, _, _, _, itemIcon, _, _, _, bindType = GetItemInfo(item_id)
+
             if itemName then
                 for _, widget in ipairs(widgets) do
-                    if widget and widget.frame and widget.frame:IsShown() then
+                    if widget and widget.frame then
                         widget:SetImage(itemIcon)
+
                         local isEquipped = BisTooltipAddon:IsItemOwned(item_id)
-                        if isEquipped then widget.image:SetVertexColor(0.35, 0.35, 0.35, 1) else widget.image:SetVertexColor(1, 1, 1, 1) end
+                        if isEquipped then
+                            widget.image:SetVertexColor(0.35, 0.35, 0.35, 1)
+                            widget.frame.bisCheckMark:Show()
+                        else
+                            widget.image:SetVertexColor(1, 1, 1, 1)
+                            widget.frame.bisCheckMark:Hide()
+                        end
                         if bindType == 2 then widget.frame.bisBoeMark:Show() else widget.frame.bisBoeMark:Hide() end
 
                         widget:SetCallback("OnClick", function()
@@ -158,6 +184,10 @@ item_fetch_frame:SetScript("OnUpdate", function()
                     end
                 end
                 missing_widgets[item_id] = nil
+            else
+                scanner:SetOwner(UIParent, "ANCHOR_NONE")
+                scanner:SetHyperlink("item:" .. item_id .. ":0:0:0:0:0:0:0")
+                scanner:ClearLines()
             end
         end
     end
@@ -184,7 +214,7 @@ local function createSpellFrame(spell_id, size)
     if not name then return spell_frame end
 
     spell_frame:SetImage(icon)
-    local link = GetSpellLink(spell_id)
+    local link = GetSpellLink(spell_id) or ("\124cffffd000\124Hspell:" .. spell_id .. "\124h[" .. name .. "]\124h\124r")
 
     spell_frame:SetCallback("OnClick", function()
         if link then
@@ -249,8 +279,9 @@ local function drawItemSlot(slot)
     spec_frame:AddChild(f)
 
     local enhs = {}
-    if BisTooltip_Enhancements and BisTooltip_Enhancements[class] and BisTooltip_Enhancements[class][spec] and BisTooltip_Enhancements[class][spec][phase] then
-        enhs = BisTooltip_Enhancements[class][spec][phase][slot.slot_name] or {}
+    local enh_class = BisTooltip_Enhancements and (BisTooltip_Enhancements[class] or BisTooltip_Enhancements[string.gsub(class, "%s+", "")])
+    if enh_class and enh_class[spec] and enh_class[spec][phase] then
+        enhs = enh_class[spec][phase][slot.slot_name] or {}
     end
 
     spec_frame:AddChild(createEnhancementsFrame(enhs))
@@ -312,13 +343,15 @@ local function drawSpecData()
     BisTooltipAddon.db.char.phase_index = phase_index
 
     missing_widgets = {}
-    query_queue = {}
+
     spec_frame:ReleaseChildren()
     drawTableHeader(spec_frame)
 
-    if not spec or not phase or not BisTooltip_ItemLists[class] or not BisTooltip_ItemLists[class][spec] then return end
-    local slots = BisTooltip_ItemLists[class][spec][phase]
+    local list_class = BisTooltip_ItemLists and (BisTooltip_ItemLists[class] or BisTooltip_ItemLists[string.gsub(class, "%s+", "")])
+    if not spec or not phase or not list_class or not list_class[spec] then return end
+    local slots = list_class[spec][phase]
     if not slots then return end
+
     for _, slot in ipairs(slots) do drawItemSlot(slot) end
 end
 
@@ -338,7 +371,10 @@ local function buildSpecsDict(class_i)
     spec_options_to_spec = {}
     local class_data = BisTooltip_ClassData[class_i]
     for si, spec_name in ipairs(class_data.specs) do
-        local option_name = "|T" .. BisTooltip_SpecIcons[class_data.name][spec_name] .. ":14|t " .. spec_name
+        local icon = BisTooltip_SpecIcons[class_data.name] and BisTooltip_SpecIcons[class_data.name][spec_name]
+        local iconStr = icon and ("|T" .. icon .. ":14|t ") or ""
+        local option_name = iconStr .. spec_name
+
         table.insert(spec_options, option_name)
         spec_options_to_spec[option_name] = spec_name
     end
@@ -486,7 +522,6 @@ function BisTooltipAddon:createMainFrame()
     main_frame:SetCallback("OnClose", function(widget)
         spec_frame = nil
         missing_widgets = {}
-        query_queue = {}
         AceGUI:Release(widget)
         main_frame = nil
     end)
@@ -545,7 +580,6 @@ function BisTooltipAddon:closeMainFrame()
         specDropdown = nil
         phaseDropDown = nil
         missing_widgets = {}
-        query_queue = {}
 
         main_frame = nil
     end

@@ -7,9 +7,9 @@ BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][1] = {["slot_name"] = "Hea
 BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40678, [2] = 42645, [3] = 42021, [4] = 37861, [5] = 37096, [6] = 44033 }
 BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 37679, [2] = 37373, [3] = 37139, [4] = 44372, [5] = 35616, [6] = 44257 }
 BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][4] = {["slot_name"] = "Back", [1] = 43406, [2] = 38614, [3] = 42061, [4] = 34241, [5] = 43566, [6] = 36947 }
-BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][5] = {["slot_name"] = "Chest", [1] = 44295, [2] = 37165, [3] = 44303, [4] = 37144, [5] = 37800 }
+BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][5] = {["slot_name"] = "Chest", [1] = 39579, [2] = 44295, [3] = 37165, [4] = 44303, [5] = 37144, [6] = 37800 }
 BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 43131, [2] = 37366, [3] = 37656, [4] = 37170, [5] = 44203, [6] = 43459 }
-BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][7] = {["slot_name"] = "Hands", [1] = 37409, [2] = 37639, [3] = 37886, [4] = 37043, [5] = 34343 }
+BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][7] = {["slot_name"] = "Hands", [1] = 39582, [2] = 37409, [3] = 37639, [4] = 37886, [5] = 37043, [6] = 34343 }
 BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][8] = {["slot_name"] = "Waist", [1] = 40692, [2] = 37407, [3] = 37243, [4] = 34549, [5] = 37648, [6] = 37845 }
 BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37669, [2] = 37644, [3] = 44117, [4] = 34188, [5] = 43458, [6] = 37262 }
 BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44297, [2] = 44898, [3] = 37666, [4] = 37167, [5] = 34570, [6] = 37870 }
@@ -116,9 +116,9 @@ BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][1] = {["slot_name"] = "Head
 BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40678, [2] = 42645, [3] = 42021, [4] = 37861, [5] = 37096, [6] = 44033 }
 BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 37679, [2] = 37373, [3] = 37139, [4] = 44372, [5] = 35616, [6] = 44257 }
 BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][4] = {["slot_name"] = "Back", [1] = 43406, [2] = 38614, [3] = 42061, [4] = 34241, [5] = 43566, [6] = 36947 }
-BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][5] = {["slot_name"] = "Chest", [1] = 44295, [2] = 37165, [3] = 44303, [4] = 37144, [5] = 37800 }
+BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][5] = {["slot_name"] = "Chest", [1] = 39579, [2] = 44295, [3] = 37165, [4] = 44303, [5] = 37144, [6] = 37800 }
 BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 43131, [2] = 37366, [3] = 37656, [4] = 37170, [5] = 44203, [6] = 43459 }
-BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][7] = {["slot_name"] = "Hands", [1] = 37409, [2] = 37639, [3] = 37886, [4] = 37043, [5] = 34343 }
+BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][7] = {["slot_name"] = "Hands", [1] = 39582, [2] = 37409, [3] = 37639, [4] = 37886, [5] = 37043, [6] = 34343 }
 BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][8] = {["slot_name"] = "Waist", [1] = 40692, [2] = 37407, [3] = 37243, [4] = 34549, [5] = 37648, [6] = 37845 }
 BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37669, [2] = 37644, [3] = 44117, [4] = 34188, [5] = 43458, [6] = 37262 }
 BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44297, [2] = 44898, [3] = 37666, [4] = 37167, [5] = 34570, [6] = 37870 }
@@ -225,9 +225,9 @@ BisTooltip_ItemLists["Hunter"]["Survival"]["PR"][1] = {["slot_name"] = "Head", [
 BisTooltip_ItemLists["Hunter"]["Survival"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40678, [2] = 42645, [3] = 42021, [4] = 37096, [5] = 37861, [6] = 44033 }
 BisTooltip_ItemLists["Hunter"]["Survival"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 37679, [2] = 37139, [3] = 37373, [4] = 44372, [5] = 44257, [6] = 35591 }
 BisTooltip_ItemLists["Hunter"]["Survival"]["PR"][4] = {["slot_name"] = "Back", [1] = 43406, [2] = 38614, [3] = 42061, [4] = 34241, [5] = 43566, [6] = 36947 }
-BisTooltip_ItemLists["Hunter"]["Survival"]["PR"][5] = {["slot_name"] = "Chest", [1] = 44295, [2] = 37165, [3] = 44303, [4] = 37800, [5] = 37144 }
+BisTooltip_ItemLists["Hunter"]["Survival"]["PR"][5] = {["slot_name"] = "Chest", [1] = 39579, [2] = 44295, [3] = 37165, [4] = 44303, [5] = 37800, [6] = 37144 }
 BisTooltip_ItemLists["Hunter"]["Survival"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 43131, [2] = 37366, [3] = 37656, [4] = 44203, [5] = 37170, [6] = 43459 }
-BisTooltip_ItemLists["Hunter"]["Survival"]["PR"][7] = {["slot_name"] = "Hands", [1] = 37409, [2] = 37639, [3] = 37886, [4] = 37043, [5] = 34343 }
+BisTooltip_ItemLists["Hunter"]["Survival"]["PR"][7] = {["slot_name"] = "Hands", [1] = 39582, [2] = 37409, [3] = 37639, [4] = 37886, [5] = 37043, [6] = 34343 }
 BisTooltip_ItemLists["Hunter"]["Survival"]["PR"][8] = {["slot_name"] = "Waist", [1] = 40692, [2] = 37407, [3] = 37243, [4] = 34549, [5] = 37714, [6] = 37648 }
 BisTooltip_ItemLists["Hunter"]["Survival"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37669, [2] = 37644, [3] = 44117, [4] = 34188, [5] = 43458, [6] = 37221 }
 BisTooltip_ItemLists["Hunter"]["Survival"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44297, [2] = 44898, [3] = 37666, [4] = 37167, [5] = 44024, [6] = 34570 }

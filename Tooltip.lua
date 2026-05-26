@@ -190,17 +190,6 @@ local function HookSetInventoryItem(tooltip, unit, slot)
     end
 end
 
-local function HookSetCompareItem(tooltip)
-    if not tooltip then return end
-    tooltip.BisIsCompareItem = true
-    local _, link = tooltip:GetItem()
-    if link then
-        ProcessTooltip(tooltip, link)
-    else
-        StyleTooltip(tooltip, true)
-    end
-end
-
 function BisTooltipAddon:ClearTooltipCache() end
 
 function BisTooltipAddon:initBisTooltip()
@@ -221,14 +210,19 @@ function BisTooltipAddon:initBisTooltip()
 
     hooksecurefunc(GameTooltip, "SetInventoryItem", HookSetInventoryItem)
     if ItemRefTooltip then hooksecurefunc(ItemRefTooltip, "SetInventoryItem", HookSetInventoryItem) end
-    if ShoppingTooltip1 then
-        hooksecurefunc(ShoppingTooltip1, "SetInventoryItem", HookSetInventoryItem)
-        hooksecurefunc(ShoppingTooltip1, "SetCompareItem", HookSetCompareItem)
-    end
-    if ShoppingTooltip2 then
-        hooksecurefunc(ShoppingTooltip2, "SetInventoryItem", HookSetInventoryItem)
-        hooksecurefunc(ShoppingTooltip2, "SetCompareItem", HookSetCompareItem)
-    end
+    if ShoppingTooltip1 then hooksecurefunc(ShoppingTooltip1, "SetInventoryItem", HookSetInventoryItem) end
+    if ShoppingTooltip2 then hooksecurefunc(ShoppingTooltip2, "SetInventoryItem", HookSetInventoryItem) end
+
+    hooksecurefunc("GameTooltip_ShowCompareItem", function()
+        if ShoppingTooltip1 and ShoppingTooltip1:IsShown() then
+            ShoppingTooltip1.BisIsCompareItem = true
+            StyleTooltip(ShoppingTooltip1, true)
+        end
+        if ShoppingTooltip2 and ShoppingTooltip2:IsShown() then
+            ShoppingTooltip2.BisIsCompareItem = true
+            StyleTooltip(ShoppingTooltip2, true)
+        end
+    end)
 
     eventFrame:RegisterEvent("MODIFIER_STATE_CHANGED")
     eventFrame:SetScript("OnEvent", function(_, _, key)

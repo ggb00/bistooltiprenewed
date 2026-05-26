@@ -93,7 +93,7 @@ local function createItemFrame(item_id, size, with_checkmark)
             local _, link = GetItemInfo(item_id)
             GameTooltip:SetHyperlink(link or ("item:" .. item_id .. ":0:0:0:0:0:0:0"))
             GameTooltip:Show()
-            if IsShiftKeyDown() then GameTooltip_ShowCompareItem() end
+            if IsShiftKeyDown() then GameTooltip_ShowCompareItem(GameTooltip) end
         end)
 
         item_frame:SetCallback("OnLeave", function() GameTooltip:Hide() end)
@@ -128,7 +128,7 @@ local function createItemFrame(item_id, size, with_checkmark)
         GameTooltip:Show()
 
         if IsShiftKeyDown() then
-            GameTooltip_ShowCompareItem()
+            GameTooltip_ShowCompareItem(GameTooltip)
         end
     end)
 
@@ -178,7 +178,7 @@ item_fetch_frame:SetScript("OnUpdate", function(self, elapsed)
                             GameTooltip:SetHyperlink(itemLink)
                             GameTooltip:Show()
                             if IsShiftKeyDown() then
-                                GameTooltip_ShowCompareItem()
+                                GameTooltip_ShowCompareItem(GameTooltip)
                             end
                         end)
                     end

@@ -24,24 +24,12 @@ local source_hex_colors = {
     ["white"]     = "FFFFFF",
 }
 
-local function GetItemSource(itemId, translatedId)
-    local source = BisTooltip_ItemSources and BisTooltip_ItemSources[itemId]
-    if not source and translatedId and BisTooltip_ItemSources then
-        source = BisTooltip_ItemSources[translatedId]
+local function GetItemSources(itemId, translatedId)
+    local sources = BisTooltip_ItemSources and BisTooltip_ItemSources[itemId]
+    if not sources and translatedId and BisTooltip_ItemSources then
+        sources = BisTooltip_ItemSources[translatedId]
     end
-
-    if source then
-        local db = BisTooltipAddon.db.char
-        local colorKey = db.source_color or "green"
-        local hexColor = source_hex_colors[colorKey] or "19FF19"
-
-        if db.hide_source_prefix then
-            return string.format("|cFF%s%s|r", hexColor, source)
-        else
-            return string.format("|cFFFFFFFFSource:|r |cFF%s%s|r", hexColor, source)
-        end
-    end
-    return nil
+    return sources
 end
 
 local function StyleTooltip(tooltip, isForcedItem)
@@ -171,9 +159,19 @@ local function ProcessTooltip(tooltip, link)
         end
     end
 
-    local sourceText = GetItemSource(itemId, translated_id)
-    if sourceText then
-        tooltip:AddLine(sourceText, 1, 1, 1, true)
+    local sources = GetItemSources(itemId, translated_id)
+    if sources then
+        local colorKey = db.source_color or "green"
+        local hexColor = source_hex_colors[colorKey] or "19FF19"
+        local icon = "|TInterface\\Icons\\INV_Misc_Bag_10:14:14:0:0:64:64:5:59:5:59|t"
+
+        if type(sources) == "table" then
+            for _, src in ipairs(sources) do
+                tooltip:AddLine(string.format("%s |cFF%s%s|r", icon, hexColor, src), 1, 1, 1, true)
+            end
+        elseif type(sources) == "string" then
+            tooltip:AddLine(string.format("%s |cFF%s%s|r", icon, hexColor, sources), 1, 1, 1, true)
+        end
     end
 
     tooltip:Show()
@@ -189,6 +187,17 @@ local function HookSetInventoryItem(tooltip, unit, slot)
         if link then
             ProcessTooltip(tooltip, link)
         end
+    end
+end
+
+local function HookSetCompareItem(tooltip)
+    if not tooltip then return end
+    tooltip.BisIsCompareItem = true
+    local _, link = tooltip:GetItem()
+    if link then
+        ProcessTooltip(tooltip, link)
+    else
+        StyleTooltip(tooltip, true)
     end
 end
 
@@ -212,19 +221,14 @@ function BisTooltipAddon:initBisTooltip()
 
     hooksecurefunc(GameTooltip, "SetInventoryItem", HookSetInventoryItem)
     if ItemRefTooltip then hooksecurefunc(ItemRefTooltip, "SetInventoryItem", HookSetInventoryItem) end
-    if ShoppingTooltip1 then hooksecurefunc(ShoppingTooltip1, "SetInventoryItem", HookSetInventoryItem) end
-    if ShoppingTooltip2 then hooksecurefunc(ShoppingTooltip2, "SetInventoryItem", HookSetInventoryItem) end
-
-    hooksecurefunc("GameTooltip_ShowCompareItem", function()
-        if ShoppingTooltip1 and ShoppingTooltip1:IsShown() then
-            ShoppingTooltip1.BisIsCompareItem = true
-            StyleTooltip(ShoppingTooltip1, true)
-        end
-        if ShoppingTooltip2 and ShoppingTooltip2:IsShown() then
-            ShoppingTooltip2.BisIsCompareItem = true
-            StyleTooltip(ShoppingTooltip2, true)
-        end
-    end)
+    if ShoppingTooltip1 then
+        hooksecurefunc(ShoppingTooltip1, "SetInventoryItem", HookSetInventoryItem)
+        hooksecurefunc(ShoppingTooltip1, "SetCompareItem", HookSetCompareItem)
+    end
+    if ShoppingTooltip2 then
+        hooksecurefunc(ShoppingTooltip2, "SetInventoryItem", HookSetInventoryItem)
+        hooksecurefunc(ShoppingTooltip2, "SetCompareItem", HookSetCompareItem)
+    end
 
     eventFrame:RegisterEvent("MODIFIER_STATE_CHANGED")
     eventFrame:SetScript("OnEvent", function(_, _, key)

@@ -12,8 +12,7 @@ local db_defaults = {
         filter_specs = {}, highlight_spec = {},
         highlight_color = "purple", use_class_colors = true,
         minimap_icon = true, tooltip_with_ctrl = false,
-        source_color = "green", hide_source_prefix = false,
-        dark_tooltips = false
+        source_color = "green", dark_tooltips = false
     }
 }
 
@@ -111,17 +110,9 @@ local configTable = {
             end,
             get = function(info) return BisTooltipAddon.db.char.highlight_color or "class" end
         },
-        hide_source_prefix = {
-            name = "Hide 'Source:' Prefix",
-            order = 7,
-            desc = "Hides the 'Source:' prefix from item tooltips",
-            type = "toggle",
-            set = function(info, val) BisTooltipAddon.db.char.hide_source_prefix = val end,
-            get = function(info) return BisTooltipAddon.db.char.hide_source_prefix end
-        },
         source_color = {
             name = "Source Color",
-            order = 8,
+            order = 7,
             desc = "Changes the text color of the item's source data",
             type = "select",
             values = {
@@ -140,7 +131,7 @@ local configTable = {
         },
         dark_tooltips = {
             name = "Dark Tooltips",
-            order = 9,
+            order = 8,
             desc = "Changes the tooltip background to a solid black color",
             type = "toggle",
             set = function(info, val) BisTooltipAddon.db.char.dark_tooltips = val end,
@@ -167,18 +158,20 @@ local function buildFilterSpecOptions()
 end
 
 local function migrateAddonDB()
-    if not BisTooltipAddon.db.char.version or BisTooltipAddon.db.char.version < 7.2 then
-        BisTooltipAddon.db.char.version = 7.2
+    if not BisTooltipAddon.db.char.version or BisTooltipAddon.db.char.version < 7.3 then
+        BisTooltipAddon.db.char.version = 7.3
         if not BisTooltipAddon.db.char.highlight_spec then BisTooltipAddon.db.char.highlight_spec = {} end
         if not BisTooltipAddon.db.char.filter_specs then BisTooltipAddon.db.char.filter_specs = {} end
         if not BisTooltipAddon.db.char.class_index then BisTooltipAddon.db.char.class_index = 1 end
         if not BisTooltipAddon.db.char.spec_index then BisTooltipAddon.db.char.spec_index = 1 end
         if not BisTooltipAddon.db.char.phase_index then BisTooltipAddon.db.char.phase_index = 1 end
     end
+
+    BisTooltipAddon.db.char.hide_source_prefix = nil
+
     if not BisTooltipAddon.db.char.highlight_color then BisTooltipAddon.db.char.highlight_color = "purple" end
     if BisTooltipAddon.db.char.use_class_colors == nil then BisTooltipAddon.db.char.use_class_colors = true end
     if not BisTooltipAddon.db.char.source_color then BisTooltipAddon.db.char.source_color = "green" end
-    if BisTooltipAddon.db.char.hide_source_prefix == nil then BisTooltipAddon.db.char.hide_source_prefix = false end
     if BisTooltipAddon.db.char.dark_tooltips == nil then BisTooltipAddon.db.char.dark_tooltips = false end
 end
 

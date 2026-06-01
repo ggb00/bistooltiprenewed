@@ -1,5 +1,5 @@
 -- Faction.lua
--- Left Horde -> Right Alliance, even though it says the other way in all other files...
+-- Left Horde -> Right Alliance, even though it says the other way in all other files... (Or is it mixed? Maybe I'll redo it one day, but it's pointless)
 BisTooltip_FactionMap = {};
 BisTooltip_FactionMap[47617] = 47855;
 BisTooltip_FactionMap[47613] = 47857;

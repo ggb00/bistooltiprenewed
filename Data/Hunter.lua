@@ -13,12 +13,12 @@ BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][7] = {["slot_name"] = "Han
 BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][8] = {["slot_name"] = "Waist", [1] = 40692, [2] = 37407, [3] = 37243, [4] = 34549, [5] = 37648, [6] = 37845 }
 BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37669, [2] = 37644, [3] = 44117, [4] = 34188, [5] = 43458, [6] = 37262 }
 BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44297, [2] = 44898, [3] = 37666, [4] = 37167, [5] = 34570, [6] = 37870 }
-BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 40586, [2] = 43251, [3] = 37685, [4] = 42642, [5] = 37624, [6] = 44308 }
-BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 42642, [2] = 43251, [3] = 37685, [4] = 40586, [5] = 37624, [6] = 44308 }
+BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 40586, [2] = 43251, [3] = 37685, [4] = 42642, [5] = 37624 }
+BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 42642, [2] = 43251, [3] = 37685, [4] = 40586, [5] = 37624 }
 BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 37166, [3] = 40684, [4] = 37723, [5] = 42990, [6] = 37390 }
 BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40684, [2] = 42987, [3] = 37166, [4] = 37723, [5] = 42990, [6] = 37390 }
-BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 44249, [2] = 44193, [3] = 44311, [4] = 44187, [5] = 37181, [6] = 44250 }
-BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 47042, [2] = 44193, [3] = 44311, [4] = 44187, [5] = 37181 }
+BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 44249, [2] = 44193, [3] = 44187, [4] = 37181, [5] = 44250 }
+BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 47042, [2] = 44193, [3] = 44187, [4] = 37181 }
 BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["PR"][17] = {["slot_name"] = "Ranged", [1] = 37191, [2] = 44504, [3] = 37692, [4] = 44245, [5] = 43284, [6] = 37615 }
 BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["T7"] = BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["T7"] or {}
 BisTooltip_ItemLists["Hunter"]["Beast Mastery"]["T7"][1] = {["slot_name"] = "Head", [1] = 40543, [2] = 40451, [3] = 40505, [4] = 40344, [5] = 39399, [6] = 44903 }
@@ -122,12 +122,12 @@ BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][7] = {["slot_name"] = "Hand
 BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][8] = {["slot_name"] = "Waist", [1] = 40692, [2] = 37407, [3] = 37243, [4] = 34549, [5] = 37648, [6] = 37845 }
 BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37669, [2] = 37644, [3] = 44117, [4] = 34188, [5] = 43458, [6] = 37262 }
 BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44297, [2] = 44898, [3] = 37666, [4] = 37167, [5] = 34570, [6] = 37870 }
-BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 40586, [2] = 43251, [3] = 37685, [4] = 42642, [5] = 37624, [6] = 44308 }
-BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 42642, [2] = 43251, [3] = 37685, [4] = 40586, [5] = 37624, [6] = 44308 }
+BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 40586, [2] = 43251, [3] = 37685, [4] = 42642, [5] = 37624 }
+BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 42642, [2] = 43251, [3] = 37685, [4] = 40586, [5] = 37624 }
 BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 37166, [3] = 40684, [4] = 37723, [5] = 42990, [6] = 37390 }
 BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40684, [2] = 42987, [3] = 37166, [4] = 37723, [5] = 42990, [6] = 37390 }
-BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 44249, [2] = 44193, [3] = 44311, [4] = 44187, [5] = 37181, [6] = 44250 }
-BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 47042, [2] = 44193, [3] = 44311, [4] = 44187, [5] = 37181 }
+BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 44249, [2] = 44193, [3] = 44187, [4] = 37181, [5] = 44250 }
+BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 47042, [2] = 44193, [3] = 44187, [4] = 37181 }
 BisTooltip_ItemLists["Hunter"]["Marksmanship"]["PR"][17] = {["slot_name"] = "Ranged", [1] = 37191, [2] = 44504, [3] = 37692, [4] = 44245, [5] = 43284, [6] = 37615 }
 BisTooltip_ItemLists["Hunter"]["Marksmanship"]["T7"] = BisTooltip_ItemLists["Hunter"]["Marksmanship"]["T7"] or {}
 BisTooltip_ItemLists["Hunter"]["Marksmanship"]["T7"][1] = {["slot_name"] = "Head", [1] = 40543, [2] = 40451, [3] = 40505, [4] = 40344, [5] = 39399, [6] = 44903 }
@@ -235,8 +235,8 @@ BisTooltip_ItemLists["Hunter"]["Survival"]["PR"][11] = {["slot_name"] = "Finger 
 BisTooltip_ItemLists["Hunter"]["Survival"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 42642, [2] = 50170, [3] = 43251, [4] = 37685, [5] = 40586, [6] = 37624 }
 BisTooltip_ItemLists["Hunter"]["Survival"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 37166, [3] = 40684, [4] = 37723, [5] = 37390, [6] = 42990 }
 BisTooltip_ItemLists["Hunter"]["Survival"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40684, [2] = 42987, [3] = 37166, [4] = 37723, [5] = 37390, [6] = 42990 }
-BisTooltip_ItemLists["Hunter"]["Survival"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 44249, [2] = 44311, [3] = 44193, [4] = 37235, [5] = 44187, [6] = 37181 }
-BisTooltip_ItemLists["Hunter"]["Survival"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 44311, [2] = 47042, [3] = 44193, [4] = 37235, [5] = 44187, [6] = 37181 }
+BisTooltip_ItemLists["Hunter"]["Survival"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 44249, [2] = 44193, [3] = 37235, [4] = 44187, [5] = 37181 }
+BisTooltip_ItemLists["Hunter"]["Survival"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 47042, [2] = 44193, [3] = 37235, [4] = 44187, [5] = 37181 }
 BisTooltip_ItemLists["Hunter"]["Survival"]["PR"][17] = {["slot_name"] = "Ranged", [1] = 37191, [2] = 44504, [3] = 44245, [4] = 37692, [5] = 43284, [6] = 37615 }
 BisTooltip_ItemLists["Hunter"]["Survival"]["T7"] = BisTooltip_ItemLists["Hunter"]["Survival"]["T7"] or {}
 BisTooltip_ItemLists["Hunter"]["Survival"]["T7"][1] = {["slot_name"] = "Head", [1] = 40543, [2] = 40451, [3] = 39399, [4] = 40505, [5] = 40344, [6] = 39578 }
@@ -254,7 +254,7 @@ BisTooltip_ItemLists["Hunter"]["Survival"]["T7"][12] = {["slot_name"] = "Finger 
 BisTooltip_ItemLists["Hunter"]["Survival"]["T7"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 40256, [3] = 37166, [4] = 40431, [5] = 40684, [6] = 39257 }
 BisTooltip_ItemLists["Hunter"]["Survival"]["T7"][14] = {["slot_name"] = "Trinket 2", [1] = 40256, [2] = 42987, [3] = 37166, [4] = 40431, [5] = 40684, [6] = 39257 }
 BisTooltip_ItemLists["Hunter"]["Survival"]["T7"][15] = {["slot_name"] = "Weapon", [1] = 40388, [2] = 40497, [3] = 40386, [4] = 40491, [5] = 39714, [6] = 40384 }
-BisTooltip_ItemLists["Hunter"]["Survival"]["T7"][16] = {["slot_name"] = "Off hand", [1] = 40386, [2] = 40491, [3] = 39714, [4] = 39420, [5] = 40239, [6] = 44311 }
+BisTooltip_ItemLists["Hunter"]["Survival"]["T7"][16] = {["slot_name"] = "Off hand", [1] = 40386, [2] = 40491, [3] = 39714, [4] = 39420, [5] = 40239, [6] = 47042 }
 BisTooltip_ItemLists["Hunter"]["Survival"]["T7"][17] = {["slot_name"] = "Ranged", [1] = 40385, [2] = 40265, [3] = 39419, [4] = 40346, [5] = 39296, [6] = 37191 }
 BisTooltip_ItemLists["Hunter"]["Survival"]["T8"] = BisTooltip_ItemLists["Hunter"]["Survival"]["T8"] or {}
 BisTooltip_ItemLists["Hunter"]["Survival"]["T8"][1] = {["slot_name"] = "Head", [1] = 45610, [2] = 45329, [3] = 46143, [4] = 45993, [5] = 45361, [6] = 45164 }

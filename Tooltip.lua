@@ -228,23 +228,22 @@ function BisTooltipAddon:initBisTooltip()
     eventFrame:SetScript("OnEvent", function(_, _, key)
         if key == "LALT" or key == "RALT" or key == "LCTRL" or key == "RCTRL" or key == "LSHIFT" or key == "RSHIFT" then
             if GameTooltip:IsShown() then
-                local owner = GameTooltip:GetOwner()
-
-                if owner and owner:GetScript("OnEnter") then
-                    owner:GetScript("OnEnter")(owner)
-                else
-                    local _, link = GameTooltip:GetItem()
-                    if link then
+                local _, link = GameTooltip:GetItem()
+                if link then
+                    local owner = GameTooltip:GetOwner()
+                    if owner and owner:GetScript("OnEnter") then
+                        owner:GetScript("OnEnter")(owner)
+                    else
                         GameTooltip:SetHyperlink("item:3299:0:0:0:0:0:0:0:0")
                         GameTooltip:SetHyperlink(link)
                     end
-                end
 
-                if IsShiftKeyDown() then
-                    GameTooltip_ShowCompareItem(GameTooltip)
-                else
-                    if ShoppingTooltip1 then ShoppingTooltip1:Hide() end
-                    if ShoppingTooltip2 then ShoppingTooltip2:Hide() end
+                    if IsShiftKeyDown() then
+                        GameTooltip_ShowCompareItem(GameTooltip)
+                    else
+                        if ShoppingTooltip1 then ShoppingTooltip1:Hide() end
+                        if ShoppingTooltip2 then ShoppingTooltip2:Hide() end
+                    end
                 end
             end
 

@@ -15,8 +15,8 @@ BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][9] = {["slot_name"] = "Legs",
 BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44202, [2] = 37730, [3] = 36954, [4] = 44900, [5] = 37218, [6] = 37867 }
 BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 44283, [2] = 37694, [3] = 37192, [4] = 40585, [5] = 43408, [6] = 42644 }
 BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 42644, [2] = 44283, [3] = 37694, [4] = 37192, [5] = 40585, [6] = 43408 }
-BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42988, [2] = 37835, [3] = 42413, [4] = 42987, [5] = 44322, [6] = 40685 }
-BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40685, [2] = 42988, [3] = 37835, [4] = 42413, [5] = 42987, [6] = 44322 }
+BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42988, [2] = 42413, [3] = 42987, [4] = 44322, [5] = 40685 }
+BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40685, [2] = 42988, [3] = 42413, [4] = 42987, [5] = 44322 }
 BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37169, [2] = 37360, [3] = 41384, [4] = 37384, [5] = 37617, [6] = 44199 }
 BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 44210, [2] = 40699, [3] = 37718, [4] = 37051, [5] = 37889, [6] = 37364 }
 BisTooltip_ItemLists["Priest"]["Discipline"]["PR"][17] = {["slot_name"] = "Ranged", [1] = 37238, [2] = 37619, [3] = 34348, [4] = 37626, [5] = 37038, [6] = 35617 }
@@ -33,8 +33,8 @@ BisTooltip_ItemLists["Priest"]["Discipline"]["T7"][9] = {["slot_name"] = "Legs",
 BisTooltip_ItemLists["Priest"]["Discipline"]["T7"][10] = {["slot_name"] = "Feet", [1] = 40236, [2] = 40558, [3] = 40326, [4] = 40246, [5] = 40751, [6] = 44202 }
 BisTooltip_ItemLists["Priest"]["Discipline"]["T7"][11] = {["slot_name"] = "Finger 1", [1] = 40108, [2] = 40399, [3] = 40375, [4] = 40719, [5] = 40433, [6] = 40720 }
 BisTooltip_ItemLists["Priest"]["Discipline"]["T7"][12] = {["slot_name"] = "Finger 2", [1] = 40720, [2] = 40399, [3] = 40375, [4] = 40719, [5] = 40433, [6] = 40108 }
-BisTooltip_ItemLists["Priest"]["Discipline"]["T7"][13] = {["slot_name"] = "Trinket 1", [1] = 40432, [2] = 42988, [3] = 37835, [4] = 42413, [5] = 40258, [6] = 40382 }
-BisTooltip_ItemLists["Priest"]["Discipline"]["T7"][14] = {["slot_name"] = "Trinket 2", [1] = 42988, [2] = 40432, [3] = 37835, [4] = 42413, [5] = 40258, [6] = 40382 }
+BisTooltip_ItemLists["Priest"]["Discipline"]["T7"][13] = {["slot_name"] = "Trinket 1", [1] = 40432, [2] = 42988, [3] = 42413, [4] = 40258, [5] = 40382, [6] = 42987 }
+BisTooltip_ItemLists["Priest"]["Discipline"]["T7"][14] = {["slot_name"] = "Trinket 2", [1] = 42988, [2] = 40432, [3] = 42413, [4] = 40258, [5] = 40382, [6] = 42987 }
 BisTooltip_ItemLists["Priest"]["Discipline"]["T7"][15] = {["slot_name"] = "Weapon", [1] = 40395, [2] = 40300, [3] = 39423, [4] = 40488, [5] = 40244, [6] = 39424 }
 BisTooltip_ItemLists["Priest"]["Discipline"]["T7"][16] = {["slot_name"] = "Off hand", [1] = 40350, [2] = 39766, [3] = 40192, [4] = 40699, [5] = 39311, [6] = 44210 }
 BisTooltip_ItemLists["Priest"]["Discipline"]["T7"][17] = {["slot_name"] = "Ranged", [1] = 40245, [2] = 39426, [3] = 40284, [4] = 40335, [5] = 39473, [6] = 37238 }
@@ -233,8 +233,8 @@ BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][9] = {["slot_name"] = "Legs", [1]
 BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44202, [2] = 44899, [3] = 37730, [4] = 37218, [5] = 37867, [6] = 34563 }
 BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 40585, [2] = 43253, [3] = 44283, [4] = 37694, [5] = 37192, [6] = 42644 }
 BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 43253, [2] = 40585, [3] = 44283, [4] = 37694, [5] = 37192, [6] = 42644 }
-BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 37873, [2] = 42395, [3] = 40682, [4] = 36972, [5] = 32483, [6] = 37835 }
-BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40682, [2] = 37873, [3] = 42395, [4] = 36972, [5] = 32483, [6] = 37835 }
+BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 37873, [2] = 42395, [3] = 40682, [4] = 36972, [5] = 32483 }
+BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40682, [2] = 37873, [3] = 42395, [4] = 36972, [5] = 32483 }
 BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 41384, [2] = 37169, [3] = 44173, [4] = 37360, [5] = 37377, [6] = 44199 }
 BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 40698, [2] = 37134, [3] = 44210, [4] = 37718, [5] = 37051, [6] = 37889 }
 BisTooltip_ItemLists["Priest"]["Shadow"]["PR"][17] = {["slot_name"] = "Ranged", [1] = 37177, [2] = 36989, [3] = 37238, [4] = 34347, [5] = 38206, [6] = 37619 }

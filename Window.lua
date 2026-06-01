@@ -509,8 +509,38 @@ function BisTooltipAddon:createMainFrame()
     main_frame:SetHeight(570)
     main_frame:EnableResize(false)
 
+    local pos = BisTooltipAddon.db.char.frame_pos
+    if pos and pos.x and pos.y then
+        main_frame.frame:ClearAllPoints()
+        main_frame.frame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", pos.x, pos.y)
+    end
+
     _G["BisTooltipRenewed_MainWindow"] = main_frame.frame
     tinsert(UISpecialFrames, "BisTooltipRenewed_MainWindow")
+
+    hooksecurefunc(main_frame.frame, "StopMovingOrSizing", function(self)
+        local x = self:GetLeft()
+        local y = self:GetTop()
+        if not x or not y then return end
+
+        local screenW = UIParent:GetRight()
+        local screenH = UIParent:GetTop()
+        local w = self:GetWidth()
+        local h = self:GetHeight()
+
+        local clamped = false
+        if x < 0 then x = 0; clamped = true end
+        if y > screenH then y = screenH; clamped = true end
+        if x + w > screenW then x = screenW - w; clamped = true end
+        if y - h < 0 then y = h; clamped = true end
+
+        BisTooltipAddon.db.char.frame_pos = {x = x, y = y}
+
+        if clamped then
+            self:ClearAllPoints()
+            self:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x, y)
+        end
+    end)
 
     if not main_frame.frame.darkOverlay then
         main_frame.frame.darkOverlay = main_frame.frame:CreateTexture(nil, "BACKGROUND", nil, -1)

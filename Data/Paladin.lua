@@ -15,8 +15,8 @@ BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][9] = {["slot_name"] = "Legs", [1] 
 BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44202, [2] = 43405, [3] = 43469, [4] = 37730, [5] = 37218, [6] = 37654 }
 BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 44283, [2] = 40585, [3] = 37694, [4] = 42644, [5] = 37192, [6] = 43408 }
 BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 40585, [2] = 44283, [3] = 37694, [4] = 42644, [5] = 37192, [6] = 43408 }
-BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 37111, [3] = 28823, [4] = 37835, [5] = 40685, [6] = 42988 }
-BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 37111, [2] = 42987, [3] = 28823, [4] = 37835, [5] = 40685, [6] = 42988 }
+BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 37111, [3] = 28823, [4] = 40685, [5] = 42988 }
+BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 37111, [2] = 42987, [3] = 28823, [4] = 40685, [5] = 42988 }
 BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37169, [2] = 41384, [3] = 44199, [4] = 37681, [5] = 44052, [6] = 34335 }
 BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 40700, [2] = 37061, [3] = 37216, [4] = 44032, [5] = 44210, [6] = 35636 }
 BisTooltip_ItemLists["Paladin"]["Holy"]["PR"][17] = {["slot_name"] = "Relic", [1] = 40705, [2] = 30063, [3] = 33502 }
@@ -33,8 +33,8 @@ BisTooltip_ItemLists["Paladin"]["Holy"]["T7"][9] = {["slot_name"] = "Legs", [1] 
 BisTooltip_ItemLists["Paladin"]["Holy"]["T7"][10] = {["slot_name"] = "Feet", [1] = 40187, [2] = 40592, [3] = 40237, [4] = 40519, [5] = 43996, [6] = 39734 }
 BisTooltip_ItemLists["Paladin"]["Holy"]["T7"][11] = {["slot_name"] = "Finger 1", [1] = 40399, [2] = 39244, [3] = 40375, [4] = 40108, [5] = 40433, [6] = 44283 }
 BisTooltip_ItemLists["Paladin"]["Holy"]["T7"][12] = {["slot_name"] = "Finger 2", [1] = 40375, [2] = 40399, [3] = 39244, [4] = 40108, [5] = 40433, [6] = 44283 }
-BisTooltip_ItemLists["Paladin"]["Holy"]["T7"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 37111, [3] = 28823, [4] = 40258, [5] = 37835, [6] = 40685 }
-BisTooltip_ItemLists["Paladin"]["Holy"]["T7"][14] = {["slot_name"] = "Trinket 2", [1] = 37111, [2] = 42987, [3] = 28823, [4] = 40258, [5] = 37835, [6] = 40685 }
+BisTooltip_ItemLists["Paladin"]["Holy"]["T7"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 37111, [3] = 28823, [4] = 40258, [5] = 40685, [6] = 42988 }
+BisTooltip_ItemLists["Paladin"]["Holy"]["T7"][14] = {["slot_name"] = "Trinket 2", [1] = 37111, [2] = 42987, [3] = 28823, [4] = 40258, [5] = 40685, [6] = 42988 }
 BisTooltip_ItemLists["Paladin"]["Holy"]["T7"][15] = {["slot_name"] = "Weapon", [1] = 40396, [2] = 40395, [3] = 39423, [4] = 40336, [5] = 40488, [6] = 40244 }
 BisTooltip_ItemLists["Paladin"]["Holy"]["T7"][16] = {["slot_name"] = "Off hand", [1] = 40401, [2] = 39716, [3] = 39233, [4] = 40700, [5] = 42564, [6] = 37061 }
 BisTooltip_ItemLists["Paladin"]["Holy"]["T7"][17] = {["slot_name"] = "Relic", [1] = 40705, [2] = 40268, [3] = 30063, [4] = 33502 }

@@ -5,7 +5,7 @@ BisTooltip_ItemLists["Death Knight"]["Blood Tank"] = BisTooltip_ItemLists["Death
 BisTooltip_ItemLists["Death Knight"]["Blood Tank"]["PR"] = BisTooltip_ItemLists["Death Knight"]["Blood Tank"]["PR"] or {}
 BisTooltip_ItemLists["Death Knight"]["Blood Tank"]["PR"][1] = {["slot_name"] = "Head", [1] = 41387, [2] = 42549, [3] = 44902, [4] = 37633, [5] = 37135, [6] = 34400 }
 BisTooltip_ItemLists["Death Knight"]["Blood Tank"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40679, [2] = 42646, [3] = 43282, [4] = 37689, [5] = 39655, [6] = 37053 }
-BisTooltip_ItemLists["Death Knight"]["Blood Tank"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 37814, [2] = 44312, [3] = 37635, [4] = 37115, [5] = 39534, [6] = 37627 }
+BisTooltip_ItemLists["Death Knight"]["Blood Tank"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 37814, [2] = 37635, [3] = 37115, [4] = 39534, [5] = 37627 }
 BisTooltip_ItemLists["Death Knight"]["Blood Tank"]["PR"][4] = {["slot_name"] = "Back", [1] = 43565, [2] = 37728, [3] = 44188, [4] = 37197, [5] = 42061, [6] = 43363 }
 BisTooltip_ItemLists["Death Knight"]["Blood Tank"]["PR"][5] = {["slot_name"] = "Chest", [1] = 39623, [2] = 37658, [3] = 44198, [4] = 43310, [5] = 34394, [6] = 37735 }
 BisTooltip_ItemLists["Death Knight"]["Blood Tank"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37620, [2] = 37682, [3] = 37891, [4] = 37040, [5] = 37668, [6] = 44341 }
@@ -23,7 +23,7 @@ BisTooltip_ItemLists["Death Knight"]["Blood Tank"]["PR"][17] = {["slot_name"] = 
 BisTooltip_ItemLists["Death Knight"]["Blood Tank"]["T7"] = BisTooltip_ItemLists["Death Knight"]["Blood Tank"]["T7"] or {}
 BisTooltip_ItemLists["Death Knight"]["Blood Tank"]["T7"][1] = {["slot_name"] = "Head", [1] = 40565, [2] = 40328, [3] = 44006, [4] = 39395, [5] = 39625, [6] = 41387 }
 BisTooltip_ItemLists["Death Knight"]["Blood Tank"]["T7"][2] = {["slot_name"] = "Neck", [1] = 40387, [2] = 44665, [3] = 40069, [4] = 44660, [5] = 40679, [6] = 39246 }
-BisTooltip_ItemLists["Death Knight"]["Blood Tank"]["T7"][3] = {["slot_name"] = "Shoulder", [1] = 40568, [2] = 39704, [3] = 39267, [4] = 39627, [5] = 44312, [6] = 40334 }
+BisTooltip_ItemLists["Death Knight"]["Blood Tank"]["T7"][3] = {["slot_name"] = "Shoulder", [1] = 40568, [2] = 39704, [3] = 39267, [4] = 39627, [5] = 40334, [6] = 37814 }
 BisTooltip_ItemLists["Death Knight"]["Blood Tank"]["T7"][4] = {["slot_name"] = "Back", [1] = 40722, [2] = 40252, [3] = 43988, [4] = 43565, [5] = 40410, [6] = 39225 }
 BisTooltip_ItemLists["Death Knight"]["Blood Tank"]["T7"][5] = {["slot_name"] = "Chest", [1] = 40559, [2] = 44000, [3] = 40203, [4] = 40279, [5] = 39623, [6] = 40365 }
 BisTooltip_ItemLists["Death Knight"]["Blood Tank"]["T7"][6] = {["slot_name"] = "Wrist", [1] = 40734, [2] = 40306, [3] = 39467, [4] = 37620, [5] = 39764, [6] = 39195 }
@@ -124,10 +124,10 @@ BisTooltip_ItemLists["Death Knight"]["Frost"]["PR"][9] = {["slot_name"] = "Legs"
 BisTooltip_ItemLists["Death Knight"]["Frost"]["PR"][10] = {["slot_name"] = "Feet", [1] = 43402, [2] = 44297, [3] = 44895, [4] = 44306, [5] = 37367, [6] = 32345 }
 BisTooltip_ItemLists["Death Knight"]["Frost"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 44935, [2] = 43251, [3] = 50170, [4] = 42642, [5] = 40586, [6] = 37642 }
 BisTooltip_ItemLists["Death Knight"]["Frost"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 37642, [2] = 43251, [3] = 50170, [4] = 44935, [5] = 42642, [6] = 40586 }
-BisTooltip_ItemLists["Death Knight"]["Frost"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 40684, [3] = 37166, [4] = 37390, [5] = 37723, [6] = 43573 }
-BisTooltip_ItemLists["Death Knight"]["Frost"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40684, [2] = 42987, [3] = 37166, [4] = 37390, [5] = 37723, [6] = 43573 }
-BisTooltip_ItemLists["Death Knight"]["Frost"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 41383, [2] = 43611, [3] = 44250, [4] = 37235, [5] = 37871, [6] = 43407 }
-BisTooltip_ItemLists["Death Knight"]["Frost"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 44250, [2] = 41383, [3] = 43611, [4] = 37235, [5] = 37871, [6] = 43407 }
+BisTooltip_ItemLists["Death Knight"]["Frost"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 40684, [3] = 37166, [4] = 37390, [5] = 37723 }
+BisTooltip_ItemLists["Death Knight"]["Frost"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40684, [2] = 42987, [3] = 37166, [4] = 37390, [5] = 37723 }
+BisTooltip_ItemLists["Death Knight"]["Frost"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 41383, [2] = 44250, [3] = 37235, [4] = 37871, [5] = 43407 }
+BisTooltip_ItemLists["Death Knight"]["Frost"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 44250, [2] = 41383, [3] = 37235, [4] = 37871, [5] = 43407 }
 BisTooltip_ItemLists["Death Knight"]["Frost"]["PR"][17] = {["slot_name"] = "Relic", [1] = 40715, [2] = 40822 }
 BisTooltip_ItemLists["Death Knight"]["Frost"]["T7"] = BisTooltip_ItemLists["Death Knight"]["Frost"]["T7"] or {}
 BisTooltip_ItemLists["Death Knight"]["Frost"]["T7"][1] = {["slot_name"] = "Head", [1] = 44006, [2] = 41386, [3] = 40554, [4] = 39403, [5] = 39619, [6] = 40543 }
@@ -233,10 +233,10 @@ BisTooltip_ItemLists["Death Knight"]["Unholy"]["PR"][9] = {["slot_name"] = "Legs
 BisTooltip_ItemLists["Death Knight"]["Unholy"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44306, [2] = 43402, [3] = 44895, [4] = 37367, [5] = 44297, [6] = 32345 }
 BisTooltip_ItemLists["Death Knight"]["Unholy"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 44935, [2] = 43251, [3] = 40586, [4] = 37651, [5] = 50170, [6] = 37151 }
 BisTooltip_ItemLists["Death Knight"]["Unholy"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 43251, [2] = 44935, [3] = 40586, [4] = 37651, [5] = 50170, [6] = 37151 }
-BisTooltip_ItemLists["Death Knight"]["Unholy"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 37166, [3] = 37390, [4] = 40684, [5] = 44914, [6] = 43573 }
-BisTooltip_ItemLists["Death Knight"]["Unholy"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 37390, [2] = 42987, [3] = 37166, [4] = 40684, [5] = 44914, [6] = 43573 }
-BisTooltip_ItemLists["Death Knight"]["Unholy"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 41383, [2] = 44311, [3] = 37401, [4] = 43611, [5] = 37235, [6] = 44250 }
-BisTooltip_ItemLists["Death Knight"]["Unholy"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 40703, [2] = 44311, [3] = 37401, [4] = 43611, [5] = 37235, [6] = 44250 }
+BisTooltip_ItemLists["Death Knight"]["Unholy"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 42987, [2] = 37166, [3] = 37390, [4] = 40684, [5] = 44914 }
+BisTooltip_ItemLists["Death Knight"]["Unholy"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 37390, [2] = 42987, [3] = 37166, [4] = 40684, [5] = 44914 }
+BisTooltip_ItemLists["Death Knight"]["Unholy"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 41383, [2] = 37401, [3] = 37235, [4] = 44250 }
+BisTooltip_ItemLists["Death Knight"]["Unholy"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 40703, [2] = 37401, [3] = 37235, [4] = 44250 }
 BisTooltip_ItemLists["Death Knight"]["Unholy"]["PR"][17] = {["slot_name"] = "Relic", [1] = 40867, [2] = 40822, [3] = 40715 }
 BisTooltip_ItemLists["Death Knight"]["Unholy"]["T7"] = BisTooltip_ItemLists["Death Knight"]["Unholy"]["T7"] or {}
 BisTooltip_ItemLists["Death Knight"]["Unholy"]["T7"][1] = {["slot_name"] = "Head", [1] = 44006, [2] = 41386, [3] = 40554, [4] = 39403, [5] = 39619, [6] = 40543 }

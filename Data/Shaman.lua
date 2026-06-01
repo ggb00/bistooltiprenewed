@@ -15,8 +15,8 @@ BisTooltip_ItemLists["Shaman"]["Elemental"]["PR"][9] = {["slot_name"] = "Legs", 
 BisTooltip_ItemLists["Shaman"]["Elemental"]["PR"][10] = {["slot_name"] = "Feet", [1] = 34566, [2] = 44896, [3] = 44202, [4] = 43469, [5] = 37730, [6] = 37654 }
 BisTooltip_ItemLists["Shaman"]["Elemental"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 43253, [2] = 40585, [3] = 37694, [4] = 37192, [5] = 44283, [6] = 42644 }
 BisTooltip_ItemLists["Shaman"]["Elemental"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 40585, [2] = 43253, [3] = 37694, [4] = 37192, [5] = 44283, [6] = 42644 }
-BisTooltip_ItemLists["Shaman"]["Elemental"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 37873, [2] = 40682, [3] = 42395, [4] = 37660, [5] = 32483, [6] = 37835 }
-BisTooltip_ItemLists["Shaman"]["Elemental"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40682, [2] = 37873, [3] = 42395, [4] = 37660, [5] = 32483, [6] = 37835 }
+BisTooltip_ItemLists["Shaman"]["Elemental"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 37873, [2] = 40682, [3] = 42395, [4] = 37660, [5] = 32483 }
+BisTooltip_ItemLists["Shaman"]["Elemental"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 40682, [2] = 37873, [3] = 42395, [4] = 37660, [5] = 32483 }
 BisTooltip_ItemLists["Shaman"]["Elemental"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 41384, [2] = 44173, [3] = 37169, [4] = 44199, [5] = 37377, [6] = 37360 }
 BisTooltip_ItemLists["Shaman"]["Elemental"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 40698, [2] = 37134, [3] = 37718, [4] = 44210, [5] = 37051, [6] = 37061 }
 BisTooltip_ItemLists["Shaman"]["Elemental"]["PR"][17] = {["slot_name"] = "Relic", [1] = 40708, [2] = 38361 }
@@ -233,8 +233,8 @@ BisTooltip_ItemLists["Shaman"]["Restoration"]["PR"][9] = {["slot_name"] = "Legs"
 BisTooltip_ItemLists["Shaman"]["Restoration"]["PR"][10] = {["slot_name"] = "Feet", [1] = 34565, [2] = 44202, [3] = 43469, [4] = 37730, [5] = 37654, [6] = 37218 }
 BisTooltip_ItemLists["Shaman"]["Restoration"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 40585, [2] = 37694, [3] = 44283, [4] = 37192, [5] = 42644, [6] = 43408 }
 BisTooltip_ItemLists["Shaman"]["Restoration"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 37694, [2] = 40585, [3] = 44283, [4] = 37192, [5] = 42644, [6] = 43408 }
-BisTooltip_ItemLists["Shaman"]["Restoration"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 37111, [2] = 37657, [3] = 42988, [4] = 37835, [5] = 40685, [6] = 44322 }
-BisTooltip_ItemLists["Shaman"]["Restoration"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 37657, [2] = 37111, [3] = 42988, [4] = 37835, [5] = 40685, [6] = 44322 }
+BisTooltip_ItemLists["Shaman"]["Restoration"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 37111, [2] = 37657, [3] = 42988, [4] = 40685, [5] = 44322 }
+BisTooltip_ItemLists["Shaman"]["Restoration"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 37657, [2] = 37111, [3] = 42988, [4] = 40685, [5] = 44322 }
 BisTooltip_ItemLists["Shaman"]["Restoration"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37169, [2] = 41384, [3] = 37360, [4] = 44199, [5] = 37377, [6] = 44173 }
 BisTooltip_ItemLists["Shaman"]["Restoration"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 40700, [2] = 37061, [3] = 44210, [4] = 37718, [5] = 37216, [6] = 37051 }
 BisTooltip_ItemLists["Shaman"]["Restoration"]["PR"][17] = {["slot_name"] = "Relic", [1] = 40709, [2] = 38368, [3] = 28523 }

@@ -325,13 +325,13 @@ BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][4] = {["slot_name"] = "Back",
 BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][5] = {["slot_name"] = "Chest", [1] = 42102, [2] = 39538, [3] = 44180, [4] = 34398, [5] = 37236, [6] = 37258 }
 BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37361, [2] = 37725, [3] = 34445, [4] = 44200, [5] = 37724, [6] = 37696 }
 BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][7] = {["slot_name"] = "Hands", [1] = 42113, [2] = 39543, [3] = 34342, [4] = 37798, [5] = 37261, [6] = 37858 }
-BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][8] = {["slot_name"] = "Waist", [1] = 37643, [2] = 44302, [3] = 40697, [4] = 37842, [5] = 37761, [6] = 37289 }
+BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][8] = {["slot_name"] = "Waist", [1] = 37643, [2] = 44302, [3] = 40697, [4] = 37842, [5] = 37289 }
 BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][9] = {["slot_name"] = "Legs", [1] = 37791, [2] = 43495, [3] = 34386, [4] = 37189, [5] = 37876, [6] = 37731 }
 BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][10] = {["slot_name"] = "Feet", [1] = 44202, [2] = 39254, [3] = 37730, [4] = 43502, [5] = 37640, [6] = 44892 }
 BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][11] = {["slot_name"] = "Finger 1", [1] = 37694, [2] = 37192, [3] = 44283, [4] = 44934, [5] = 43408, [6] = 37371 }
 BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][12] = {["slot_name"] = "Finger 2", [1] = 37192, [2] = 37694, [3] = 44283, [4] = 44934, [5] = 43408, [6] = 37371 }
-BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 37111, [2] = 44322, [3] = 37657, [4] = 42988, [5] = 37835, [6] = 36972 }
-BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 37657, [2] = 44322, [3] = 37111, [4] = 42988, [5] = 37835, [6] = 36972 }
+BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][13] = {["slot_name"] = "Trinket 1", [1] = 37111, [2] = 44322, [3] = 37657, [4] = 42988, [5] = 36972 }
+BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][14] = {["slot_name"] = "Trinket 2", [1] = 37657, [2] = 44322, [3] = 37111, [4] = 42988, [5] = 36972 }
 BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][15] = {["slot_name"] = "Weapon", [1] = 37360, [2] = 41384, [3] = 37169, [4] = 37384, [5] = 37617, [6] = 44199 }
 BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][16] = {["slot_name"] = "Off hand", [1] = 40699, [2] = 37718, [3] = 44210, [4] = 37051, [5] = 37889 }
 BisTooltip_ItemLists["Druid"]["Restoration"]["PR"][17] = {["slot_name"] = "Relic", [1] = 33508, [2] = 25643, [3] = 38366 }
@@ -348,8 +348,8 @@ BisTooltip_ItemLists["Druid"]["Restoration"]["T7"][9] = {["slot_name"] = "Legs",
 BisTooltip_ItemLists["Druid"]["Restoration"]["T7"][10] = {["slot_name"] = "Feet", [1] = 40558, [2] = 40409, [3] = 40326, [4] = 40751, [5] = 39215, [6] = 39254 }
 BisTooltip_ItemLists["Druid"]["Restoration"]["T7"][11] = {["slot_name"] = "Finger 1", [1] = 40719, [2] = 39250, [3] = 40375, [4] = 40399, [5] = 40433, [6] = 37694 }
 BisTooltip_ItemLists["Druid"]["Restoration"]["T7"][12] = {["slot_name"] = "Finger 2", [1] = 40375, [2] = 40719, [3] = 39250, [4] = 40399, [5] = 40433, [6] = 37694 }
-BisTooltip_ItemLists["Druid"]["Restoration"]["T7"][13] = {["slot_name"] = "Trinket 1", [1] = 40432, [2] = 44322, [3] = 37111, [4] = 37657, [5] = 42988, [6] = 37835 }
-BisTooltip_ItemLists["Druid"]["Restoration"]["T7"][14] = {["slot_name"] = "Trinket 2", [1] = 37111, [2] = 40432, [3] = 44322, [4] = 37657, [5] = 42988, [6] = 37835 }
+BisTooltip_ItemLists["Druid"]["Restoration"]["T7"][13] = {["slot_name"] = "Trinket 1", [1] = 40432, [2] = 44322, [3] = 37111, [4] = 37657, [5] = 42988, [6] = 40258 }
+BisTooltip_ItemLists["Druid"]["Restoration"]["T7"][14] = {["slot_name"] = "Trinket 2", [1] = 37111, [2] = 40432, [3] = 44322, [4] = 37657, [5] = 42988, [6] = 40258 }
 BisTooltip_ItemLists["Druid"]["Restoration"]["T7"][15] = {["slot_name"] = "Weapon", [1] = 40395, [2] = 40488, [3] = 39763, [4] = 39423, [5] = 40244, [6] = 40300 }
 BisTooltip_ItemLists["Druid"]["Restoration"]["T7"][16] = {["slot_name"] = "Off hand", [1] = 39766, [2] = 40699, [3] = 40192, [4] = 37718, [5] = 44210, [6] = 37051 }
 BisTooltip_ItemLists["Druid"]["Restoration"]["T7"][17] = {["slot_name"] = "Relic", [1] = 40342, [2] = 33508, [3] = 25643, [4] = 38366 }

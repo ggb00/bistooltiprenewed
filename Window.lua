@@ -342,6 +342,11 @@ local function drawSpecData()
     BisTooltipAddon.db.char.spec_index = spec_index
     BisTooltipAddon.db.char.phase_index = phase_index
 
+    local targetScroll = 0
+    if BisTooltipAddon.db.char.scroll_status and BisTooltipAddon.db.char.scroll_status.scrollvalue then
+        targetScroll = BisTooltipAddon.db.char.scroll_status.scrollvalue
+    end
+
     missing_widgets = {}
 
     spec_frame:ReleaseChildren()
@@ -353,6 +358,10 @@ local function drawSpecData()
     if not slots then return end
 
     for _, slot in ipairs(slots) do drawItemSlot(slot) end
+
+    if targetScroll > 0 then
+        spec_frame:SetScroll(targetScroll)
+    end
 end
 
 local function buildClassDict()
@@ -419,12 +428,14 @@ local function drawDropdowns()
     phaseDropDown:SetCallback("OnValueChanged", function(_, _, key)
         phase_index = key
         phase = BisTooltip_PhaseData[key]
+        if BisTooltipAddon.db.char.scroll_status then BisTooltipAddon.db.char.scroll_status.scrollvalue = 0 end
         drawSpecData()
     end)
 
     specDropdown:SetCallback("OnValueChanged", function(_, _, key)
         spec_index = key
         spec = spec_options_to_spec[spec_options[key]]
+        if BisTooltipAddon.db.char.scroll_status then BisTooltipAddon.db.char.scroll_status.scrollvalue = 0 end
         drawSpecData()
     end)
 
@@ -437,6 +448,7 @@ local function drawDropdowns()
         specDropdown:SetValue(1)
         spec_index = 1
         spec = spec_options_to_spec[spec_options[1]]
+        if BisTooltipAddon.db.char.scroll_status then BisTooltipAddon.db.char.scroll_status.scrollvalue = 0 end
         drawSpecData()
     end)
 
@@ -476,6 +488,10 @@ local function createSpecFrame()
     frame:SetFullWidth(true)
     frame:SetHeight(420)
     frame:SetAutoAdjustHeight(false)
+
+    BisTooltipAddon.db.char.scroll_status = BisTooltipAddon.db.char.scroll_status or {}
+    frame:SetStatusTable(BisTooltipAddon.db.char.scroll_status)
+
     main_frame:AddChild(frame)
     spec_frame = frame
 end

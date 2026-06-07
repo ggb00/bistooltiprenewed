@@ -197,30 +197,49 @@ function BisTooltipAddon:initBisTooltip()
     ItemRefTooltip:HookScript("OnShow", StyleTooltip)
     if ShoppingTooltip1 then ShoppingTooltip1:HookScript("OnShow", StyleTooltip) end
     if ShoppingTooltip2 then ShoppingTooltip2:HookScript("OnShow", StyleTooltip) end
+    if ItemRefShoppingTooltip1 then ItemRefShoppingTooltip1:HookScript("OnShow", StyleTooltip) end
+    if ItemRefShoppingTooltip2 then ItemRefShoppingTooltip2:HookScript("OnShow", StyleTooltip) end
 
     GameTooltip:HookScript("OnTooltipSetItem", OnTooltipSetItem)
     ItemRefTooltip:HookScript("OnTooltipSetItem", OnTooltipSetItem)
     if ShoppingTooltip1 then ShoppingTooltip1:HookScript("OnTooltipSetItem", OnTooltipSetItem) end
     if ShoppingTooltip2 then ShoppingTooltip2:HookScript("OnTooltipSetItem", OnTooltipSetItem) end
+    if ItemRefShoppingTooltip1 then ItemRefShoppingTooltip1:HookScript("OnTooltipSetItem", OnTooltipSetItem) end
+    if ItemRefShoppingTooltip2 then ItemRefShoppingTooltip2:HookScript("OnTooltipSetItem", OnTooltipSetItem) end
 
     GameTooltip:HookScript("OnTooltipCleared", OnTooltipCleared)
     ItemRefTooltip:HookScript("OnTooltipCleared", OnTooltipCleared)
     if ShoppingTooltip1 then ShoppingTooltip1:HookScript("OnTooltipCleared", OnTooltipCleared) end
     if ShoppingTooltip2 then ShoppingTooltip2:HookScript("OnTooltipCleared", OnTooltipCleared) end
+    if ItemRefShoppingTooltip1 then ItemRefShoppingTooltip1:HookScript("OnTooltipCleared", OnTooltipCleared) end
+    if ItemRefShoppingTooltip2 then ItemRefShoppingTooltip2:HookScript("OnTooltipCleared", OnTooltipCleared) end
 
     hooksecurefunc(GameTooltip, "SetInventoryItem", HookSetInventoryItem)
     if ItemRefTooltip then hooksecurefunc(ItemRefTooltip, "SetInventoryItem", HookSetInventoryItem) end
     if ShoppingTooltip1 then hooksecurefunc(ShoppingTooltip1, "SetInventoryItem", HookSetInventoryItem) end
     if ShoppingTooltip2 then hooksecurefunc(ShoppingTooltip2, "SetInventoryItem", HookSetInventoryItem) end
+    if ItemRefShoppingTooltip1 then hooksecurefunc(ItemRefShoppingTooltip1, "SetInventoryItem", HookSetInventoryItem) end
+    if ItemRefShoppingTooltip2 then hooksecurefunc(ItemRefShoppingTooltip2, "SetInventoryItem", HookSetInventoryItem) end
 
-    hooksecurefunc("GameTooltip_ShowCompareItem", function()
-        if ShoppingTooltip1 and ShoppingTooltip1:IsShown() then
-            ShoppingTooltip1.BisIsCompareItem = true
-            StyleTooltip(ShoppingTooltip1, true)
+    hooksecurefunc("GameTooltip_ShowCompareItem", function(tooltip)
+        local t = tooltip or GameTooltip
+        local s1, s2
+
+        if t.shoppingTooltips then
+            s1, s2 = t.shoppingTooltips[1], t.shoppingTooltips[2]
+        elseif t == ItemRefTooltip then
+            s1, s2 = ItemRefShoppingTooltip1, ItemRefShoppingTooltip2
+        else
+            s1, s2 = ShoppingTooltip1, ShoppingTooltip2
         end
-        if ShoppingTooltip2 and ShoppingTooltip2:IsShown() then
-            ShoppingTooltip2.BisIsCompareItem = true
-            StyleTooltip(ShoppingTooltip2, true)
+
+        if s1 and s1:IsShown() then
+            s1.BisIsCompareItem = true
+            StyleTooltip(s1, true)
+        end
+        if s2 and s2:IsShown() then
+            s2.BisIsCompareItem = true
+            StyleTooltip(s2, true)
         end
     end)
 
@@ -228,22 +247,23 @@ function BisTooltipAddon:initBisTooltip()
     eventFrame:SetScript("OnEvent", function(_, _, key)
         if key == "LALT" or key == "RALT" or key == "LCTRL" or key == "RCTRL" or key == "LSHIFT" or key == "RSHIFT" then
             if GameTooltip:IsShown() then
-                local _, link = GameTooltip:GetItem()
-                if link then
-                    local owner = GameTooltip:GetOwner()
-                    if owner and owner:GetScript("OnEnter") then
-                        owner:GetScript("OnEnter")(owner)
-                    else
+                local owner = GameTooltip:GetOwner()
+
+                if owner and owner:GetScript("OnEnter") then
+                    owner:GetScript("OnEnter")(owner)
+                else
+                    local _, link = GameTooltip:GetItem()
+                    if link then
                         GameTooltip:SetHyperlink("item:3299:0:0:0:0:0:0:0:0")
                         GameTooltip:SetHyperlink(link)
                     end
+                end
 
-                    if IsShiftKeyDown() then
-                        GameTooltip_ShowCompareItem(GameTooltip)
-                    else
-                        if ShoppingTooltip1 then ShoppingTooltip1:Hide() end
-                        if ShoppingTooltip2 then ShoppingTooltip2:Hide() end
-                    end
+                if IsShiftKeyDown() then
+                    GameTooltip_ShowCompareItem(GameTooltip)
+                else
+                    if ShoppingTooltip1 then ShoppingTooltip1:Hide() end
+                    if ShoppingTooltip2 then ShoppingTooltip2:Hide() end
                 end
             end
 
@@ -252,6 +272,15 @@ function BisTooltipAddon:initBisTooltip()
                 if link then
                     ItemRefTooltip:SetHyperlink("item:3299:0:0:0:0:0:0:0:0")
                     ItemRefTooltip:SetHyperlink(link)
+
+                    if GetMouseFocus() == ItemRefTooltip then
+                        if IsShiftKeyDown() then
+                            GameTooltip_ShowCompareItem(ItemRefTooltip)
+                        else
+                            if ItemRefShoppingTooltip1 then ItemRefShoppingTooltip1:Hide() end
+                            if ItemRefShoppingTooltip2 then ItemRefShoppingTooltip2:Hide() end
+                        end
+                    end
                 end
             end
         end

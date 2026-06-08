@@ -256,14 +256,14 @@ function BisTooltipAddon:initBisTooltip()
                     if link then
                         GameTooltip:SetHyperlink("item:3299:0:0:0:0:0:0:0:0")
                         GameTooltip:SetHyperlink(link)
-                    end
-                end
 
-                if IsShiftKeyDown() then
-                    GameTooltip_ShowCompareItem(GameTooltip)
-                else
-                    if ShoppingTooltip1 then ShoppingTooltip1:Hide() end
-                    if ShoppingTooltip2 then ShoppingTooltip2:Hide() end
+                        if IsModifiedClick("COMPAREITEMS") then
+                            GameTooltip_ShowCompareItem(GameTooltip)
+                        else
+                            if ShoppingTooltip1 then ShoppingTooltip1:Hide() end
+                            if ShoppingTooltip2 then ShoppingTooltip2:Hide() end
+                        end
+                    end
                 end
             end
 
@@ -273,8 +273,9 @@ function BisTooltipAddon:initBisTooltip()
                     ItemRefTooltip:SetHyperlink("item:3299:0:0:0:0:0:0:0:0")
                     ItemRefTooltip:SetHyperlink(link)
 
-                    if GetMouseFocus() == ItemRefTooltip then
-                        if IsShiftKeyDown() then
+                    local focus = GetMouseFocus()
+                    if focus == ItemRefTooltip or (focus and focus:GetParent() == ItemRefTooltip) then
+                        if IsModifiedClick("COMPAREITEMS") then
                             GameTooltip_ShowCompareItem(ItemRefTooltip)
                         else
                             if ItemRefShoppingTooltip1 then ItemRefShoppingTooltip1:Hide() end

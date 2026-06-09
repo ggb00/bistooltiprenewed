@@ -6,7 +6,7 @@ BisTooltip_ItemLists["Mage"]["Arcane"]["PR"] = BisTooltip_ItemLists["Mage"]["Arc
 BisTooltip_ItemLists["Mage"]["Arcane"]["PR"][1] = {["slot_name"] = "Head", [1] = 37294, [2] = 44910, [3] = 42553, [4] = 37684, [5] = 41984, [6] = 34340 }
 BisTooltip_ItemLists["Mage"]["Arcane"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40680, [2] = 37595, [3] = 42024, [4] = 44017, [5] = 42647, [6] = 37683 }
 BisTooltip_ItemLists["Mage"]["Arcane"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 34210, [2] = 37673, [3] = 37655, [4] = 37196, [5] = 41550, [6] = 44370 }
-BisTooltip_ItemLists["Mage"]["Arcane"]["PR"][4] = {["slot_name"] = "Back", [1] = 41610, [2] = 42057, [3] = 36983, [4] = 44242, [5] = 37291, [6] = 34242 }
+BisTooltip_ItemLists["Mage"]["Arcane"]["PR"][4] = {["slot_name"] = "Back", [1] = 41610, [2] = 42057, [3] = 44242, [4] = 36983, [5] = 37291, [6] = 34242 }
 BisTooltip_ItemLists["Mage"]["Arcane"]["PR"][5] = {["slot_name"] = "Chest", [1] = 39492, [2] = 42102, [3] = 43401, [4] = 37258, [5] = 37222, [6] = 34399 }
 BisTooltip_ItemLists["Mage"]["Arcane"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37361, [2] = 37725, [3] = 37884, [4] = 34447, [5] = 44200, [6] = 41555 }
 BisTooltip_ItemLists["Mage"]["Arcane"]["PR"][7] = {["slot_name"] = "Hands", [1] = 39495, [2] = 42113, [3] = 37172, [4] = 37825, [5] = 34406, [6] = 43287 }
@@ -115,7 +115,7 @@ BisTooltip_ItemLists["Mage"]["Fire"]["PR"] = BisTooltip_ItemLists["Mage"]["Fire"
 BisTooltip_ItemLists["Mage"]["Fire"]["PR"][1] = {["slot_name"] = "Head", [1] = 37294, [2] = 44910, [3] = 42553, [4] = 41984, [5] = 37684, [6] = 34340 }
 BisTooltip_ItemLists["Mage"]["Fire"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40680, [2] = 37595, [3] = 42024, [4] = 42647, [5] = 44017, [6] = 37683 }
 BisTooltip_ItemLists["Mage"]["Fire"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 34210, [2] = 37196, [3] = 37673, [4] = 37655, [5] = 37691, [6] = 44370 }
-BisTooltip_ItemLists["Mage"]["Fire"]["PR"][4] = {["slot_name"] = "Back", [1] = 41610, [2] = 42057, [3] = 36983, [4] = 44242, [5] = 37799, [6] = 34242 }
+BisTooltip_ItemLists["Mage"]["Fire"]["PR"][4] = {["slot_name"] = "Back", [1] = 41610, [2] = 42057, [3] = 44242, [4] = 36983, [5] = 37799, [6] = 34242 }
 BisTooltip_ItemLists["Mage"]["Fire"]["PR"][5] = {["slot_name"] = "Chest", [1] = 39492, [2] = 43401, [3] = 42102, [4] = 34399, [5] = 37258, [6] = 37222 }
 BisTooltip_ItemLists["Mage"]["Fire"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37361, [2] = 37884, [3] = 44200, [4] = 34447, [5] = 37725, [6] = 36945 }
 BisTooltip_ItemLists["Mage"]["Fire"]["PR"][7] = {["slot_name"] = "Hands", [1] = 39495, [2] = 42113, [3] = 34344, [4] = 37172, [5] = 37798, [6] = 37825 }
@@ -224,7 +224,7 @@ BisTooltip_ItemLists["Mage"]["Fire FFB"]["PR"] = BisTooltip_ItemLists["Mage"]["F
 BisTooltip_ItemLists["Mage"]["Fire FFB"]["PR"][1] = {["slot_name"] = "Head", [1] = 34340, [2] = 42553, [3] = 44910, [4] = 37684, [5] = 41984, [6] = 37294 }
 BisTooltip_ItemLists["Mage"]["Fire FFB"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40680, [2] = 37595, [3] = 42647, [4] = 42024, [5] = 44017, [6] = 43285 }
 BisTooltip_ItemLists["Mage"]["Fire FFB"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 34210, [2] = 37673, [3] = 37196, [4] = 37655, [5] = 42842, [6] = 41550 }
-BisTooltip_ItemLists["Mage"]["Fire FFB"]["PR"][4] = {["slot_name"] = "Back", [1] = 41610, [2] = 42057, [3] = 36983, [4] = 44242, [5] = 34242, [6] = 37291 }
+BisTooltip_ItemLists["Mage"]["Fire FFB"]["PR"][4] = {["slot_name"] = "Back", [1] = 41610, [2] = 42057, [3] = 44242, [4] = 36983, [5] = 34242, [6] = 37291 }
 BisTooltip_ItemLists["Mage"]["Fire FFB"]["PR"][5] = {["slot_name"] = "Chest", [1] = 39492, [2] = 42102, [3] = 43401, [4] = 34399, [5] = 37222, [6] = 37258 }
 BisTooltip_ItemLists["Mage"]["Fire FFB"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37361, [2] = 37884, [3] = 34447, [4] = 37725, [5] = 41907, [6] = 44200 }
 BisTooltip_ItemLists["Mage"]["Fire FFB"]["PR"][7] = {["slot_name"] = "Hands", [1] = 39495, [2] = 42113, [3] = 34344, [4] = 37172, [5] = 43287, [6] = 37825 }
@@ -333,7 +333,7 @@ BisTooltip_ItemLists["Mage"]["Frost"]["PR"] = BisTooltip_ItemLists["Mage"]["Fros
 BisTooltip_ItemLists["Mage"]["Frost"]["PR"][1] = {["slot_name"] = "Head", [1] = 34340, [2] = 42553, [3] = 44910, [4] = 37684, [5] = 41984, [6] = 37294 }
 BisTooltip_ItemLists["Mage"]["Frost"]["PR"][2] = {["slot_name"] = "Neck", [1] = 40680, [2] = 37595, [3] = 42647, [4] = 42024, [5] = 44017, [6] = 43285 }
 BisTooltip_ItemLists["Mage"]["Frost"]["PR"][3] = {["slot_name"] = "Shoulder", [1] = 34210, [2] = 37673, [3] = 37196, [4] = 37655, [5] = 42842, [6] = 41550 }
-BisTooltip_ItemLists["Mage"]["Frost"]["PR"][4] = {["slot_name"] = "Back", [1] = 41610, [2] = 42057, [3] = 36983, [4] = 44242, [5] = 34242, [6] = 37291 }
+BisTooltip_ItemLists["Mage"]["Frost"]["PR"][4] = {["slot_name"] = "Back", [1] = 41610, [2] = 42057, [3] = 44242, [4] = 36983, [5] = 34242, [6] = 37291 }
 BisTooltip_ItemLists["Mage"]["Frost"]["PR"][5] = {["slot_name"] = "Chest", [1] = 39492, [2] = 42102, [3] = 43401, [4] = 34399, [5] = 37222, [6] = 37258 }
 BisTooltip_ItemLists["Mage"]["Frost"]["PR"][6] = {["slot_name"] = "Wrist", [1] = 37361, [2] = 37884, [3] = 34447, [4] = 37725, [5] = 41907, [6] = 44200 }
 BisTooltip_ItemLists["Mage"]["Frost"]["PR"][7] = {["slot_name"] = "Hands", [1] = 39495, [2] = 42113, [3] = 34344, [4] = 37172, [5] = 43287, [6] = 37825 }

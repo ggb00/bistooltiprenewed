@@ -134,7 +134,7 @@ BisTooltip_ItemLists["Paladin"]["Protection"]["T7"][1] = {["slot_name"] = "Head"
 BisTooltip_ItemLists["Paladin"]["Protection"]["T7"][2] = {["slot_name"] = "Neck", [1] = 44665, [2] = 40387, [3] = 40069, [4] = 42646, [5] = 44660, [6] = 39246 }
 BisTooltip_ItemLists["Paladin"]["Protection"]["T7"][3] = {["slot_name"] = "Shoulder", [1] = 40584, [2] = 39704, [3] = 40334, [4] = 39267, [5] = 39642, [6] = 37814 }
 BisTooltip_ItemLists["Paladin"]["Protection"]["T7"][4] = {["slot_name"] = "Back", [1] = 40722, [2] = 40252, [3] = 43988, [4] = 40410, [5] = 39225, [6] = 37197 }
-BisTooltip_ItemLists["Paladin"]["Protection"]["T7"][5] = {["slot_name"] = "Chest", [1] = 40579, [2] = 40203, [3] = 44000, [4] = 39398, [5] = 40279, [6] = 43793 }
+BisTooltip_ItemLists["Paladin"]["Protection"]["T7"][5] = {["slot_name"] = "Chest", [1] = 40579, [2] = 40203, [3] = 44000, [4] = 39398, [5] = 40279, [6] = 39638 }
 BisTooltip_ItemLists["Paladin"]["Protection"]["T7"][6] = {["slot_name"] = "Wrist", [1] = 39764, [2] = 40306, [3] = 40734, [4] = 39467, [5] = 39195, [6] = 39729 }
 BisTooltip_ItemLists["Paladin"]["Protection"]["T7"][7] = {["slot_name"] = "Hands", [1] = 40580, [2] = 37645, [3] = 40188, [4] = 39726, [5] = 44183, [6] = 39639 }
 BisTooltip_ItemLists["Paladin"]["Protection"]["T7"][8] = {["slot_name"] = "Waist", [1] = 39759, [2] = 40263, [3] = 40689, [4] = 37241, [5] = 39298, [6] = 37379 }

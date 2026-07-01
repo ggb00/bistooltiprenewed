@@ -162,7 +162,7 @@ BisTooltip_ItemLists["Warlock"]["Demonology"]["T8"][11] = {["slot_name"] = "Fing
 BisTooltip_ItemLists["Warlock"]["Demonology"]["T8"][12] = {["slot_name"] = "Finger 2", [1] = 45495, [2] = 45297, [3] = 45451, [4] = 45515, [5] = 46046, [6] = 45702 }
 BisTooltip_ItemLists["Warlock"]["Demonology"]["T8"][13] = {["slot_name"] = "Trinket 1", [1] = 45148, [2] = 45518, [3] = 40255, [4] = 45466, [5] = 37873, [6] = 40432 }
 BisTooltip_ItemLists["Warlock"]["Demonology"]["T8"][14] = {["slot_name"] = "Trinket 2", [1] = 45518, [2] = 45148, [3] = 40255, [4] = 45466, [5] = 37873, [6] = 40432 }
-BisTooltip_ItemLists["Warlock"]["Demonology"]["T8"][15] = {["slot_name"] = "Weapon", [1] = 45620, [2] = 45990, [3] = 45330, [4] = 45457, [5] = 45527, [6] = 45437 }
+BisTooltip_ItemLists["Warlock"]["Demonology"]["T8"][15] = {["slot_name"] = "Weapon", [1] = 45620, [2] = 45990, [3] = 45171, [4] = 45457, [5] = 45527, [6] = 45437 }
 BisTooltip_ItemLists["Warlock"]["Demonology"]["T8"][16] = {["slot_name"] = "Off hand", [1] = 45617, [2] = 45115, [3] = 40273, [4] = 45271, [5] = 40698, [6] = 45314 }
 BisTooltip_ItemLists["Warlock"]["Demonology"]["T8"][17] = {["slot_name"] = "Ranged", [1] = 45294, [2] = 45257, [3] = 45511, [4] = 39712, [5] = 45170, [6] = 45713 }
 BisTooltip_ItemLists["Warlock"]["Demonology"]["T9"] = BisTooltip_ItemLists["Warlock"]["Demonology"]["T9"] or {}

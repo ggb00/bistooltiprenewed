@@ -14,11 +14,12 @@ equipWatcher:SetScript("OnEvent", function()
     end
 end)
 
-function BisTooltipAddon:IsItemOwned(itemID)
-    if not itemID then return false end
-    if BisTooltip_EquippedCache[itemID] then return true end
-    if GetItemCount(itemID, true) > 0 then return true end
-    return false
+function BisTooltipAddon:GetItemState(itemID)
+    if not itemID then return 0 end
+    if BisTooltip_EquippedCache[itemID] then return 2 end
+    if GetItemCount(itemID, false) > 0 then return 1 end
+    if GetItemCount(itemID, true) > 0 then return 3 end
+    return 0
 end
 
 function BisTooltipAddon:BuildFactionMaps()
@@ -32,9 +33,14 @@ end
 
 function BisTooltipAddon:BuildReverseLookup()
     self.FormattedNames = {}
+    local canonicalClasses = {}
+
     if BisTooltip_ClassData then
         for _, classData in ipairs(BisTooltip_ClassData) do
             local class = classData.name
+            canonicalClasses[class] = class
+            canonicalClasses[string.gsub(class, "%s+", "")] = class
+
             self.FormattedNames[class] = {}
             for _, spec in ipairs(classData.specs) do
                 local icon = BisTooltip_SpecIcons[class] and BisTooltip_SpecIcons[class][spec]
@@ -51,7 +57,8 @@ function BisTooltipAddon:BuildReverseLookup()
     local sortedPhases = BisTooltip_PhaseData or {}
 
     if BisTooltip_ItemLists then
-        for class, specs in pairs(BisTooltip_ItemLists) do
+        for rawClass, specs in pairs(BisTooltip_ItemLists) do
+            local class = canonicalClasses[rawClass] or rawClass
             for spec, phases in pairs(specs) do
                 for _, phase in ipairs(sortedPhases) do
                     local items = phases[phase]

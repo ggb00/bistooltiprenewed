@@ -174,6 +174,32 @@ local function ProcessTooltip(tooltip, link)
         end
     end
 
+    if itemBisData and sources then
+        local state = BisTooltipAddon:GetItemState(itemId)
+        if state == 1 or state == 3 then
+            local owner = tooltip:GetOwner()
+            local ownerName = ""
+            if owner and owner.GetName and owner:GetName() then
+                ownerName = string.lower(owner:GetName())
+            end
+
+            local inBagUI = ownerName:find("container") or ownerName:find("bag") or ownerName:find("inventory") or ownerName:find("bagnon")
+            local inBankUI = ownerName:find("bank") or ownerName:find("bag") or ownerName:find("bagnon")
+
+            local skip = false
+            if state == 1 and inBagUI then skip = true end
+            if state == 3 and inBankUI then skip = true end
+
+            if not skip then
+                if state == 1 then
+                    tooltip:AddLine("|TInterface\\Icons\\inv_misc_bag_08:14:14:0:0:64:64:5:59:5:59|t |cFFFFFF00In Bags|r", 1, 1, 1, true)
+                elseif state == 3 then
+                    tooltip:AddLine("|TInterface\\Icons\\inv_misc_bag_08:14:14:0:0:64:64:5:59:5:59|t |cFFFFFF00In Bank|r", 1, 1, 1, true)
+                end
+            end
+        end
+    end
+
     tooltip:Show()
 end
 

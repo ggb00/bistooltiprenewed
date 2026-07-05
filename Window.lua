@@ -29,7 +29,75 @@ local fetch_timer = 0
 
 local checkmark_path = "Interface\\AddOns\\" .. addonName .. "\\checkmark-16.tga"
 
-local function createItemFrame(item_id, size, with_checkmark)
+local function HandleItemTooltip(widget, item_id)
+    GameTooltip:SetOwner(widget.frame, "ANCHOR_NONE")
+    GameTooltip:SetPoint("TOPRIGHT", widget.frame, "TOPRIGHT", 220, -13)
+
+    local _, link = GetItemInfo(item_id)
+    local validLink = link or ("item:" .. item_id .. ":0:0:0:0:0:0:0")
+
+    GameTooltip:SetHyperlink(validLink)
+    GameTooltip:Show()
+    if IsShiftKeyDown() then GameTooltip_ShowCompareItem(GameTooltip) end
+end
+
+local function ApplyItemStateVisuals(widget, item_id, is_missing)
+    if is_missing then
+        widget.image:SetVertexColor(1, 1, 1, 1)
+        widget.frame.bisCheckMark:Hide()
+        if widget.frame.bisBorder then widget.frame.bisBorder:Hide() end
+        return
+    end
+
+    local state = BisTooltipAddon:GetItemState(item_id)
+    local show_borders = BisTooltipAddon.db.char.show_item_borders
+
+    if state == 2 then
+        widget.image:SetVertexColor(0.35, 0.35, 0.35, 1)
+        widget.frame.bisCheckMark:SetTexture(checkmark_path)
+        widget.frame.bisCheckMark:SetTexCoord(0, 1, 0, 1)
+        widget.frame.bisCheckMark:SetWidth(32)
+        widget.frame.bisCheckMark:SetHeight(32)
+        widget.frame.bisCheckMark:ClearAllPoints()
+        widget.frame.bisCheckMark:SetPoint("CENTER", 4, -8)
+        widget.frame.bisCheckMark:Show()
+
+        if widget.frame.bisBorder then
+            if show_borders then
+                widget.frame.bisBorder:SetVertexColor(0, 1, 0, 0.7)
+                widget.frame.bisBorder:Show()
+            else
+                widget.frame.bisBorder:Hide()
+            end
+        end
+
+    elseif state == 1 or state == 3 then
+        widget.image:SetVertexColor(0.35, 0.35, 0.35, 1)
+        widget.frame.bisCheckMark:SetTexture("Interface\\Icons\\inv_misc_bag_08")
+        widget.frame.bisCheckMark:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+        widget.frame.bisCheckMark:SetWidth(16)
+        widget.frame.bisCheckMark:SetHeight(16)
+        widget.frame.bisCheckMark:ClearAllPoints()
+        widget.frame.bisCheckMark:SetPoint("BOTTOMRIGHT", -2, 6)
+        widget.frame.bisCheckMark:Show()
+
+        if widget.frame.bisBorder then
+            if show_borders then
+                widget.frame.bisBorder:SetVertexColor(1, 1, 0, 0.7)
+                widget.frame.bisBorder:Show()
+            else
+                widget.frame.bisBorder:Hide()
+            end
+        end
+
+    else
+        widget.image:SetVertexColor(1, 1, 1, 1)
+        widget.frame.bisCheckMark:Hide()
+        if widget.frame.bisBorder then widget.frame.bisBorder:Hide() end
+    end
+end
+
+local function createItemFrame(item_id, size)
     if item_id < 0 then
         local empty_icon = AceGUI:Create("Icon")
         empty_icon:SetImageSize(size, size)
@@ -37,6 +105,7 @@ local function createItemFrame(item_id, size, with_checkmark)
 
         if empty_icon.frame.bisCheckMark then empty_icon.frame.bisCheckMark:Hide() end
         if empty_icon.frame.bisBoeMark then empty_icon.frame.bisBoeMark:Hide() end
+        if empty_icon.frame.bisBorder then empty_icon.frame.bisBorder:Hide() end
         empty_icon:SetImage("")
 
         return empty_icon
@@ -49,10 +118,14 @@ local function createItemFrame(item_id, size, with_checkmark)
 
     if not item_frame.frame.bisCheckMark then
         item_frame.frame.bisCheckMark = item_frame.frame:CreateTexture(nil, "OVERLAY")
-        item_frame.frame.bisCheckMark:SetWidth(32)
-        item_frame.frame.bisCheckMark:SetHeight(32)
-        item_frame.frame.bisCheckMark:SetPoint("CENTER", 6, -8)
-        item_frame.frame.bisCheckMark:SetTexture(checkmark_path)
+    end
+
+    if not item_frame.frame.bisBorder then
+        item_frame.frame.bisBorder = item_frame.frame:CreateTexture(nil, "OVERLAY")
+        item_frame.frame.bisBorder:SetTexture("Interface\\Buttons\\CheckButtonHilight")
+        item_frame.frame.bisBorder:SetBlendMode("ADD")
+        item_frame.frame.bisBorder:SetAllPoints(item_frame.image)
+        item_frame.frame.bisBorder:Hide()
     end
 
     if not item_frame.frame.bisBoeMark then
@@ -63,40 +136,28 @@ local function createItemFrame(item_id, size, with_checkmark)
         item_frame.frame.bisBoeMark:SetTexture("Interface\\Icons\\INV_Misc_Coin_01")
     end
 
-    local itemName, itemLink, _, _, _, _, _, _, _, itemIcon, _, _, _, bindType = GetItemInfo(item_id)
+    item_frame:SetCallback("OnClick", function()
+        local _, link = GetItemInfo(item_id)
+        local validLink = link or ("item:" .. item_id .. ":0:0:0:0:0:0:0")
+        if IsModifiedClick() then
+            HandleModifiedItemClick(validLink)
+        else
+            SetItemRef(validLink, validLink, "LeftButton")
+        end
+    end)
+
+    item_frame:SetCallback("OnEnter", function(widget)
+        HandleItemTooltip(widget, item_id)
+    end)
+
+    item_frame:SetCallback("OnLeave", function() GameTooltip:Hide() end)
+
+    local itemName, _, _, _, _, _, _, _, _, itemIcon, _, _, _, bindType = GetItemInfo(item_id)
 
     if not itemName then
         item_frame:SetImage("Interface\\Icons\\INV_Misc_QuestionMark")
         item_frame.frame.bisBoeMark:Hide()
-
-        if with_checkmark then
-            item_frame.frame.bisCheckMark:Show()
-            item_frame.image:SetVertexColor(0.35, 0.35, 0.35, 1)
-        else
-            item_frame.frame.bisCheckMark:Hide()
-            item_frame.image:SetVertexColor(1, 1, 1, 1)
-        end
-
-        item_frame:SetCallback("OnClick", function()
-            local _, link = GetItemInfo(item_id)
-            local validLink = link or ("item:" .. item_id .. ":0:0:0:0:0:0:0")
-            if IsModifiedClick() then
-                HandleModifiedItemClick(validLink)
-            else
-                SetItemRef(validLink, validLink, "LeftButton")
-            end
-        end)
-
-        item_frame:SetCallback("OnEnter", function(widget)
-            GameTooltip:SetOwner(item_frame.frame, "ANCHOR_NONE")
-            GameTooltip:SetPoint("TOPRIGHT", item_frame.frame, "TOPRIGHT", 220, -13)
-            local _, link = GetItemInfo(item_id)
-            GameTooltip:SetHyperlink(link or ("item:" .. item_id .. ":0:0:0:0:0:0:0"))
-            GameTooltip:Show()
-            if IsShiftKeyDown() then GameTooltip_ShowCompareItem(GameTooltip) end
-        end)
-
-        item_frame:SetCallback("OnLeave", function() GameTooltip:Hide() end)
+        ApplyItemStateVisuals(item_frame, item_id, true)
 
         if not missing_widgets[item_id] then missing_widgets[item_id] = {} end
         table.insert(missing_widgets[item_id], item_frame)
@@ -104,35 +165,8 @@ local function createItemFrame(item_id, size, with_checkmark)
     end
 
     item_frame:SetImage(itemIcon)
-    if with_checkmark then
-        item_frame.frame.bisCheckMark:Show()
-        item_frame.image:SetVertexColor(0.35, 0.35, 0.35, 1)
-    else
-        item_frame.frame.bisCheckMark:Hide()
-        item_frame.image:SetVertexColor(1, 1, 1, 1)
-    end
     if bindType == 2 then item_frame.frame.bisBoeMark:Show() else item_frame.frame.bisBoeMark:Hide() end
-
-    item_frame:SetCallback("OnClick", function()
-        if IsModifiedClick() then
-            HandleModifiedItemClick(itemLink)
-        else
-            SetItemRef(itemLink, itemLink, "LeftButton")
-        end
-    end)
-
-    item_frame:SetCallback("OnEnter", function(widget)
-        GameTooltip:SetOwner(item_frame.frame, "ANCHOR_NONE")
-        GameTooltip:SetPoint("TOPRIGHT", item_frame.frame, "TOPRIGHT", 220, -13)
-        GameTooltip:SetHyperlink(itemLink)
-        GameTooltip:Show()
-
-        if IsShiftKeyDown() then
-            GameTooltip_ShowCompareItem(GameTooltip)
-        end
-    end)
-
-    item_frame:SetCallback("OnLeave", function() GameTooltip:Hide() end)
+    ApplyItemStateVisuals(item_frame, item_id, false)
 
     return item_frame
 end
@@ -147,40 +181,14 @@ item_fetch_frame:SetScript("OnUpdate", function(self, elapsed)
     if fetch_timer > 0.25 then
         fetch_timer = 0
         for item_id, widgets in pairs(missing_widgets) do
-            local itemName, itemLink, _, _, _, _, _, _, _, itemIcon, _, _, _, bindType = GetItemInfo(item_id)
+            local itemName, _, _, _, _, _, _, _, _, itemIcon, _, _, _, bindType = GetItemInfo(item_id)
 
             if itemName then
                 for _, widget in ipairs(widgets) do
                     if widget and widget.frame then
                         widget:SetImage(itemIcon)
-
-                        local isEquipped = BisTooltipAddon:IsItemOwned(item_id)
-                        if isEquipped then
-                            widget.image:SetVertexColor(0.35, 0.35, 0.35, 1)
-                            widget.frame.bisCheckMark:Show()
-                        else
-                            widget.image:SetVertexColor(1, 1, 1, 1)
-                            widget.frame.bisCheckMark:Hide()
-                        end
                         if bindType == 2 then widget.frame.bisBoeMark:Show() else widget.frame.bisBoeMark:Hide() end
-
-                        widget:SetCallback("OnClick", function()
-                            if IsModifiedClick() then
-                                HandleModifiedItemClick(itemLink)
-                            else
-                                SetItemRef(itemLink, itemLink, "LeftButton")
-                            end
-                        end)
-
-                        widget:SetCallback("OnEnter", function(w)
-                            GameTooltip:SetOwner(w.frame, "ANCHOR_NONE")
-                            GameTooltip:SetPoint("TOPRIGHT", w.frame, "TOPRIGHT", 220, -13)
-                            GameTooltip:SetHyperlink(itemLink)
-                            GameTooltip:Show()
-                            if IsShiftKeyDown() then
-                                GameTooltip_ShowCompareItem(GameTooltip)
-                            end
-                        end)
+                        ApplyItemStateVisuals(widget, item_id, false)
                     end
                 end
                 missing_widgets[item_id] = nil
@@ -209,6 +217,7 @@ local function createSpellFrame(spell_id, size)
 
     if spell_frame.frame.bisCheckMark then spell_frame.frame.bisCheckMark:Hide() end
     if spell_frame.frame.bisBoeMark then spell_frame.frame.bisBoeMark:Hide() end
+    if spell_frame.frame.bisBorder then spell_frame.frame.bisBorder:Hide() end
 
     local name, _, icon = GetSpellInfo(spell_id)
     if not name then return spell_frame end
@@ -262,7 +271,7 @@ local function createEnhancementsFrame(enhancements)
     for _, enhancement in ipairs(enhancements) do
         local size = 16
         if enhancement.type == "item" then
-            frame:AddChild(createItemFrame(enhancement.id, size, false))
+            frame:AddChild(createItemFrame(enhancement.id, size))
         elseif enhancement.type == "spell" then
             frame:AddChild(createSpellFrame(enhancement.id, size))
         end
@@ -298,13 +307,12 @@ local function drawItemSlot(slot)
             display_id = BisTooltip_FactionMap[original_item_id]
         end
 
-        local isEquipped = display_id and BisTooltipAddon:IsItemOwned(display_id)
-        spec_frame:AddChild(createItemFrame(display_id, 40, isEquipped))
+        spec_frame:AddChild(createItemFrame(display_id, 40))
         count = count + 1
     end
 
     for i = count + 1, 6 do
-        spec_frame:AddChild(createItemFrame(-1, 40, false))
+        spec_frame:AddChild(createItemFrame(-1, 40))
     end
 end
 

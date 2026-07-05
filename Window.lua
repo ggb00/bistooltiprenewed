@@ -335,9 +335,10 @@ local function drawTableHeader(frame)
     eLabel.label:SetJustifyH("LEFT")
     frame:AddChild(eLabel)
 
+    local headerTexts = {"BIS", "Alt 1", "Alt 2", "Alt 3", "Alt 4", "Alt 5"}
     for i = 1, 6 do
         local topLabel = AceGUI:Create("Label")
-        topLabel:SetText("Top " .. i)
+        topLabel:SetText(headerTexts[i])
         topLabel:SetColor(color, color, color)
         topLabel:SetWidth(44)
         topLabel.label:SetJustifyH("CENTER")

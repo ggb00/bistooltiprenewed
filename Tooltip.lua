@@ -283,13 +283,14 @@ function BisTooltipAddon:initBisTooltip()
             if key == "LALT" or key == "RALT" or key == "LCTRL" or key == "RCTRL" or key == "LSHIFT" or key == "RSHIFT" then
 
                 if GameTooltip:IsShown() then
-                    local owner = GameTooltip:GetOwner()
+                    local _, link = GameTooltip:GetItem()
 
-                    if owner and owner:GetScript("OnEnter") then
-                        owner:GetScript("OnEnter")(owner)
-                    else
-                        local _, link = GameTooltip:GetItem()
-                        if link then
+                    if link then
+                        local owner = GameTooltip:GetOwner()
+
+                        if owner and owner:GetScript("OnEnter") then
+                            owner:GetScript("OnEnter")(owner)
+                        else
                             GameTooltip:SetHyperlink("item:3299:0:0:0:0:0:0:0:0")
                             GameTooltip:SetHyperlink(link)
 

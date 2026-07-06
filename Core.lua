@@ -56,6 +56,22 @@ function BisTooltipAddon:BuildReverseLookup()
     local tempLookup = {}
     local sortedPhases = BisTooltip_PhaseData or {}
 
+    local function assignRank(targetId, cls, spc, phs, rank)
+        local tItem = tempLookup[targetId]
+        if not tItem then tItem = {}; tempLookup[targetId] = tItem end
+
+        local tClass = tItem[cls]
+        if not tClass then tClass = {}; tItem[cls] = tClass end
+
+        local tSpec = tClass[spc]
+        if not tSpec then tSpec = {}; tClass[spc] = tSpec end
+
+        local currentRank = tSpec[phs]
+        if not currentRank or rank < currentRank then
+            tSpec[phs] = rank
+        end
+    end
+
     if BisTooltip_ItemLists then
         for rawClass, specs in pairs(BisTooltip_ItemLists) do
             local class = canonicalClasses[rawClass] or rawClass
@@ -67,24 +83,15 @@ function BisTooltipAddon:BuildReverseLookup()
                             if type(itemData) == "table" then
                                 for i, itemId in ipairs(itemData) do
                                     if type(itemId) == "number" and itemId > 0 then
-                                        local function registerId(targetId)
-                                            if not tempLookup[targetId] then tempLookup[targetId] = {} end
-                                            if not tempLookup[targetId][class] then tempLookup[targetId][class] = {} end
-                                            if not tempLookup[targetId][class][spec] then tempLookup[targetId][class][spec] = {} end
 
-                                            if not tempLookup[targetId][class][spec][phase] then
-                                                tempLookup[targetId][class][spec][phase] = i
-                                            else
-                                                tempLookup[targetId][class][spec][phase] = math.min(tempLookup[targetId][class][spec][phase], i)
-                                            end
-                                        end
+                                        assignRank(itemId, class, spec, phase, i)
 
-                                        registerId(itemId)
                                         if BisTooltip_FactionMap and BisTooltip_FactionMap[itemId] then
-                                            registerId(BisTooltip_FactionMap[itemId])
+                                            assignRank(BisTooltip_FactionMap[itemId], class, spec, phase, i)
                                         elseif BisTooltip_AliToHorde and BisTooltip_AliToHorde[itemId] then
-                                            registerId(BisTooltip_AliToHorde[itemId])
+                                            assignRank(BisTooltip_AliToHorde[itemId], class, spec, phase, i)
                                         end
+
                                     end
                                 end
                             end

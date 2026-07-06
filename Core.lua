@@ -72,14 +72,11 @@ function BisTooltipAddon:BuildReverseLookup()
                                             if not tempLookup[targetId][class] then tempLookup[targetId][class] = {} end
                                             if not tempLookup[targetId][class][spec] then tempLookup[targetId][class][spec] = {} end
 
-                                            local phaseLabel = (i == 1) and (phase .. " BIS") or (phase .. " alt " .. (i - 1))
-                                            local labels = tempLookup[targetId][class][spec]
-
-                                            local found = false
-                                            for _, label in ipairs(labels) do
-                                                if label == phaseLabel then found = true; break end
+                                            if not tempLookup[targetId][class][spec][phase] then
+                                                tempLookup[targetId][class][spec][phase] = i
+                                            else
+                                                tempLookup[targetId][class][spec][phase] = math.min(tempLookup[targetId][class][spec][phase], i)
                                             end
-                                            if not found then table.insert(labels, phaseLabel) end
                                         end
 
                                         registerId(itemId)
@@ -102,12 +99,24 @@ function BisTooltipAddon:BuildReverseLookup()
     for itemId, classes in pairs(tempLookup) do
         local flatList = {}
         for class, specs in pairs(classes) do
-            for spec, labels in pairs(specs) do
-                table.insert(flatList, {
-                    class = class,
-                    spec = spec,
-                    rightText = table.concat(labels, " / ")
-                })
+            for spec, phaseRanks in pairs(specs) do
+                local labels = {}
+
+                for _, phase in ipairs(sortedPhases) do
+                    local rank = phaseRanks[phase]
+                    if rank then
+                        local phaseLabel = (rank == 1) and (phase .. " BIS") or (phase .. " alt " .. (rank - 1))
+                        table.insert(labels, phaseLabel)
+                    end
+                end
+
+                if #labels > 0 then
+                    table.insert(flatList, {
+                        class = class,
+                        spec = spec,
+                        rightText = table.concat(labels, " / ")
+                    })
+                end
             end
         end
 

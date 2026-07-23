@@ -23,7 +23,7 @@ local configTable = {
         minimap_icon = {
             name = "Show minimap icon",
             order = 0,
-            desc = "Shows/hides minimap icon\nMight work incorrectly with 'Minimap Button Bag'",
+            desc = "Shows/hides the minimap icon\n(Requires Reload)",
             type = "toggle", width = "double",
             set = function(info, val)
                 BisTooltipAddon.db.char.minimap.hide = not val
@@ -89,7 +89,7 @@ local configTable = {
         dark_tooltips = {
             name = "Dark Tooltips",
             order = 5,
-            desc = "Changes the tooltip background to a solid black color",
+            desc = "Changes the tooltip background to a solid black color\n(Requires Reload)",
             type = "toggle", width = "double",
             set = function(info, val) BisTooltipAddon.db.char.dark_tooltips = val end,
             get = function(info) return BisTooltipAddon.db.char.dark_tooltips end
@@ -199,8 +199,8 @@ local function buildFilterSpecOptions()
 end
 
 local function migrateAddonDB()
-    if not BisTooltipAddon.db.char.version or BisTooltipAddon.db.char.version < 7.7 then
-        BisTooltipAddon.db.char.version = 7.7
+    if not BisTooltipAddon.db.char.version or BisTooltipAddon.db.char.version < 7.9 then
+        BisTooltipAddon.db.char.version = 7.9
         if not BisTooltipAddon.db.char.highlight_spec then BisTooltipAddon.db.char.highlight_spec = {} end
         if not BisTooltipAddon.db.char.filter_specs then BisTooltipAddon.db.char.filter_specs = {} end
         if not BisTooltipAddon.db.char.class_index then BisTooltipAddon.db.char.class_index = 1 end

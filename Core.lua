@@ -145,6 +145,7 @@ function BisTooltipAddon:OnInitialize()
     self:addMapIcon()
     self:initBisTooltip()
 
-    self:RegisterChatCommand("bisrenewed", "createMainFrame")
+    self:RegisterChatCommand("bt", "createMainFrame")
+    self:RegisterChatCommand("bis", "createMainFrame")
     self:RegisterChatCommand("bistooltip", "createMainFrame")
 end

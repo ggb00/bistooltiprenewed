@@ -42,7 +42,7 @@ BisTooltip_ItemLists["Shaman"]["Elemental"]["T8"] = BisTooltip_ItemLists["Shaman
 BisTooltip_ItemLists["Shaman"]["Elemental"]["T8"][1] = {["slot_name"] = "Head", [1] = 46209, [2] = 45150, [3] = 45408, [4] = 45497, [5] = 45687, [6] = 40516 }
 BisTooltip_ItemLists["Shaman"]["Elemental"]["T8"][2] = {["slot_name"] = "Neck", [1] = 45933, [2] = 45133, [3] = 45699, [4] = 44661, [5] = 45539, [6] = 44658 }
 BisTooltip_ItemLists["Shaman"]["Elemental"]["T8"][3] = {["slot_name"] = "Shoulder", [1] = 46211, [2] = 46044, [3] = 45186, [4] = 46068, [5] = 45474, [6] = 45136 }
-BisTooltip_ItemLists["Shaman"]["Elemental"]["T8"][4] = {["slot_name"] = "Back", [1] = 45242, [2] = 46042, [3] = 45618, [4] = 45486, [5] = 44005, [6] = 46341 }
+BisTooltip_ItemLists["Shaman"]["Elemental"]["T8"][4] = {["slot_name"] = "Back", [1] = 45242, [2] = 46042, [3] = 45618, [4] = 45486, [5] = 44005, [6] = 41610 }
 BisTooltip_ItemLists["Shaman"]["Elemental"]["T8"][5] = {["slot_name"] = "Chest", [1] = 46206, [2] = 45865, [3] = 45411, [4] = 40526, [5] = 40234, [6] = 45867 }
 BisTooltip_ItemLists["Shaman"]["Elemental"]["T8"][6] = {["slot_name"] = "Wrist", [1] = 45460, [2] = 45275, [3] = 45549, [4] = 40325, [5] = 45291, [6] = 45446 }
 BisTooltip_ItemLists["Shaman"]["Elemental"]["T8"][7] = {["slot_name"] = "Hands", [1] = 45665, [2] = 46045, [3] = 45976, [4] = 45943, [5] = 45239, [6] = 46207 }
@@ -94,7 +94,7 @@ BisTooltip_ItemLists["Shaman"]["Elemental"]["T10"][16] = {["slot_name"] = "Off h
 BisTooltip_ItemLists["Shaman"]["Elemental"]["T10"][17] = {["slot_name"] = "Relic", [1] = 50458, [2] = 47666, [3] = 40267, [4] = 40708, [5] = 45255, [6] = 38361 }
 BisTooltip_ItemLists["Shaman"]["Elemental"]["RS"] = BisTooltip_ItemLists["Shaman"]["Elemental"]["RS"] or {}
 BisTooltip_ItemLists["Shaman"]["Elemental"]["RS"][1] = {["slot_name"] = "Head", [1] = 51237, [2] = 49468, [3] = 51837, [4] = 51202, [5] = 47692, [6] = 48328 }
-BisTooltip_ItemLists["Shaman"]["Elemental"]["RS"][2] = {["slot_name"] = "Neck", [1] = 50658, [2] = 50005, [3] = 51863, [4] = 45133, [5] = 50724, [6] = 51894 }
+BisTooltip_ItemLists["Shaman"]["Elemental"]["RS"][2] = {["slot_name"] = "Neck", [1] = 50658, [2] = 50005, [3] = 51863, [4] = 50724, [5] = 51894, [6] = 48030 }
 BisTooltip_ItemLists["Shaman"]["Elemental"]["RS"][3] = {["slot_name"] = "Shoulder", [1] = 50698, [2] = 50643, [3] = 49991, [4] = 51859, [5] = 51235, [6] = 51811 }
 BisTooltip_ItemLists["Shaman"]["Elemental"]["RS"][4] = {["slot_name"] = "Back", [1] = 54583, [2] = 51826, [3] = 47452, [4] = 50628, [5] = 47551, [6] = 53489 }
 BisTooltip_ItemLists["Shaman"]["Elemental"]["RS"][5] = {["slot_name"] = "Chest", [1] = 51239, [2] = 50629, [3] = 50418, [4] = 48326, [5] = 47462, [6] = 51813 }
@@ -108,8 +108,8 @@ BisTooltip_ItemLists["Shaman"]["Elemental"]["RS"][12] = {["slot_name"] = "Finger
 BisTooltip_ItemLists["Shaman"]["Elemental"]["RS"][13] = {["slot_name"] = "Trinket 1", [1] = 50365, [2] = 50348, [3] = 54588, [4] = 50360, [5] = 50353, [6] = 54572 }
 BisTooltip_ItemLists["Shaman"]["Elemental"]["RS"][14] = {["slot_name"] = "Trinket 2", [1] = 50348, [2] = 50365, [3] = 54588, [4] = 50360, [5] = 50353, [6] = 54572 }
 BisTooltip_ItemLists["Shaman"]["Elemental"]["RS"][15] = {["slot_name"] = "Weapon", [1] = 50734, [2] = 51815, [3] = 51939, [4] = 50608, [5] = 50428, [6] = 51943 }
-BisTooltip_ItemLists["Shaman"]["Elemental"]["RS"][16] = {["slot_name"] = "Off hand", [1] = 50616, [2] = 51922, [3] = 50719, [4] = 47437, [5] = 45617, [6] = 47448 }
-BisTooltip_ItemLists["Shaman"]["Elemental"]["RS"][17] = {["slot_name"] = "Relic", [1] = 50458, [2] = 47666, [3] = 40267, [4] = 40708, [5] = 45255, [6] = 38361 }
+BisTooltip_ItemLists["Shaman"]["Elemental"]["RS"][16] = {["slot_name"] = "Off hand", [1] = 50616, [2] = 51922, [3] = 50719, [4] = 47437, [5] = 47448, [6] = 48032 }
+BisTooltip_ItemLists["Shaman"]["Elemental"]["RS"][17] = {["slot_name"] = "Relic", [1] = 50458, [2] = 47666 }
 BisTooltip_ItemLists["Shaman"]["Enhancement"] = BisTooltip_ItemLists["Shaman"]["Enhancement"] or {}
 BisTooltip_ItemLists["Shaman"]["Enhancement"]["PR"] = BisTooltip_ItemLists["Shaman"]["Enhancement"]["PR"] or {}
 BisTooltip_ItemLists["Shaman"]["Enhancement"]["PR"][1] = {["slot_name"] = "Head", [1] = 37293, [2] = 44903, [3] = 42551, [4] = 41984, [5] = 37188, [6] = 43311 }
@@ -218,7 +218,7 @@ BisTooltip_ItemLists["Shaman"]["Enhancement"]["RS"][13] = {["slot_name"] = "Trin
 BisTooltip_ItemLists["Shaman"]["Enhancement"]["RS"][14] = {["slot_name"] = "Trinket 2", [1] = 50348, [2] = 50365, [3] = 50357, [4] = 54588, [5] = 54590, [6] = 50706 }
 BisTooltip_ItemLists["Shaman"]["Enhancement"]["RS"][15] = {["slot_name"] = "Weapon", [1] = 50734, [2] = 51939, [3] = 50428, [4] = 50608, [5] = 51944, [6] = 51815 }
 BisTooltip_ItemLists["Shaman"]["Enhancement"]["RS"][16] = {["slot_name"] = "Off hand", [1] = 50737, [2] = 50710, [3] = 51893, [4] = 50184, [5] = 50012, [6] = 47475 }
-BisTooltip_ItemLists["Shaman"]["Enhancement"]["RS"][17] = {["slot_name"] = "Relic", [1] = 50458, [2] = 50463, [3] = 47666, [4] = 47667, [5] = 42608, [6] = 42607 }
+BisTooltip_ItemLists["Shaman"]["Enhancement"]["RS"][17] = {["slot_name"] = "Relic", [1] = 50458, [2] = 50463, [3] = 47666, [4] = 47667 }
 BisTooltip_ItemLists["Shaman"]["Restoration"] = BisTooltip_ItemLists["Shaman"]["Restoration"] or {}
 BisTooltip_ItemLists["Shaman"]["Restoration"]["PR"] = BisTooltip_ItemLists["Shaman"]["Restoration"]["PR"] or {}
 BisTooltip_ItemLists["Shaman"]["Restoration"]["PR"][1] = {["slot_name"] = "Head", [1] = 34332, [2] = 42555, [3] = 37180, [4] = 44905, [5] = 37592, [6] = 37294 }
@@ -260,7 +260,7 @@ BisTooltip_ItemLists["Shaman"]["Restoration"]["T8"] = BisTooltip_ItemLists["Sham
 BisTooltip_ItemLists["Shaman"]["Restoration"]["T8"][1] = {["slot_name"] = "Head", [1] = 46201, [2] = 45497, [3] = 45687, [4] = 45402, [5] = 45118, [6] = 45439 }
 BisTooltip_ItemLists["Shaman"]["Restoration"]["T8"][2] = {["slot_name"] = "Neck", [1] = 45443, [2] = 45933, [3] = 46047, [4] = 45243, [5] = 45116, [6] = 45447 }
 BisTooltip_ItemLists["Shaman"]["Restoration"]["T8"][3] = {["slot_name"] = "Shoulder", [1] = 46204, [2] = 46044, [3] = 45474, [4] = 46068, [5] = 45136, [6] = 45440 }
-BisTooltip_ItemLists["Shaman"]["Restoration"]["T8"][4] = {["slot_name"] = "Back", [1] = 45486, [2] = 44005, [3] = 45618, [4] = 45541, [5] = 46341, [6] = 46321 }
+BisTooltip_ItemLists["Shaman"]["Restoration"]["T8"][4] = {["slot_name"] = "Back", [1] = 45486, [2] = 44005, [3] = 45618, [4] = 45541, [5] = 46321, [6] = 40251 }
 BisTooltip_ItemLists["Shaman"]["Restoration"]["T8"][5] = {["slot_name"] = "Chest", [1] = 45867, [2] = 46198, [3] = 45531, [4] = 45272, [5] = 45519, [6] = 45288 }
 BisTooltip_ItemLists["Shaman"]["Restoration"]["T8"][6] = {["slot_name"] = "Wrist", [1] = 45460, [2] = 45446, [3] = 45187, [4] = 45316, [5] = 40324, [6] = 40209 }
 BisTooltip_ItemLists["Shaman"]["Restoration"]["T8"][7] = {["slot_name"] = "Hands", [1] = 46199, [2] = 45665, [3] = 45943, [4] = 45239, [5] = 45520, [6] = 45462 }
@@ -317,14 +317,14 @@ BisTooltip_ItemLists["Shaman"]["Restoration"]["RS"][3] = {["slot_name"] = "Shoul
 BisTooltip_ItemLists["Shaman"]["Restoration"]["RS"][4] = {["slot_name"] = "Back", [1] = 54583, [2] = 50628, [3] = 47551, [4] = 53489, [5] = 54556, [6] = 50205 }
 BisTooltip_ItemLists["Shaman"]["Restoration"]["RS"][5] = {["slot_name"] = "Chest", [1] = 51249, [2] = 50723, [3] = 50974, [4] = 51813, [5] = 51190, [6] = 51840 }
 BisTooltip_ItemLists["Shaman"]["Restoration"]["RS"][6] = {["slot_name"] = "Wrist", [1] = 54584, [2] = 54582, [3] = 50687, [4] = 53134, [5] = 53486, [6] = 50030 }
-BisTooltip_ItemLists["Shaman"]["Restoration"]["RS"][7] = {["slot_name"] = "Hands", [1] = 54560, [2] = 50703, [3] = 50980, [4] = 51827, [5] = 45665, [6] = 51248 }
+BisTooltip_ItemLists["Shaman"]["Restoration"]["RS"][7] = {["slot_name"] = "Hands", [1] = 54560, [2] = 50703, [3] = 50980, [4] = 51827, [5] = 51248, [6] = 47487 }
 BisTooltip_ItemLists["Shaman"]["Restoration"]["RS"][8] = {["slot_name"] = "Waist", [1] = 54587, [2] = 50613, [3] = 53488, [4] = 50671, [5] = 49978, [6] = 50992 }
 BisTooltip_ItemLists["Shaman"]["Restoration"]["RS"][9] = {["slot_name"] = "Legs", [1] = 51246, [2] = 49891, [3] = 51882, [4] = 51860, [5] = 47479, [6] = 50696 }
 BisTooltip_ItemLists["Shaman"]["Restoration"]["RS"][10] = {["slot_name"] = "Feet", [1] = 50699, [2] = 54558, [3] = 49896, [4] = 50062, [5] = 51920, [6] = 50652 }
 BisTooltip_ItemLists["Shaman"]["Restoration"]["RS"][11] = {["slot_name"] = "Finger 1", [1] = 50400, [2] = 50664, [3] = 54585, [4] = 50610, [5] = 50008, [6] = 50720 }
 BisTooltip_ItemLists["Shaman"]["Restoration"]["RS"][12] = {["slot_name"] = "Finger 2", [1] = 50664, [2] = 50400, [3] = 54585, [4] = 50610, [5] = 50008, [6] = 50720 }
-BisTooltip_ItemLists["Shaman"]["Restoration"]["RS"][13] = {["slot_name"] = "Trinket 1", [1] = 50366, [2] = 54589, [3] = 50359, [4] = 54573, [5] = 47432, [6] = 45466 }
-BisTooltip_ItemLists["Shaman"]["Restoration"]["RS"][14] = {["slot_name"] = "Trinket 2", [1] = 47432, [2] = 50366, [3] = 54589, [4] = 50359, [5] = 54573, [6] = 45466 }
-BisTooltip_ItemLists["Shaman"]["Restoration"]["RS"][15] = {["slot_name"] = "Weapon", [1] = 46017, [2] = 50685, [3] = 50734, [4] = 51939, [5] = 50608, [6] = 51943 }
+BisTooltip_ItemLists["Shaman"]["Restoration"]["RS"][13] = {["slot_name"] = "Trinket 1", [1] = 50366, [2] = 54589, [3] = 50359, [4] = 54573, [5] = 47432, [6] = 50358 }
+BisTooltip_ItemLists["Shaman"]["Restoration"]["RS"][14] = {["slot_name"] = "Trinket 2", [1] = 47432, [2] = 50366, [3] = 54589, [4] = 50359, [5] = 54573, [6] = 50358 }
+BisTooltip_ItemLists["Shaman"]["Restoration"]["RS"][15] = {["slot_name"] = "Weapon", [1] = 50685, [2] = 50734, [3] = 51939, [4] = 50608, [5] = 51943, [6] = 47483 }
 BisTooltip_ItemLists["Shaman"]["Restoration"]["RS"][16] = {["slot_name"] = "Off hand", [1] = 50616, [2] = 50719, [3] = 47448, [4] = 49976, [5] = 51812, [6] = 50173 }
-BisTooltip_ItemLists["Shaman"]["Restoration"]["RS"][17] = {["slot_name"] = "Relic", [1] = 50464, [2] = 47665, [3] = 45114, [4] = 40709, [5] = 38368, [6] = 28523 }
+BisTooltip_ItemLists["Shaman"]["Restoration"]["RS"][17] = {["slot_name"] = "Relic", [1] = 50464, [2] = 47665 }

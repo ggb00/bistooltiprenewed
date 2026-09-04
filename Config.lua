@@ -8,9 +8,21 @@ local icon_name = "BisTooltipIcon"
 
 local keyToClassSpec = {}
 
+local function GetPlayerClassIndex()
+    local playerClass = UnitClass("player")
+    if BisTooltip_ClassData then
+        for i = 1, #BisTooltip_ClassData do
+            if BisTooltip_ClassData[i].name == playerClass then
+                return i
+            end
+        end
+    end
+    return 1
+end
+
 local db_defaults = {
     char = {
-        class_index = 1, spec_index = 1, phase_index = 1,
+        class_index = nil, spec_index = 1, phase_index = 1,
         filter_specs = {}, highlight_spec = {},
         highlight_color = "purple", use_class_colors = true,
         minimap = { hide = false }, tooltip_with_ctrl = false,
@@ -209,13 +221,17 @@ local function buildFilterSpecOptions()
 end
 
 local function migrateAddonDB()
-    if not BisTooltipAddon.db.char.version or BisTooltipAddon.db.char.version < 7.9 then
-        BisTooltipAddon.db.char.version = 7.9
+    if not BisTooltipAddon.db.char.version or BisTooltipAddon.db.char.version < 8.0 then
+        BisTooltipAddon.db.char.version = 8.0
         if not BisTooltipAddon.db.char.highlight_spec then BisTooltipAddon.db.char.highlight_spec = {} end
         if not BisTooltipAddon.db.char.filter_specs then BisTooltipAddon.db.char.filter_specs = {} end
-        if not BisTooltipAddon.db.char.class_index then BisTooltipAddon.db.char.class_index = 1 end
+        BisTooltipAddon.db.char.class_index = GetPlayerClassIndex()
         if not BisTooltipAddon.db.char.spec_index then BisTooltipAddon.db.char.spec_index = 1 end
         if not BisTooltipAddon.db.char.phase_index then BisTooltipAddon.db.char.phase_index = 1 end
+    end
+
+    if not BisTooltipAddon.db.char.class_index then
+        BisTooltipAddon.db.char.class_index = GetPlayerClassIndex()
     end
 
     if BisTooltipAddon.db.char.minimap == nil then

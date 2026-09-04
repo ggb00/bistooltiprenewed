@@ -22,12 +22,13 @@ local phaseDropDown = nil
 local isHorde = UnitFactionGroup("player") == "Horde"
 
 local missing_widgets = {}
-local pending_widget_update = false
 local scanner = CreateFrame("GameTooltip", "BisTooltipScanner", UIParent, "GameTooltipTemplate")
 local item_fetch_frame = CreateFrame("Frame")
 local fetch_timer = 0
 
 local checkmark_path = "Interface\\AddOns\\" .. addonName .. "\\checkmark-16.tga"
+local MAIN_WINDOW_FRAME_NAME = "BisTooltipRenewed_MainWindow"
+local isSpecialFrameRegistered = false
 
 local function HandleItemTooltip(widget, item_id)
     GameTooltip:SetOwner(widget.frame, "ANCHOR_NONE")
@@ -97,6 +98,53 @@ local function ApplyItemStateVisuals(widget, item_id, is_missing)
     end
 end
 
+local function ProcessMissingItems(self, elapsed)
+    fetch_timer = fetch_timer + elapsed
+    if fetch_timer <= 0.25 then return end
+    fetch_timer = 0
+
+    local hasRemaining = false
+    for item_id, widgets in pairs(missing_widgets) do
+        local itemName, _, _, _, _, _, _, _, _, itemIcon, _, _, _, bindType = GetItemInfo(item_id)
+
+        if itemName then
+            for _, widget in ipairs(widgets) do
+                if widget and widget.frame and widget.frame:IsShown() then
+                    widget:SetImage(itemIcon)
+                    if bindType == 2 then widget.frame.bisBoeMark:Show() else widget.frame.bisBoeMark:Hide() end
+                    ApplyItemStateVisuals(widget, item_id, false)
+                end
+            end
+            missing_widgets[item_id] = nil
+        else
+            hasRemaining = true
+            scanner:SetOwner(UIParent, "ANCHOR_NONE")
+            scanner:SetHyperlink("item:" .. item_id .. ":0:0:0:0:0:0:0")
+            scanner:ClearLines()
+        end
+    end
+
+    if not hasRemaining then
+        item_fetch_frame:SetScript("OnUpdate", nil)
+    end
+end
+
+local function StartItemFetch()
+    if next(missing_widgets) then
+        item_fetch_frame:SetScript("OnUpdate", ProcessMissingItems)
+    else
+        item_fetch_frame:SetScript("OnUpdate", nil)
+    end
+end
+
+item_fetch_frame:RegisterEvent("GET_ITEM_INFO_RECEIVED")
+item_fetch_frame:SetScript("OnEvent", function()
+    if next(missing_widgets) then
+        fetch_timer = 0.25
+        item_fetch_frame:SetScript("OnUpdate", ProcessMissingItems)
+    end
+end)
+
 local function createItemFrame(item_id, size)
     if item_id < 0 then
         local empty_icon = AceGUI:Create("Icon")
@@ -161,6 +209,7 @@ local function createItemFrame(item_id, size)
 
         if not missing_widgets[item_id] then missing_widgets[item_id] = {} end
         table.insert(missing_widgets[item_id], item_frame)
+        StartItemFetch()
         return item_frame
     end
 
@@ -170,36 +219,6 @@ local function createItemFrame(item_id, size)
 
     return item_frame
 end
-
-item_fetch_frame:RegisterEvent("GET_ITEM_INFO_RECEIVED")
-item_fetch_frame:SetScript("OnEvent", function()
-    pending_widget_update = true
-end)
-
-item_fetch_frame:SetScript("OnUpdate", function(self, elapsed)
-    fetch_timer = fetch_timer + elapsed
-    if fetch_timer > 0.25 then
-        fetch_timer = 0
-        for item_id, widgets in pairs(missing_widgets) do
-            local itemName, _, _, _, _, _, _, _, _, itemIcon, _, _, _, bindType = GetItemInfo(item_id)
-
-            if itemName then
-                for _, widget in ipairs(widgets) do
-                    if widget and widget.frame then
-                        widget:SetImage(itemIcon)
-                        if bindType == 2 then widget.frame.bisBoeMark:Show() else widget.frame.bisBoeMark:Hide() end
-                        ApplyItemStateVisuals(widget, item_id, false)
-                    end
-                end
-                missing_widgets[item_id] = nil
-            else
-                scanner:SetOwner(UIParent, "ANCHOR_NONE")
-                scanner:SetHyperlink("item:" .. item_id .. ":0:0:0:0:0:0:0")
-                scanner:ClearLines()
-            end
-        end
-    end
-end)
 
 local function createSpellFrame(spell_id, size)
     if spell_id < 0 then
@@ -356,7 +375,8 @@ local function drawSpecData()
         targetScroll = BisTooltipAddon.db.char.scroll_status.scrollvalue
     end
 
-    missing_widgets = {}
+    wipe(missing_widgets)
+    item_fetch_frame:SetScript("OnUpdate", nil)
 
     spec_frame:ReleaseChildren()
     drawTableHeader(spec_frame)
@@ -524,7 +544,10 @@ function BisTooltipAddon:reloadData()
 end
 
 function BisTooltipAddon:createMainFrame()
-    if main_frame then BisTooltipAddon:closeMainFrame(); return end
+    if main_frame then
+        BisTooltipAddon:closeMainFrame()
+        return
+    end
 
     buildClassDict()
     loadData()
@@ -540,8 +563,17 @@ function BisTooltipAddon:createMainFrame()
         main_frame.frame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", pos.x, pos.y)
     end
 
-    _G["BisTooltipRenewed_MainWindow"] = main_frame.frame
-    tinsert(UISpecialFrames, "BisTooltipRenewed_MainWindow")
+    _G[MAIN_WINDOW_FRAME_NAME] = main_frame.frame
+    if not isSpecialFrameRegistered then
+        tinsert(UISpecialFrames, MAIN_WINDOW_FRAME_NAME)
+        isSpecialFrameRegistered = true
+    end
+
+    main_frame.frame:SetScript("OnHide", function()
+        if main_frame then
+            BisTooltipAddon:closeMainFrame()
+        end
+    end)
 
     hooksecurefunc(main_frame.frame, "StopMovingOrSizing", function(self)
         local x = self:GetLeft()
@@ -574,11 +606,8 @@ function BisTooltipAddon:createMainFrame()
         main_frame.frame.darkOverlay:SetTexture(0, 0, 0, 0.60)
     end
 
-    main_frame:SetCallback("OnClose", function(widget)
-        spec_frame = nil
-        missing_widgets = {}
-        AceGUI:Release(widget)
-        main_frame = nil
+    main_frame:SetCallback("OnClose", function()
+        BisTooltipAddon:closeMainFrame()
     end)
     main_frame:SetLayout("List")
     main_frame:SetTitle(BisTooltipAddon.AddonNameAndVersion)
@@ -630,13 +659,18 @@ end
 
 function BisTooltipAddon:closeMainFrame()
     if main_frame then
-        AceGUI:Release(main_frame)
+        local widget = main_frame
+        main_frame = nil
+
+        spec_frame = nil
         classDropdown = nil
         specDropdown = nil
         phaseDropDown = nil
-        missing_widgets = {}
+        wipe(missing_widgets)
+        item_fetch_frame:SetScript("OnUpdate", nil)
 
-        main_frame = nil
+        widget.frame:SetScript("OnHide", nil)
+        AceGUI:Release(widget)
     end
 end
 

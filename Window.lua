@@ -19,7 +19,9 @@ local classDropdown = nil
 local specDropdown = nil
 local phaseDropDown = nil
 
-local isHorde = UnitFactionGroup("player") == "Horde"
+local function IsPlayerHorde()
+    return UnitFactionGroup("player") == "Horde"
+end
 
 local missing_widgets = {}
 local displayed_item_widgets = {}
@@ -30,6 +32,8 @@ local fetch_timer = 0
 local checkmark_path = "Interface\\AddOns\\" .. addonName .. "\\checkmark-16.tga"
 local MAIN_WINDOW_FRAME_NAME = "BisTooltipRenewed_MainWindow"
 local isSpecialFrameRegistered = false
+
+local EMPTY_TABLE = {}
 
 local function HandleItemTooltip(widget, item_id)
     GameTooltip:SetOwner(widget.frame, "ANCHOR_NONE")
@@ -100,6 +104,7 @@ local function ApplyItemStateVisuals(widget, item_id, is_missing)
 end
 
 local function RefreshItemStateVisuals()
+    if not main_frame or not main_frame.frame:IsShown() then return end
     for i = 1, #displayed_item_widgets do
         local entry = displayed_item_widgets[i]
         if entry.widget and entry.widget.frame then
@@ -107,6 +112,7 @@ local function RefreshItemStateVisuals()
         end
     end
 end
+BisTooltipAddon.RefreshItemStateVisuals = RefreshItemStateVisuals
 
 local function ProcessMissingItems(self, elapsed)
     fetch_timer = fetch_timer + elapsed
@@ -316,10 +322,10 @@ local function drawItemSlot(slot)
     f.label:SetJustifyH("LEFT")
     spec_frame:AddChild(f)
 
-    local enhs = {}
-    local enh_class = BisTooltip_Enhancements and (BisTooltip_Enhancements[class] or BisTooltip_Enhancements[string.gsub(class, "%s+", "")])
+    local enhs = EMPTY_TABLE
+    local enh_class = BisTooltip_Enhancements and BisTooltip_Enhancements[class]
     if enh_class and enh_class[spec] and enh_class[spec][phase] then
-        enhs = enh_class[spec][phase][slot.slot_name] or {}
+        enhs = enh_class[spec][phase][slot.slot_name] or EMPTY_TABLE
     end
 
     spec_frame:AddChild(createEnhancementsFrame(enhs))
@@ -330,9 +336,9 @@ local function drawItemSlot(slot)
 
         local display_id = original_item_id
 
-        if isHorde and BisTooltip_AliToHorde and BisTooltip_AliToHorde[original_item_id] then
+        if IsPlayerHorde() and BisTooltip_AliToHorde and BisTooltip_AliToHorde[original_item_id] then
             display_id = BisTooltip_AliToHorde[original_item_id]
-        elseif not isHorde and BisTooltip_FactionMap and BisTooltip_FactionMap[original_item_id] then
+        elseif not IsPlayerHorde() and BisTooltip_FactionMap and BisTooltip_FactionMap[original_item_id] then
             display_id = BisTooltip_FactionMap[original_item_id]
         end
 

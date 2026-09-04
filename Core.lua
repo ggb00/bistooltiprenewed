@@ -12,6 +12,9 @@ equipWatcher:SetScript("OnEvent", function()
         local itemID = GetInventoryItemID("player", i)
         if itemID then BisTooltip_EquippedCache[itemID] = true end
     end
+    if BisTooltipAddon.RefreshItemStateVisuals then
+        BisTooltipAddon.RefreshItemStateVisuals()
+    end
 end)
 
 function BisTooltipAddon:GetItemState(itemID)

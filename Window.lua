@@ -22,6 +22,7 @@ local phaseDropDown = nil
 local isHorde = UnitFactionGroup("player") == "Horde"
 
 local missing_widgets = {}
+local displayed_item_widgets = {}
 local scanner = CreateFrame("GameTooltip", "BisTooltipScanner", UIParent, "GameTooltipTemplate")
 local item_fetch_frame = CreateFrame("Frame")
 local fetch_timer = 0
@@ -95,6 +96,15 @@ local function ApplyItemStateVisuals(widget, item_id, is_missing)
         widget.image:SetVertexColor(1, 1, 1, 1)
         widget.frame.bisCheckMark:Hide()
         if widget.frame.bisBorder then widget.frame.bisBorder:Hide() end
+    end
+end
+
+local function RefreshItemStateVisuals()
+    for i = 1, #displayed_item_widgets do
+        local entry = displayed_item_widgets[i]
+        if entry.widget and entry.widget.frame then
+            ApplyItemStateVisuals(entry.widget, entry.item_id, false)
+        end
     end
 end
 
@@ -326,7 +336,11 @@ local function drawItemSlot(slot)
             display_id = BisTooltip_FactionMap[original_item_id]
         end
 
-        spec_frame:AddChild(createItemFrame(display_id, 40))
+        local item_widget = createItemFrame(display_id, 40)
+        if display_id > 0 then
+            table.insert(displayed_item_widgets, { widget = item_widget, item_id = display_id })
+        end
+        spec_frame:AddChild(item_widget)
         count = count + 1
     end
 
@@ -375,6 +389,7 @@ local function drawSpecData()
         targetScroll = BisTooltipAddon.db.char.scroll_status.scrollvalue
     end
 
+    wipe(displayed_item_widgets)
     wipe(missing_widgets)
     item_fetch_frame:SetScript("OnUpdate", nil)
 
@@ -394,7 +409,7 @@ local function drawSpecData()
 end
 
 local function buildClassDict()
-    if not BisTooltip_ClassData or type(BisTooltip_ClassData) ~= "table" then return end
+    if #class_options > 0 or not BisTooltip_ClassData or type(BisTooltip_ClassData) ~= "table" then return end
     class_options = {}
     for ci, class_data in ipairs(BisTooltip_ClassData) do
         local option_name = class_data.name
@@ -545,7 +560,13 @@ end
 
 function BisTooltipAddon:createMainFrame()
     if main_frame then
-        BisTooltipAddon:closeMainFrame()
+        if main_frame.frame:IsShown() then
+            BisTooltipAddon:closeMainFrame()
+        else
+            RefreshItemStateVisuals()
+            main_frame:Show()
+            StartItemFetch()
+        end
         return
     end
 
@@ -570,9 +591,7 @@ function BisTooltipAddon:createMainFrame()
     end
 
     main_frame.frame:SetScript("OnHide", function()
-        if main_frame then
-            BisTooltipAddon:closeMainFrame()
-        end
+        item_fetch_frame:SetScript("OnUpdate", nil)
     end)
 
     hooksecurefunc(main_frame.frame, "StopMovingOrSizing", function(self)
@@ -658,19 +677,9 @@ function BisTooltipAddon:createMainFrame()
 end
 
 function BisTooltipAddon:closeMainFrame()
-    if main_frame then
-        local widget = main_frame
-        main_frame = nil
-
-        spec_frame = nil
-        classDropdown = nil
-        specDropdown = nil
-        phaseDropDown = nil
-        wipe(missing_widgets)
+    if main_frame and main_frame.frame:IsShown() then
         item_fetch_frame:SetScript("OnUpdate", nil)
-
-        widget.frame:SetScript("OnHide", nil)
-        AceGUI:Release(widget)
+        main_frame:Hide()
     end
 end
 

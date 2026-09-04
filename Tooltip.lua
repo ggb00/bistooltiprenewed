@@ -1,12 +1,17 @@
 -- Tooltip.lua
 local eventFrame = CreateFrame("Frame", nil, UIParent)
 
-local HARDCODED_CLASS_COLORS = {
-    ["DEATHKNIGHT"] = {0.77, 0.12, 0.23}, ["DRUID"]   = {1.00, 0.49, 0.04},
-    ["HUNTER"]      = {0.67, 0.83, 0.45}, ["MAGE"]    = {0.25, 0.78, 0.92},
-    ["PALADIN"]     = {0.96, 0.55, 0.73}, ["PRIEST"]  = {1.00, 1.00, 1.00},
-    ["ROGUE"]       = {1.00, 0.96, 0.41}, ["SHAMAN"]  = {0.00, 0.44, 0.87},
-    ["WARLOCK"]     = {0.53, 0.53, 0.93}, ["WARRIOR"] = {0.78, 0.61, 0.43},
+local CLASS_COLORS = {
+    ["Death Knight"] = {0.77, 0.12, 0.23},
+    ["Druid"]        = {1.00, 0.49, 0.04},
+    ["Hunter"]       = {0.67, 0.83, 0.45},
+    ["Mage"]         = {0.25, 0.78, 0.92},
+    ["Paladin"]      = {0.96, 0.55, 0.73},
+    ["Priest"]       = {1.00, 1.00, 1.00},
+    ["Rogue"]        = {1.00, 0.96, 0.41},
+    ["Shaman"]       = {0.00, 0.44, 0.87},
+    ["Warlock"]      = {0.53, 0.53, 0.93},
+    ["Warrior"]      = {0.78, 0.61, 0.43},
 }
 
 local highlight_colors = {
@@ -24,6 +29,20 @@ local source_hex_colors = {
     ["white"]     = "FFFFFF",
 }
 
+local DARK_BACKDROP = {
+    bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
+    edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+    tile = true, tileSize = 16, edgeSize = 16,
+    insets = { left = 2, right = 2, top = 2, bottom = 2 }
+}
+
+local DEFAULT_BACKDROP = {
+    bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+    edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+    tile = true, tileSize = 16, edgeSize = 16,
+    insets = { left = 5, right = 5, top = 5, bottom = 5 }
+}
+
 local function GetItemSources(itemId, translatedId)
     local sources = BisTooltip_ItemSources and BisTooltip_ItemSources[itemId]
     if not sources and translatedId and BisTooltip_ItemSources then
@@ -34,8 +53,8 @@ end
 
 local function StyleTooltip(tooltip, isForcedItem)
     if not tooltip then return end
-    local bd = tooltip:GetBackdrop()
-    if not bd then return end
+
+    local darkEnabled = BisTooltipAddon.db and BisTooltipAddon.db.char and BisTooltipAddon.db.char.dark_tooltips
 
     local isItem = isForcedItem
     if isItem == nil then
@@ -43,26 +62,19 @@ local function StyleTooltip(tooltip, isForcedItem)
         isItem = (link ~= nil) or tooltip.BisIsCompareItem
     end
 
-    if isItem and BisTooltipAddon.db.char.dark_tooltips then
-        if bd.bgFile ~= "Interface\\ChatFrame\\ChatFrameBackground" then
-            if not tooltip.BisOrigBg then
-                tooltip.BisOrigBg = bd.bgFile
-                tooltip.BisOrigInsets = bd.insets
-            end
-            bd.bgFile = "Interface\\ChatFrame\\ChatFrameBackground"
-            bd.insets = { left = 2, right = 2, top = 2, bottom = 2 }
-            tooltip:SetBackdrop(bd)
+    if isItem and darkEnabled then
+        if not tooltip.BisStyledDark then
+            tooltip.BisStyledDark = true
+            tooltip:SetBackdrop(DARK_BACKDROP)
         end
         tooltip:SetBackdropColor(0, 0, 0, 0.92)
     else
-        if tooltip.BisOrigBg and bd.bgFile ~= tooltip.BisOrigBg then
-            bd.bgFile = tooltip.BisOrigBg
-            bd.insets = tooltip.BisOrigInsets
-            tooltip:SetBackdrop(bd)
-
-            local defaultColor = TOOLTIP_DEFAULT_BACKGROUND_COLOR
-            if defaultColor then
-                tooltip:SetBackdropColor(defaultColor.r, defaultColor.g, defaultColor.b, 1)
+        if tooltip.BisStyledDark then
+            tooltip.BisStyledDark = nil
+            tooltip:SetBackdrop(DEFAULT_BACKDROP)
+            local c = TOOLTIP_DEFAULT_BACKGROUND_COLOR
+            if c then
+                tooltip:SetBackdropColor(c.r, c.g, c.b, 1)
             else
                 tooltip:SetBackdropColor(0.09, 0.09, 0.19, 1)
             end
@@ -111,43 +123,39 @@ local function ProcessTooltip(tooltip, link)
         local useClassColors = db.use_class_colors
         local filterClassNames = db.filter_class_names
         local selectedColor = db.highlight_color or "class"
+        local hlRGB = (selectedColor ~= "class") and (highlight_colors[selectedColor] or highlight_colors["purple"])
 
-        for _, data in ipairs(itemBisData) do
-            local isHighlighted = (highlightSpec.spec_name == data.spec and highlightSpec.class_name == data.class)
-            local isFiltered = false
-
-            if not isHighlighted and not isAltDown and filterSpecs[data.class] and filterSpecs[data.class][data.spec] then
-                isFiltered = true
-            end
+        for i = 1, #itemBisData do
+            local data = itemBisData[i]
+            local dClass = data.class
+            local dSpec = data.spec
+            local isHighlighted = (highlightSpec.spec_name == dSpec and highlightSpec.class_name == dClass)
+            local isFiltered = not isHighlighted and not isAltDown and filterSpecs[dClass] and filterSpecs[dClass][dSpec]
 
             if not isFiltered then
-                local fData = BisTooltipAddon.FormattedNames[data.class]
-                local fSpec = fData and fData[data.spec]
+                local fData = BisTooltipAddon.FormattedNames[dClass]
+                local fSpec = fData and fData[dSpec]
                 local lineText
 
                 if fSpec then
                     lineText = filterClassNames and fSpec.withoutClass or fSpec.withClass
                 else
-                    lineText = string.format("%s %s", data.class or "Unknown", data.spec or "Unknown")
+                    lineText = dClass .. " " .. dSpec
                 end
 
                 local r1, g1, b1, r2, g2, b2
                 if isHighlighted then
-                    if selectedColor == "class" then
-                        local classKey = string.upper(string.gsub(data.class, "%s+", ""))
-                        local cColor = HARDCODED_CLASS_COLORS[classKey] or {0.8, 0.8, 0.8}
-                        r1, g1, b1 = cColor[1], cColor[2], cColor[3]
-                        r2, g2, b2 = cColor[1], cColor[2], cColor[3]
+                    if hlRGB then
+                        r1, g1, b1 = hlRGB[1], hlRGB[2], hlRGB[3]
                     else
-                        local colorRGB = highlight_colors[selectedColor] or highlight_colors["purple"]
-                        r1, g1, b1 = colorRGB[1], colorRGB[2], colorRGB[3]
-                        r2, g2, b2 = colorRGB[1], colorRGB[2], colorRGB[3]
+                        local cColor = CLASS_COLORS[dClass] or {0.8, 0.8, 0.8}
+                        r1, g1, b1 = cColor[1], cColor[2], cColor[3]
                     end
+                    r2, g2, b2 = r1, g1, b1
                 else
                     r2, g2, b2 = 0.65, 0.65, 0.65
                     if useClassColors then
-                        local classKey = string.upper(string.gsub(data.class, "%s+", ""))
-                        local cColor = HARDCODED_CLASS_COLORS[classKey] or {0.65, 0.65, 0.65}
+                        local cColor = CLASS_COLORS[dClass] or {0.65, 0.65, 0.65}
                         r1, g1, b1 = cColor[1], cColor[2], cColor[3]
                     else
                         r1, g1, b1 = 0.65, 0.65, 0.65
@@ -287,9 +295,10 @@ function BisTooltipAddon:initBisTooltip()
 
                     if link then
                         local owner = GameTooltip:GetOwner()
+                        local onEnter = owner and owner.GetScript and owner:GetScript("OnEnter")
 
-                        if owner and owner:GetScript("OnEnter") then
-                            owner:GetScript("OnEnter")(owner)
+                        if onEnter then
+                            pcall(onEnter, owner)
                         else
                             GameTooltip:SetHyperlink("item:3299:0:0:0:0:0:0:0:0")
                             GameTooltip:SetHyperlink(link)
@@ -305,7 +314,7 @@ function BisTooltipAddon:initBisTooltip()
                     end
                 end
 
-                if ItemRefTooltip:IsShown() then
+                if ItemRefTooltip and ItemRefTooltip:IsShown() then
                     local _, link = ItemRefTooltip:GetItem()
                     if link then
                         ItemRefTooltip:SetHyperlink("item:3299:0:0:0:0:0:0:0:0")

@@ -6,6 +6,8 @@ local LDBIcon = LDB and LibStub("LibDBIcon-1.0", true)
 local icon_loaded = false
 local icon_name = "BisTooltipIcon"
 
+local keyToClassSpec = {}
+
 local db_defaults = {
     char = {
         class_index = 1, spec_index = 1, phase_index = 1,
@@ -104,10 +106,14 @@ local configTable = {
                 if key == "none" then
                     BisTooltipAddon.db.char.highlight_spec = {}
                 else
-                    local ci, si = strsplit(":", key)
-                    BisTooltipAddon.db.char.highlight_spec = {
-                        key = key, class_name = BisTooltip_ClassData[tonumber(ci)].name, spec_name = BisTooltip_ClassData[tonumber(ci)].specs[tonumber(si)]
-                    }
+                    local entry = keyToClassSpec[key]
+                    if entry then
+                        BisTooltipAddon.db.char.highlight_spec = {
+                            key = key,
+                            class_name = entry.class,
+                            spec_name = entry.spec
+                        }
+                    end
                 end
                 if BisTooltipAddon.ClearTooltipCache then BisTooltipAddon:ClearTooltipCache() end
             end,
@@ -163,17 +169,19 @@ local configTable = {
             desc = "Removes checked specs from item tooltips",
             type = "multiselect", values = {}, --width = "full",
             set = function(info, key, val)
-                local ci, si = strsplit(":", key)
-                local class_name = BisTooltip_ClassData[tonumber(ci)].name
-                local spec_name = BisTooltip_ClassData[tonumber(ci)].specs[tonumber(si)]
+                local entry = keyToClassSpec[key]
+                if not entry then return end
+                local class_name = entry.class
+                local spec_name = entry.spec
                 if not BisTooltipAddon.db.char.filter_specs[class_name] then BisTooltipAddon.db.char.filter_specs[class_name] = {} end
                 BisTooltipAddon.db.char.filter_specs[class_name][spec_name] = val
                 if BisTooltipAddon.ClearTooltipCache then BisTooltipAddon:ClearTooltipCache() end
             end,
             get = function(info, key)
-                local ci, si = strsplit(":", key)
-                local class_name = BisTooltip_ClassData[tonumber(ci)].name
-                local spec_name = BisTooltip_ClassData[tonumber(ci)].specs[tonumber(si)]
+                local entry = keyToClassSpec[key]
+                if not entry then return false end
+                local class_name = entry.class
+                local spec_name = entry.spec
                 if not BisTooltipAddon.db.char.filter_specs[class_name] then return false end
                 return BisTooltipAddon.db.char.filter_specs[class_name][spec_name] or false
             end
@@ -184,6 +192,7 @@ local configTable = {
 local function buildFilterSpecOptions()
     local filter_specs_options = {}
     local highlight_specs_options = {["none"] = "None" }
+    wipe(keyToClassSpec)
     if BisTooltip_ClassData then
         for ci, class in ipairs(BisTooltip_ClassData) do
             for si, spec in ipairs(class.specs) do
@@ -191,6 +200,7 @@ local function buildFilterSpecOptions()
                 local option_key = ci .. ":" .. si
                 filter_specs_options[option_key] = option_val
                 highlight_specs_options[option_key] = option_val
+                keyToClassSpec[option_key] = { class = class.name, spec = spec }
             end
         end
     end
@@ -220,10 +230,13 @@ local function migrateAddonDB()
     if BisTooltipAddon.db.char.show_item_borders == nil then BisTooltipAddon.db.char.show_item_borders = true end
 end
 
-local config_shown = false
 function BisTooltipAddon:openConfigDialog()
-    if config_shown then InterfaceOptionsFrame_Show() else InterfaceOptionsFrame_OpenToCategory(BisTooltipAddon.AceAddonName) end
-    config_shown = not config_shown
+    if InterfaceOptionsFrame:IsShown() then
+        InterfaceOptionsFrame:Hide()
+    else
+        InterfaceOptionsFrame_OpenToCategory(BisTooltipAddon.AceAddonName)
+        InterfaceOptionsFrame_OpenToCategory(BisTooltipAddon.AceAddonName)
+    end
 end
 
 function BisTooltipAddon:addMapIcon()

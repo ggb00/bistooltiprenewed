@@ -60,11 +60,9 @@ function BisTooltipAddon:BuildReverseLookup()
         local tItem = tempLookup[targetId]
         if not tItem then tItem = {}; tempLookup[targetId] = tItem end
 
-        local tClass = tItem[cls]
-        if not tClass then tClass = {}; tItem[cls] = tClass end
-
-        local tSpec = tClass[spc]
-        if not tSpec then tSpec = {}; tClass[spc] = tSpec end
+        local key = cls .. ":" .. spc
+        local tSpec = tItem[key]
+        if not tSpec then tSpec = { class = cls, spec = spc }; tItem[key] = tSpec end
 
         local currentRank = tSpec[phs]
         if not currentRank or rank < currentRank then
@@ -105,25 +103,23 @@ function BisTooltipAddon:BuildReverseLookup()
     self.ReverseLookup = {}
     for itemId, classes in pairs(tempLookup) do
         local flatList = {}
-        for class, specs in pairs(classes) do
-            for spec, phaseRanks in pairs(specs) do
-                local labels = {}
+        for _, entry in pairs(classes) do
+            local labels = {}
 
-                for _, phase in ipairs(sortedPhases) do
-                    local rank = phaseRanks[phase]
-                    if rank then
-                        local phaseLabel = (rank == 1) and (phase .. " BIS") or (phase .. " alt " .. (rank - 1))
-                        table.insert(labels, phaseLabel)
-                    end
+            for _, phase in ipairs(sortedPhases) do
+                local rank = entry[phase]
+                if rank then
+                    local phaseLabel = (rank == 1) and (phase .. " BIS") or (phase .. " alt " .. (rank - 1))
+                    table.insert(labels, phaseLabel)
                 end
+            end
 
-                if #labels > 0 then
-                    table.insert(flatList, {
-                        class = class,
-                        spec = spec,
-                        rightText = table.concat(labels, " / ")
-                    })
-                end
+            if #labels > 0 then
+                table.insert(flatList, {
+                    class = entry.class,
+                    spec = entry.spec,
+                    rightText = table.concat(labels, " / ")
+                })
             end
         end
 

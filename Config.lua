@@ -26,7 +26,8 @@ local db_defaults = {
         filter_specs = {}, highlight_spec = {},
         highlight_color = "purple", use_class_colors = true,
         minimap = { hide = false }, tooltip_with_ctrl = false,
-        source_color = "green", dark_tooltips = false,
+        show_sources = true, source_color = "green",
+        show_item_states = true, dark_tooltips = false,
         show_item_borders = true, frame_pos = nil, scroll_status = {}
     }
 }
@@ -73,9 +74,21 @@ local configTable = {
             get = function(info) return BisTooltipAddon.db.char.show_item_borders end
         },
 
+        show_item_states = {
+            name = "Show Bag / Bank Status",
+            order = 3,
+            desc = "Shows whether items are in your bags or bank inside tooltips",
+            type = "toggle", width = "double",
+            set = function(info, val) BisTooltipAddon.db.char.show_item_states = val end,
+            get = function(info)
+                if BisTooltipAddon.db.char.show_item_states == nil then return true end
+                return BisTooltipAddon.db.char.show_item_states
+            end
+        },
+
         filter_class_names = {
             name = "Hide class names",
-            order = 3,
+            order = 4,
             desc = "Removes class names from item tooltips, leaving only spec name",
             type = "toggle", width = "double",
             set = function(info, val)
@@ -87,7 +100,7 @@ local configTable = {
 
         use_class_colors = {
             name = "Use Class Colors",
-            order = 4,
+            order = 5,
             desc = "Colorize class/spec text with class colors",
             type = "toggle", width = "double",
             set = function(info, val)
@@ -102,7 +115,7 @@ local configTable = {
 
         dark_tooltips = {
             name = "Dark Tooltips",
-            order = 5,
+            order = 6,
             desc = "Changes the tooltip background to a solid black color\n(Requires Reload)",
             type = "toggle", width = "double",
             set = function(info, val) BisTooltipAddon.db.char.dark_tooltips = val end,
@@ -111,7 +124,7 @@ local configTable = {
 
         highlight_spec = {
             name = "Highlight Spec",
-            order = 6,
+            order = 7,
             desc = "Highlights selected spec in item tooltips",
             type = "select", values = {},
             set = function(info, key)
@@ -134,7 +147,7 @@ local configTable = {
 
         highlight_color = {
             name = "Highlight Color",
-            order = 7,
+            order = 8,
             desc = "Changes the text color of your highlighted spec",
             type = "select",
             values = {
@@ -155,11 +168,27 @@ local configTable = {
             get = function(info) return BisTooltipAddon.db.char.highlight_color or "class" end
         },
 
+        show_sources = {
+            name = "Show Item Sources",
+            order = 9,
+            desc = "Display item drop sources in item tooltips",
+            type = "toggle", width = "double",
+            set = function(info, val)
+                BisTooltipAddon.db.char.show_sources = val
+                if BisTooltipAddon.ClearTooltipCache then BisTooltipAddon:ClearTooltipCache() end
+            end,
+            get = function(info)
+                if BisTooltipAddon.db.char.show_sources == nil then return true end
+                return BisTooltipAddon.db.char.show_sources
+            end
+        },
+
         source_color = {
             name = "Source Color",
-            order = 8,
+            order = 10,
             desc = "Changes the text color of the item's source data",
             type = "select",
+            disabled = function() return BisTooltipAddon.db.char.show_sources == false end,
             values = {
                 ["purple"] = "Purple",
                 ["green"] = "Green",
@@ -177,7 +206,7 @@ local configTable = {
 
         filter_specs = {
             name = "Hide Specs",
-            order = 9,
+            order = 11,
             desc = "Removes checked specs from item tooltips",
             type = "multiselect", values = {}, --width = "full",
             set = function(info, key, val)
@@ -233,6 +262,9 @@ local function migrateAddonDB()
     if not BisTooltipAddon.db.char.class_index then
         BisTooltipAddon.db.char.class_index = GetPlayerClassIndex()
     end
+
+    if BisTooltipAddon.db.char.show_sources == nil then BisTooltipAddon.db.char.show_sources = true end
+    if BisTooltipAddon.db.char.show_item_states == nil then BisTooltipAddon.db.char.show_item_states = true end
 
     if BisTooltipAddon.db.char.minimap == nil then
         BisTooltipAddon.db.char.minimap = { hide = false }

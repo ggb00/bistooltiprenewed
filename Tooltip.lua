@@ -52,7 +52,7 @@ local function GetItemSources(itemId, translatedId)
 end
 
 local function StyleTooltip(tooltip, isForcedItem)
-    if not tooltip then return end
+    if not tooltip or not tooltip.GetItem then return end
 
     local darkEnabled = BisTooltipAddon.db and BisTooltipAddon.db.char and BisTooltipAddon.db.char.dark_tooltips
 
@@ -83,6 +83,7 @@ local function StyleTooltip(tooltip, isForcedItem)
 end
 
 local function OnTooltipCleared(tooltip)
+    if not tooltip then return end
     tooltip.BisTooltipRendered = nil
     tooltip.BisIsCompareItem = nil
     StyleTooltip(tooltip, false)
@@ -170,7 +171,8 @@ local function ProcessTooltip(tooltip, link)
         end
     end
 
-    local sources = GetItemSources(itemId, translated_id)
+    local showSources = (db.show_sources == nil) or db.show_sources
+    local sources = showSources and GetItemSources(itemId, translated_id)
     if sources then
         local colorKey = db.source_color or "green"
         local hexColor = source_hex_colors[colorKey] or "19FF19"
@@ -185,7 +187,8 @@ local function ProcessTooltip(tooltip, link)
         end
     end
 
-    if itemBisData and sources then
+    local showItemStates = (db.show_item_states == nil) or db.show_item_states
+    if showItemStates and itemBisData then
         local state = BisTooltipAddon:GetItemState(itemId)
         if state == 1 or state == 3 then
             local owner = tt:GetOwner()
@@ -282,20 +285,35 @@ function BisTooltipAddon:initBisTooltip()
         if s3 and s3:IsShown() then s3.BisIsCompareItem = true; StyleTooltip(s3, true) end
     end)
 
+    local atlasLootHooked = false
+    local function HookAtlasLoot()
+        if atlasLootHooked then return end
+        if AtlasLootTooltip and AtlasLootTooltip.HookScript then
+            atlasLootHooked = true
+            AtlasLootTooltip:HookScript("OnShow", StyleTooltip)
+            AtlasLootTooltip:HookScript("OnTooltipSetItem", OnTooltipSetItem)
+            AtlasLootTooltip:HookScript("OnTooltipCleared", OnTooltipCleared)
+        end
+    end
+
     eventFrame:RegisterEvent("PLAYER_LOGIN")
-    eventFrame:SetScript("OnEvent", function(_, event, key)
+    eventFrame:RegisterEvent("ADDON_LOADED")
+    eventFrame:SetScript("OnEvent", function(_, event, arg1)
         if event == "PLAYER_LOGIN" then
-            if AtlasLootTooltip then
-                AtlasLootTooltip:HookScript("OnShow", StyleTooltip)
-                AtlasLootTooltip:HookScript("OnTooltipSetItem", OnTooltipSetItem)
-                AtlasLootTooltip:HookScript("OnTooltipCleared", OnTooltipCleared)
+            HookAtlasLoot()
+            return
+        end
+
+        if event == "ADDON_LOADED" then
+            if arg1 and (arg1 == "AtlasLoot" or arg1:find("AtlasLoot")) then
+                HookAtlasLoot()
             end
             return
         end
 
         if event == "MODIFIER_STATE_CHANGED" then
+            local key = arg1
             if key == "LALT" or key == "RALT" or key == "LCTRL" or key == "RCTRL" or key == "LSHIFT" or key == "RSHIFT" then
-
                 if GameTooltip:IsShown() then
                     local _, link = GameTooltip:GetItem()
 
@@ -308,14 +326,14 @@ function BisTooltipAddon:initBisTooltip()
                         else
                             GameTooltip:SetHyperlink("item:3299:0:0:0:0:0:0:0:0")
                             GameTooltip:SetHyperlink(link)
+                        end
 
-                            if IsModifiedClick("COMPAREITEMS") then
-                                GameTooltip_ShowCompareItem(GameTooltip)
-                            else
-                                if ShoppingTooltip1 then ShoppingTooltip1:Hide() end
-                                if ShoppingTooltip2 then ShoppingTooltip2:Hide() end
-                                if ShoppingTooltip3 then ShoppingTooltip3:Hide() end
-                            end
+                        if IsModifiedClick("COMPAREITEMS") then
+                            GameTooltip_ShowCompareItem(GameTooltip)
+                        else
+                            if ShoppingTooltip1 then ShoppingTooltip1:Hide() end
+                            if ShoppingTooltip2 then ShoppingTooltip2:Hide() end
+                            if ShoppingTooltip3 then ShoppingTooltip3:Hide() end
                         end
                     end
                 end

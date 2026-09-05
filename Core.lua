@@ -1,5 +1,5 @@
 -- Core.lua
-BisTooltipAddon = LibStub("AceAddon-3.0"):NewAddon("Bis-Tooltip Renewed", "AceConsole-3.0")
+BisTooltipAddon = LibStub("AceAddon-3.0"):NewAddon("BiS-Tooltip Renewed", "AceConsole-3.0")
 BisTooltip_AliToHorde = {}
 BisTooltip_EquippedCache = {}
 
@@ -16,8 +16,9 @@ local equipWatcher = CreateFrame("Frame")
 equipWatcher:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
 equipWatcher:RegisterEvent("PLAYER_ENTERING_WORLD")
 equipWatcher:RegisterEvent("BAG_UPDATE")
+equipWatcher:RegisterEvent("PLAYERBANKSLOTS_CHANGED")
 equipWatcher:SetScript("OnEvent", function(_, event)
-    if event == "BAG_UPDATE" then
+    if event == "BAG_UPDATE" or event == "PLAYERBANKSLOTS_CHANGED" then
         if BisTooltipAddon.IsWindowOpen and BisTooltipAddon:IsWindowOpen() then
             bagUpdateFrame:Show()
         end

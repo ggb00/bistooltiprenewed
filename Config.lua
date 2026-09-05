@@ -319,7 +319,7 @@ function BisTooltipAddon:addMapIcon()
         if LDB then
             icon_loaded = true
             local PC_MinimapBtn = LDB:NewDataObject(icon_name, {
-                type = "launcher", text = "Bis-Tooltip Renewed", icon = "interface/icons/inv_weapon_glave_01.blp",
+                type = "launcher", text = "BiS-Tooltip Renewed", icon = "interface/icons/inv_weapon_glave_01.blp",
                 OnClick = function(_, button)
                     if button == "LeftButton" then BisTooltipAddon:createMainFrame() end
                     if button == "RightButton" then BisTooltipAddon:openConfigDialog() end

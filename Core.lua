@@ -3,10 +3,27 @@ BisTooltipAddon = LibStub("AceAddon-3.0"):NewAddon("Bis-Tooltip Renewed", "AceCo
 BisTooltip_AliToHorde = {}
 BisTooltip_EquippedCache = {}
 
+local bagUpdateFrame = CreateFrame("Frame")
+bagUpdateFrame:Hide()
+bagUpdateFrame:SetScript("OnUpdate", function(self)
+    self:Hide()
+    if BisTooltipAddon.RefreshItemStateVisuals then
+        BisTooltipAddon.RefreshItemStateVisuals()
+    end
+end)
+
 local equipWatcher = CreateFrame("Frame")
 equipWatcher:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
 equipWatcher:RegisterEvent("PLAYER_ENTERING_WORLD")
-equipWatcher:SetScript("OnEvent", function()
+equipWatcher:RegisterEvent("BAG_UPDATE")
+equipWatcher:SetScript("OnEvent", function(_, event)
+    if event == "BAG_UPDATE" then
+        if BisTooltipAddon.IsWindowOpen and BisTooltipAddon:IsWindowOpen() then
+            bagUpdateFrame:Show()
+        end
+        return
+    end
+
     wipe(BisTooltip_EquippedCache)
     for i = 1, 19 do
         local itemID = GetInventoryItemID("player", i)

@@ -114,6 +114,10 @@ local function RefreshItemStateVisuals()
 end
 BisTooltipAddon.RefreshItemStateVisuals = RefreshItemStateVisuals
 
+function BisTooltipAddon:IsWindowOpen()
+    return main_frame and main_frame.frame and main_frame.frame:IsShown()
+end
+
 local function ProcessMissingItems(self, elapsed)
     fetch_timer = fetch_timer + elapsed
     if fetch_timer <= 0.25 then return end

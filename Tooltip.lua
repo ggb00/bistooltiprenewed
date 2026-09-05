@@ -89,13 +89,16 @@ local function OnTooltipCleared(tooltip)
 end
 
 local function ProcessTooltip(tooltip, link)
-    StyleTooltip(tooltip, true)
+    local tt = tooltip or (this ~= nil and this) or GameTooltip
+    if not tt or not tt.GetItem then return end
+
+    StyleTooltip(tt, true)
 
     local db = BisTooltipAddon.db.char
     if db.tooltip_with_ctrl and not IsControlKeyDown() then return end
 
     if not link then
-        _, link = tooltip:GetItem()
+        _, link = tt:GetItem()
     end
     if not link then return end
 
@@ -104,8 +107,8 @@ local function ProcessTooltip(tooltip, link)
 
     if not GetItemInfo(itemId) then return end
 
-    if tooltip.BisTooltipRendered == itemId then return end
-    tooltip.BisTooltipRendered = itemId
+    if tt.BisTooltipRendered == itemId then return end
+    tt.BisTooltipRendered = itemId
 
     local translated_id = nil
     if BisTooltip_FactionMap and BisTooltip_FactionMap[itemId] then
@@ -162,7 +165,7 @@ local function ProcessTooltip(tooltip, link)
                     end
                 end
 
-                tooltip:AddDoubleLine(lineText, data.rightText, r1, g1, b1, r2, g2, b2)
+                tt:AddDoubleLine(lineText, data.rightText, r1, g1, b1, r2, g2, b2)
             end
         end
     end
@@ -175,17 +178,17 @@ local function ProcessTooltip(tooltip, link)
 
         if type(sources) == "table" then
             for _, src in ipairs(sources) do
-                tooltip:AddLine(string.format("%s |cFF%s%s|r", icon, hexColor, src), 1, 1, 1, true)
+                tt:AddLine(string.format("%s |cFF%s%s|r", icon, hexColor, src), 1, 1, 1, true)
             end
         elseif type(sources) == "string" then
-            tooltip:AddLine(string.format("%s |cFF%s%s|r", icon, hexColor, sources), 1, 1, 1, true)
+            tt:AddLine(string.format("%s |cFF%s%s|r", icon, hexColor, sources), 1, 1, 1, true)
         end
     end
 
     if itemBisData and sources then
         local state = BisTooltipAddon:GetItemState(itemId)
         if state == 1 or state == 3 then
-            local owner = tooltip:GetOwner()
+            local owner = tt:GetOwner()
             local ownerName = ""
             if owner and owner.GetName and owner:GetName() then
                 ownerName = string.lower(owner:GetName())
@@ -200,19 +203,22 @@ local function ProcessTooltip(tooltip, link)
 
             if not skip then
                 if state == 1 then
-                    tooltip:AddLine("|TInterface\\Icons\\inv_misc_bag_08:14:14:0:0:64:64:5:59:5:59|t |cFFFFFF00In Bags|r", 1, 1, 1, true)
+                    tt:AddLine("|TInterface\\Icons\\inv_misc_bag_08:14:14:0:0:64:64:5:59:5:59|t |cFFFFFF00In Bags|r", 1, 1, 1, true)
                 elseif state == 3 then
-                    tooltip:AddLine("|TInterface\\Icons\\inv_misc_bag_08:14:14:0:0:64:64:5:59:5:59|t |cFFFFFF00In Bank|r", 1, 1, 1, true)
+                    tt:AddLine("|TInterface\\Icons\\inv_misc_bag_08:14:14:0:0:64:64:5:59:5:59|t |cFFFFFF00In Bank|r", 1, 1, 1, true)
                 end
             end
         end
     end
 
-    tooltip:Show()
+    tt:Show()
 end
 
 local function OnTooltipSetItem(tooltip)
-    ProcessTooltip(tooltip, nil)
+    local tt = tooltip or (this ~= nil and this) or GameTooltip
+    if tt and tt.GetItem then
+        ProcessTooltip(tt, nil)
+    end
 end
 
 local function HookSetInventoryItem(tooltip, unit, slot)

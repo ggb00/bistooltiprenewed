@@ -95,7 +95,9 @@ local function ProcessTooltip(tooltip, link)
 
     StyleTooltip(tt, true)
 
-    local db = BisTooltipAddon.db.char
+    local db = BisTooltipAddon.db and BisTooltipAddon.db.char
+    if not db then return end
+
     if db.tooltip_with_ctrl and not IsControlKeyDown() then return end
 
     if not link then

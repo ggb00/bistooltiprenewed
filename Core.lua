@@ -155,8 +155,8 @@ function BisTooltipAddon:OnInitialize()
     self:BuildFactionMaps()
     self:BuildReverseLookup()
 
-    self.AceAddonName = "Bis-Tooltip Renewed"
-    self.AddonNameAndVersion = "Bis-Tooltip Renewed"
+    self.AceAddonName = "BiS-Tooltip Renewed"
+    self.AddonNameAndVersion = "BiS-Tooltip Renewed"
     self:initConfig()
     self:addMapIcon()
     self:initBisTooltip()

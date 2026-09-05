@@ -194,13 +194,29 @@ local function ProcessTooltip(tooltip, link)
         local state = BisTooltipAddon:GetItemState(itemId)
         if state == 1 or state == 3 then
             local owner = tt:GetOwner()
-            local ownerName = ""
-            if owner and owner.GetName and owner:GetName() then
-                ownerName = string.lower(owner:GetName())
-            end
+            local inBagUI = false
+            local inBankUI = false
 
-            local inBagUI = ownerName:find("container") or ownerName:find("bag") or ownerName:find("inventory") or ownerName:find("bagnon")
-            local inBankUI = ownerName:find("bank") or ownerName:find("bag") or ownerName:find("bagnon")
+            if owner then
+                local ownerName = (owner.GetName and owner:GetName()) and string.lower(owner:GetName()) or ""
+
+                local parent = owner.GetParent and owner:GetParent()
+                local bagID = parent and parent.GetID and parent:GetID()
+
+                if bagID then
+                    if bagID >= 0 and bagID <= 4 then
+                        inBagUI = true
+                    elseif bagID == -1 or (bagID >= 5 and bagID <= 11) then
+                        inBankUI = true
+                    end
+                end
+
+                if ownerName:find("bank") then
+                    inBankUI = true
+                elseif not inBankUI and (ownerName:find("container") or ownerName:find("inventory") or ownerName:find("bagnon") or ownerName:find("bag")) then
+                    inBagUI = true
+                end
+            end
 
             local skip = false
             if state == 1 and inBagUI then skip = true end
@@ -315,10 +331,10 @@ function BisTooltipAddon:initBisTooltip()
 
         if event == "MODIFIER_STATE_CHANGED" then
             local key = arg1
-            if key == "LALT" or key == "RALT" or key == "LCTRL" or key == "RCTRL" or key == "LSHIFT" or key == "RSHIFT" then
+
+            if key == "LALT" or key == "RALT" or key == "LCTRL" or key == "RCTRL" then
                 if GameTooltip:IsShown() then
                     local _, link = GameTooltip:GetItem()
-
                     if link then
                         local owner = GameTooltip:GetOwner()
                         local onEnter = owner and owner.GetScript and owner:GetScript("OnEnter")
@@ -329,14 +345,6 @@ function BisTooltipAddon:initBisTooltip()
                             GameTooltip:SetHyperlink("item:3299:0:0:0:0:0:0:0:0")
                             GameTooltip:SetHyperlink(link)
                         end
-
-                        if IsModifiedClick("COMPAREITEMS") then
-                            GameTooltip_ShowCompareItem(GameTooltip)
-                        else
-                            if ShoppingTooltip1 then ShoppingTooltip1:Hide() end
-                            if ShoppingTooltip2 then ShoppingTooltip2:Hide() end
-                            if ShoppingTooltip3 then ShoppingTooltip3:Hide() end
-                        end
                     end
                 end
 
@@ -345,15 +353,28 @@ function BisTooltipAddon:initBisTooltip()
                     if link then
                         ItemRefTooltip:SetHyperlink("item:3299:0:0:0:0:0:0:0:0")
                         ItemRefTooltip:SetHyperlink(link)
+                    end
+                end
 
-                        local focus = GetMouseFocus()
-                        if focus == ItemRefTooltip or (focus and focus:GetParent() == ItemRefTooltip) then
-                            if IsModifiedClick("COMPAREITEMS") then
-                                GameTooltip_ShowCompareItem(ItemRefTooltip)
-                            else
-                                if ItemRefShoppingTooltip1 then ItemRefShoppingTooltip1:Hide() end
-                                if ItemRefShoppingTooltip2 then ItemRefShoppingTooltip2:Hide() end
-                            end
+            elseif key == "LSHIFT" or key == "RSHIFT" then
+                if GameTooltip:IsShown() then
+                    if IsModifiedClick("COMPAREITEMS") then
+                        GameTooltip_ShowCompareItem(GameTooltip)
+                    else
+                        if ShoppingTooltip1 then ShoppingTooltip1:Hide() end
+                        if ShoppingTooltip2 then ShoppingTooltip2:Hide() end
+                        if ShoppingTooltip3 then ShoppingTooltip3:Hide() end
+                    end
+                end
+
+                if ItemRefTooltip and ItemRefTooltip:IsShown() then
+                    local focus = GetMouseFocus()
+                    if focus == ItemRefTooltip or (focus and focus:GetParent() == ItemRefTooltip) then
+                        if IsModifiedClick("COMPAREITEMS") then
+                            GameTooltip_ShowCompareItem(ItemRefTooltip)
+                        else
+                            if ItemRefShoppingTooltip1 then ItemRefShoppingTooltip1:Hide() end
+                            if ItemRefShoppingTooltip2 then ItemRefShoppingTooltip2:Hide() end
                         end
                     end
                 end

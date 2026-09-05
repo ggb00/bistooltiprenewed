@@ -573,8 +573,8 @@ function BisTooltipAddon:createMainFrame()
         if main_frame.frame:IsShown() then
             BisTooltipAddon:closeMainFrame()
         else
-            RefreshItemStateVisuals()
             main_frame:Show()
+            RefreshItemStateVisuals()
             StartItemFetch()
         end
         return

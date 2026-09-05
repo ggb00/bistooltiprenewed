@@ -228,7 +228,7 @@ local function ProcessTooltip(tooltip, link)
                 if state == 1 then
                     tt:AddLine("|TInterface\\Icons\\inv_misc_bag_08:14:14:0:0:64:64:5:59:5:59|t |cFFFFFF00In Bags|r", 1, 1, 1, true)
                 elseif state == 3 then
-                    tt:AddLine("|TInterface\\Icons\\inv_misc_bag_08:14:14:0:0:64:64:5:59:5:59|t |cFFFFFF00In Bank|r", 1, 1, 1, true)
+                    tt:AddLine("|TInterface\\Icons\\inv_box_01:14:14:0:0:64:64:5:59:5:59|t |cFFFFFF00In Bank|r", 1, 1, 1, true)
                 end
             end
         end

@@ -79,7 +79,8 @@ local function ApplyItemStateVisuals(widget, item_id, is_missing)
 
     elseif state == 1 or state == 3 then
         widget.image:SetVertexColor(0.35, 0.35, 0.35, 1)
-        widget.frame.bisCheckMark:SetTexture("Interface\\Icons\\inv_misc_bag_08")
+        local iconTexture = (state == 3) and "Interface\\Icons\\inv_box_01" or "Interface\\Icons\\inv_misc_bag_08"
+        widget.frame.bisCheckMark:SetTexture(iconTexture)
         widget.frame.bisCheckMark:SetTexCoord(0.08, 0.92, 0.08, 0.92)
         widget.frame.bisCheckMark:SetWidth(16)
         widget.frame.bisCheckMark:SetHeight(16)
@@ -184,17 +185,19 @@ local function createItemFrame(item_id, size)
 
     item_frame.frame:EnableMouse(true)
 
-    if not item_frame.frame.bisCheckMark then
-        item_frame.frame.bisCheckMark = item_frame.frame:CreateTexture(nil, "OVERLAY")
-    end
-
     if not item_frame.frame.bisBorder then
-        item_frame.frame.bisBorder = item_frame.frame:CreateTexture(nil, "OVERLAY")
+        item_frame.frame.bisBorder = item_frame.frame:CreateTexture(nil, "ARTWORK")
         item_frame.frame.bisBorder:SetTexture("Interface\\Buttons\\CheckButtonHilight")
         item_frame.frame.bisBorder:SetBlendMode("ADD")
         item_frame.frame.bisBorder:SetAllPoints(item_frame.image)
         item_frame.frame.bisBorder:Hide()
     end
+    item_frame.frame.bisBorder:SetDrawLayer("ARTWORK", 1)
+
+    if not item_frame.frame.bisCheckMark then
+        item_frame.frame.bisCheckMark = item_frame.frame:CreateTexture(nil, "OVERLAY")
+    end
+    item_frame.frame.bisCheckMark:SetDrawLayer("OVERLAY", 1)
 
     if not item_frame.frame.bisBoeMark then
         item_frame.frame.bisBoeMark = item_frame.frame:CreateTexture(nil, "OVERLAY")
@@ -203,6 +206,7 @@ local function createItemFrame(item_id, size)
         item_frame.frame.bisBoeMark:SetPoint("TOPLEFT", 2, -5)
         item_frame.frame.bisBoeMark:SetTexture("Interface\\Icons\\INV_Misc_Coin_01")
     end
+    item_frame.frame.bisBoeMark:SetDrawLayer("OVERLAY", 2)
 
     item_frame:SetCallback("OnClick", function()
         local _, link = GetItemInfo(item_id)

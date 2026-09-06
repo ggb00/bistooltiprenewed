@@ -25,6 +25,7 @@ local db_defaults = {
         class_index = nil, spec_index = 1, phase_index = 1,
         filter_specs = {}, highlight_spec = {},
         highlight_color = "purple", use_class_colors = true,
+        filter_class_names = false,
         minimap = { hide = false }, tooltip_with_ctrl = false,
         show_sources = true, source_color = "green",
         show_item_states = true, dark_tooltips = false,
@@ -134,10 +135,13 @@ local configTable = {
         dark_tooltips = {
             name = "Dark Tooltips",
             order = 15,
-            desc = "Changes the tooltip background to a solid black color\n(Requires Reload)",
+            desc = "Changes the tooltip background to a solid black color",
             type = "toggle",
             width = "full",
-            set = function(info, val) BisTooltipAddon.db.char.dark_tooltips = val end,
+            set = function(info, val)
+                BisTooltipAddon.db.char.dark_tooltips = val
+                if BisTooltipAddon.ClearTooltipCache then BisTooltipAddon:ClearTooltipCache() end
+            end,
             get = function(info) return BisTooltipAddon.db.char.dark_tooltips end
         },
 

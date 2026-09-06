@@ -229,7 +229,7 @@ local configTable = {
         },
 
         filter_specs = {
-            name = "Hide Specs",
+            name = "Hide Specs (Hold Alt to show)",
             order = 30,
             desc = "Removes checked specs from item tooltips",
             type = "multiselect",

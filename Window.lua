@@ -24,10 +24,12 @@ local function IsPlayerHorde()
 end
 
 local missing_widgets = {}
+local fetch_attempts = {}
 local displayed_item_widgets = {}
 local scanner = CreateFrame("GameTooltip", "BisTooltipScanner", UIParent, "GameTooltipTemplate")
 local item_fetch_frame = CreateFrame("Frame")
 local fetch_timer = 0
+local MAX_FETCH_ATTEMPTS = 10
 
 local checkmark_path = "Interface\\AddOns\\" .. addonName .. "\\checkmark-16.tga"
 local MAIN_WINDOW_FRAME_NAME = "BisTooltipRenewed_MainWindow"
@@ -137,11 +139,19 @@ local function ProcessMissingItems(self, elapsed)
                 end
             end
             missing_widgets[item_id] = nil
+            fetch_attempts[item_id] = nil
         else
-            hasRemaining = true
-            scanner:SetOwner(UIParent, "ANCHOR_NONE")
-            scanner:SetHyperlink("item:" .. item_id .. ":0:0:0:0:0:0:0")
-            scanner:ClearLines()
+            local attempts = (fetch_attempts[item_id] or 0) + 1
+            fetch_attempts[item_id] = attempts
+
+            if attempts >= MAX_FETCH_ATTEMPTS then
+                missing_widgets[item_id] = nil
+            else
+                hasRemaining = true
+                scanner:SetOwner(UIParent, "ANCHOR_NONE")
+                scanner:SetHyperlink("item:" .. item_id .. ":0:0:0:0:0:0:0")
+                scanner:ClearLines()
+            end
         end
     end
 
@@ -411,6 +421,7 @@ local function drawSpecData()
 
     wipe(displayed_item_widgets)
     wipe(missing_widgets)
+    wipe(fetch_attempts)
     item_fetch_frame:SetScript("OnUpdate", nil)
 
     spec_frame:ReleaseChildren()

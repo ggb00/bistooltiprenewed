@@ -86,7 +86,10 @@ local configTable = {
             desc = "Only show tooltips when holding down Ctrl key",
             type = "toggle",
             width = "full",
-            set = function(info, val) BisTooltipAddon.db.char.tooltip_with_ctrl = val end,
+            set = function(info, val)
+                BisTooltipAddon.db.char.tooltip_with_ctrl = val
+                if BisTooltipAddon.ClearTooltipCache then BisTooltipAddon:ClearTooltipCache() end
+            end,
             get = function(info) return BisTooltipAddon.db.char.tooltip_with_ctrl end
         },
 
@@ -96,7 +99,10 @@ local configTable = {
             desc = "Show a line that says whenever an item is already in your bags or bank",
             type = "toggle",
             width = "full",
-            set = function(info, val) BisTooltipAddon.db.char.show_item_states = val end,
+            set = function(info, val)
+                BisTooltipAddon.db.char.show_item_states = val
+                if BisTooltipAddon.ClearTooltipCache then BisTooltipAddon:ClearTooltipCache() end
+            end,
             get = function(info)
                 if BisTooltipAddon.db.char.show_item_states == nil then return true end
                 return BisTooltipAddon.db.char.show_item_states
@@ -228,7 +234,10 @@ local configTable = {
                 ["cyan"]      = "Cyan",
                 ["white"]     = "White"
             },
-            set = function(info, val) BisTooltipAddon.db.char.source_color = val end,
+            set = function(info, val)
+                BisTooltipAddon.db.char.source_color = val
+                if BisTooltipAddon.ClearTooltipCache then BisTooltipAddon:ClearTooltipCache() end
+            end,
             get = function(info) return BisTooltipAddon.db.char.source_color or "green" end
         },
 

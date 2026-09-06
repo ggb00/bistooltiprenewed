@@ -1,12 +1,17 @@
 -- Tooltip.lua
 local eventFrame = CreateFrame("Frame", nil, UIParent)
 
-local HARDCODED_CLASS_COLORS = {
-    ["DEATHKNIGHT"] = {0.77, 0.12, 0.23}, ["DRUID"]   = {1.00, 0.49, 0.04},
-    ["HUNTER"]      = {0.67, 0.83, 0.45}, ["MAGE"]    = {0.25, 0.78, 0.92},
-    ["PALADIN"]     = {0.96, 0.55, 0.73}, ["PRIEST"]  = {1.00, 1.00, 1.00},
-    ["ROGUE"]       = {1.00, 0.96, 0.41}, ["SHAMAN"]  = {0.00, 0.44, 0.87},
-    ["WARLOCK"]     = {0.53, 0.53, 0.93}, ["WARRIOR"] = {0.78, 0.61, 0.43},
+local CLASS_COLORS = {
+    ["Death Knight"] = {0.77, 0.12, 0.23},
+    ["Druid"]        = {1.00, 0.49, 0.04},
+    ["Hunter"]       = {0.67, 0.83, 0.45},
+    ["Mage"]         = {0.25, 0.78, 0.92},
+    ["Paladin"]      = {0.96, 0.55, 0.73},
+    ["Priest"]       = {1.00, 1.00, 1.00},
+    ["Rogue"]        = {1.00, 0.96, 0.41},
+    ["Shaman"]       = {0.00, 0.44, 0.87},
+    ["Warlock"]      = {0.53, 0.53, 0.93},
+    ["Warrior"]      = {0.78, 0.61, 0.43},
 }
 
 local highlight_colors = {
@@ -24,6 +29,20 @@ local source_hex_colors = {
     ["white"]     = "FFFFFF",
 }
 
+local DARK_BACKDROP = {
+    bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
+    edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+    tile = true, tileSize = 16, edgeSize = 16,
+    insets = { left = 2, right = 2, top = 2, bottom = 2 }
+}
+
+local DEFAULT_BACKDROP = {
+    bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+    edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+    tile = true, tileSize = 16, edgeSize = 16,
+    insets = { left = 5, right = 5, top = 5, bottom = 5 }
+}
+
 local function GetItemSources(itemId, translatedId)
     local sources = BisTooltip_ItemSources and BisTooltip_ItemSources[itemId]
     if not sources and translatedId and BisTooltip_ItemSources then
@@ -33,9 +52,9 @@ local function GetItemSources(itemId, translatedId)
 end
 
 local function StyleTooltip(tooltip, isForcedItem)
-    if not tooltip then return end
-    local bd = tooltip:GetBackdrop()
-    if not bd then return end
+    if not tooltip or not tooltip.GetItem then return end
+
+    local darkEnabled = BisTooltipAddon.db and BisTooltipAddon.db.char and BisTooltipAddon.db.char.dark_tooltips
 
     local isItem = isForcedItem
     if isItem == nil then
@@ -43,26 +62,19 @@ local function StyleTooltip(tooltip, isForcedItem)
         isItem = (link ~= nil) or tooltip.BisIsCompareItem
     end
 
-    if isItem and BisTooltipAddon.db.char.dark_tooltips then
-        if bd.bgFile ~= "Interface\\ChatFrame\\ChatFrameBackground" then
-            if not tooltip.BisOrigBg then
-                tooltip.BisOrigBg = bd.bgFile
-                tooltip.BisOrigInsets = bd.insets
-            end
-            bd.bgFile = "Interface\\ChatFrame\\ChatFrameBackground"
-            bd.insets = { left = 2, right = 2, top = 2, bottom = 2 }
-            tooltip:SetBackdrop(bd)
+    if isItem and darkEnabled then
+        if not tooltip.BisStyledDark then
+            tooltip.BisStyledDark = true
+            tooltip:SetBackdrop(DARK_BACKDROP)
         end
         tooltip:SetBackdropColor(0, 0, 0, 0.92)
     else
-        if tooltip.BisOrigBg and bd.bgFile ~= tooltip.BisOrigBg then
-            bd.bgFile = tooltip.BisOrigBg
-            bd.insets = tooltip.BisOrigInsets
-            tooltip:SetBackdrop(bd)
-
-            local defaultColor = TOOLTIP_DEFAULT_BACKGROUND_COLOR
-            if defaultColor then
-                tooltip:SetBackdropColor(defaultColor.r, defaultColor.g, defaultColor.b, 1)
+        if tooltip.BisStyledDark then
+            tooltip.BisStyledDark = nil
+            tooltip:SetBackdrop(DEFAULT_BACKDROP)
+            local c = TOOLTIP_DEFAULT_BACKGROUND_COLOR
+            if c then
+                tooltip:SetBackdropColor(c.r, c.g, c.b, 1)
             else
                 tooltip:SetBackdropColor(0.09, 0.09, 0.19, 1)
             end
@@ -71,19 +83,25 @@ local function StyleTooltip(tooltip, isForcedItem)
 end
 
 local function OnTooltipCleared(tooltip)
+    if not tooltip then return end
     tooltip.BisTooltipRendered = nil
     tooltip.BisIsCompareItem = nil
     StyleTooltip(tooltip, false)
 end
 
 local function ProcessTooltip(tooltip, link)
-    StyleTooltip(tooltip, true)
+    local tt = tooltip or (this ~= nil and this) or GameTooltip
+    if not tt or not tt.GetItem then return end
 
-    local db = BisTooltipAddon.db.char
+    StyleTooltip(tt, true)
+
+    local db = BisTooltipAddon.db and BisTooltipAddon.db.char
+    if not db then return end
+
     if db.tooltip_with_ctrl and not IsControlKeyDown() then return end
 
     if not link then
-        _, link = tooltip:GetItem()
+        _, link = tt:GetItem()
     end
     if not link then return end
 
@@ -92,8 +110,8 @@ local function ProcessTooltip(tooltip, link)
 
     if not GetItemInfo(itemId) then return end
 
-    if tooltip.BisTooltipRendered == itemId then return end
-    tooltip.BisTooltipRendered = itemId
+    if tt.BisTooltipRendered == itemId then return end
+    tt.BisTooltipRendered = itemId
 
     local translated_id = nil
     if BisTooltip_FactionMap and BisTooltip_FactionMap[itemId] then
@@ -111,55 +129,52 @@ local function ProcessTooltip(tooltip, link)
         local useClassColors = db.use_class_colors
         local filterClassNames = db.filter_class_names
         local selectedColor = db.highlight_color or "class"
+        local hlRGB = (selectedColor ~= "class") and (highlight_colors[selectedColor] or highlight_colors["purple"])
 
-        for _, data in ipairs(itemBisData) do
-            local isHighlighted = (highlightSpec.spec_name == data.spec and highlightSpec.class_name == data.class)
-            local isFiltered = false
-
-            if not isHighlighted and not isAltDown and filterSpecs[data.class] and filterSpecs[data.class][data.spec] then
-                isFiltered = true
-            end
+        for i = 1, #itemBisData do
+            local data = itemBisData[i]
+            local dClass = data.class
+            local dSpec = data.spec
+            local isHighlighted = (highlightSpec.spec_name == dSpec and highlightSpec.class_name == dClass)
+            local isFiltered = not isHighlighted and not isAltDown and filterSpecs[dClass] and filterSpecs[dClass][dSpec]
 
             if not isFiltered then
-                local fData = BisTooltipAddon.FormattedNames[data.class]
-                local fSpec = fData and fData[data.spec]
+                local fData = BisTooltipAddon.FormattedNames[dClass]
+                local fSpec = fData and fData[dSpec]
                 local lineText
 
                 if fSpec then
                     lineText = filterClassNames and fSpec.withoutClass or fSpec.withClass
                 else
-                    lineText = string.format("%s %s", data.class or "Unknown", data.spec or "Unknown")
+                    lineText = dClass .. " " .. dSpec
                 end
 
                 local r1, g1, b1, r2, g2, b2
                 if isHighlighted then
-                    if selectedColor == "class" then
-                        local classKey = string.upper(string.gsub(data.class, "%s+", ""))
-                        local cColor = HARDCODED_CLASS_COLORS[classKey] or {0.8, 0.8, 0.8}
-                        r1, g1, b1 = cColor[1], cColor[2], cColor[3]
-                        r2, g2, b2 = cColor[1], cColor[2], cColor[3]
+                    if hlRGB then
+                        r1, g1, b1 = hlRGB[1], hlRGB[2], hlRGB[3]
                     else
-                        local colorRGB = highlight_colors[selectedColor] or highlight_colors["purple"]
-                        r1, g1, b1 = colorRGB[1], colorRGB[2], colorRGB[3]
-                        r2, g2, b2 = colorRGB[1], colorRGB[2], colorRGB[3]
+                        local cColor = CLASS_COLORS[dClass] or {0.8, 0.8, 0.8}
+                        r1, g1, b1 = cColor[1], cColor[2], cColor[3]
                     end
+                    r2, g2, b2 = r1, g1, b1
                 else
                     r2, g2, b2 = 0.65, 0.65, 0.65
                     if useClassColors then
-                        local classKey = string.upper(string.gsub(data.class, "%s+", ""))
-                        local cColor = HARDCODED_CLASS_COLORS[classKey] or {0.65, 0.65, 0.65}
+                        local cColor = CLASS_COLORS[dClass] or {0.65, 0.65, 0.65}
                         r1, g1, b1 = cColor[1], cColor[2], cColor[3]
                     else
                         r1, g1, b1 = 0.65, 0.65, 0.65
                     end
                 end
 
-                tooltip:AddDoubleLine(lineText, data.rightText, r1, g1, b1, r2, g2, b2)
+                tt:AddDoubleLine(lineText, data.rightText, r1, g1, b1, r2, g2, b2)
             end
         end
     end
 
-    local sources = GetItemSources(itemId, translated_id)
+    local showSources = (db.show_sources == nil) or db.show_sources
+    local sources = showSources and GetItemSources(itemId, translated_id)
     if sources then
         local colorKey = db.source_color or "green"
         local hexColor = source_hex_colors[colorKey] or "19FF19"
@@ -167,24 +182,43 @@ local function ProcessTooltip(tooltip, link)
 
         if type(sources) == "table" then
             for _, src in ipairs(sources) do
-                tooltip:AddLine(string.format("%s |cFF%s%s|r", icon, hexColor, src), 1, 1, 1, true)
+                tt:AddLine(string.format("%s |cFF%s%s|r", icon, hexColor, src), 1, 1, 1, true)
             end
         elseif type(sources) == "string" then
-            tooltip:AddLine(string.format("%s |cFF%s%s|r", icon, hexColor, sources), 1, 1, 1, true)
+            tt:AddLine(string.format("%s |cFF%s%s|r", icon, hexColor, sources), 1, 1, 1, true)
         end
     end
 
-    if itemBisData and sources then
+    local showItemStates = (db.show_item_states == nil) or db.show_item_states
+    if showItemStates and itemBisData then
         local state = BisTooltipAddon:GetItemState(itemId)
         if state == 1 or state == 3 then
-            local owner = tooltip:GetOwner()
-            local ownerName = ""
-            if owner and owner.GetName and owner:GetName() then
-                ownerName = string.lower(owner:GetName())
-            end
+            local owner = tt:GetOwner()
+            local inBagUI = false
+            local inBankUI = false
 
-            local inBagUI = ownerName:find("container") or ownerName:find("bag") or ownerName:find("inventory") or ownerName:find("bagnon")
-            local inBankUI = ownerName:find("bank") or ownerName:find("bag") or ownerName:find("bagnon")
+            if owner then
+                local ownerName = (owner.GetName and owner:GetName()) and string.lower(owner:GetName()) or ""
+                local parent = owner.GetParent and owner:GetParent()
+                local parentName = (parent and parent.GetName and parent:GetName()) or ""
+
+                if parentName:find("^ContainerFrame%d+") then
+                    local bagID = parent.GetID and parent:GetID()
+                    if bagID then
+                        if bagID >= 0 and bagID <= 4 then
+                            inBagUI = true
+                        elseif bagID == -1 or (bagID >= 5 and bagID <= 11) then
+                            inBankUI = true
+                        end
+                    end
+                end
+
+                if ownerName:find("bank") then
+                    inBankUI = true
+                elseif not inBankUI and (ownerName:find("inventory") or ownerName:find("bagnon") or ownerName:find("bag")) then
+                    inBagUI = true
+                end
+            end
 
             local skip = false
             if state == 1 and inBagUI then skip = true end
@@ -192,19 +226,22 @@ local function ProcessTooltip(tooltip, link)
 
             if not skip then
                 if state == 1 then
-                    tooltip:AddLine("|TInterface\\Icons\\inv_misc_bag_08:14:14:0:0:64:64:5:59:5:59|t |cFFFFFF00In Bags|r", 1, 1, 1, true)
+                    tt:AddLine("|TInterface\\Icons\\inv_misc_bag_08:14:14:0:0:64:64:5:59:5:59|t |cFFFFFF00In Bags|r", 1, 1, 1, true)
                 elseif state == 3 then
-                    tooltip:AddLine("|TInterface\\Icons\\inv_misc_bag_08:14:14:0:0:64:64:5:59:5:59|t |cFFFFFF00In Bank|r", 1, 1, 1, true)
+                    tt:AddLine("|TInterface\\Icons\\inv_box_01:14:14:0:0:64:64:5:59:5:59|t |cFFFFFF00In Bank|r", 1, 1, 1, true)
                 end
             end
         end
     end
 
-    tooltip:Show()
+    tt:Show()
 end
 
 local function OnTooltipSetItem(tooltip)
-    ProcessTooltip(tooltip, nil)
+    local tt = tooltip or (this ~= nil and this) or GameTooltip
+    if tt and tt.GetItem then
+        ProcessTooltip(tt, nil)
+    end
 end
 
 local function HookSetInventoryItem(tooltip, unit, slot)
@@ -216,7 +253,127 @@ local function HookSetInventoryItem(tooltip, unit, slot)
     end
 end
 
-function BisTooltipAddon:ClearTooltipCache() end
+local function ShouldCompareItems()
+    return IsShiftKeyDown() or IsModifiedClick("COMPAREITEMS") or (GetCVarBool and GetCVarBool("alwaysCompareItems"))
+end
+
+local function HideShoppingTooltips()
+    if ShoppingTooltip1 then ShoppingTooltip1:Hide() end
+    if ShoppingTooltip2 then ShoppingTooltip2:Hide() end
+    if ShoppingTooltip3 then ShoppingTooltip3:Hide() end
+    if ItemRefShoppingTooltip1 then ItemRefShoppingTooltip1:Hide() end
+    if ItemRefShoppingTooltip2 then ItemRefShoppingTooltip2:Hide() end
+    if AtlasLootTooltip2 then AtlasLootTooltip2:Hide() end
+end
+
+local function RefreshTooltip(tt)
+    if not tt or not tt:IsShown() or not tt.GetItem then return end
+    local _, link = tt:GetItem()
+    if not link then return end
+
+    tt.BisTooltipRendered = nil
+
+    local owner = tt:GetOwner()
+    if owner and owner:IsShown() and owner.GetScript and owner:GetScript("OnEnter") then
+        local oldThis = this
+        this = owner
+        local success = pcall(owner:GetScript("OnEnter"), owner)
+        this = oldThis
+        if not success then
+            tt:ClearLines()
+            tt:SetHyperlink(link)
+        end
+    else
+        tt:ClearLines()
+        tt:SetHyperlink(link)
+    end
+end
+
+local function HookAtlasLoot()
+    if AtlasLootTooltip and not AtlasLootTooltip.BisHooked then
+        AtlasLootTooltip.BisHooked = true
+        if not AtlasLootTooltip.shoppingTooltips then
+            AtlasLootTooltip.shoppingTooltips = { ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3 }
+        end
+        AtlasLootTooltip:HookScript("OnShow", StyleTooltip)
+        AtlasLootTooltip:HookScript("OnTooltipSetItem", OnTooltipSetItem)
+        AtlasLootTooltip:HookScript("OnTooltipCleared", OnTooltipCleared)
+    end
+    if AtlasLootTooltip2 and not AtlasLootTooltip2.BisHooked then
+        AtlasLootTooltip2.BisHooked = true
+        AtlasLootTooltip2:HookScript("OnShow", StyleTooltip)
+        AtlasLootTooltip2:HookScript("OnTooltipSetItem", OnTooltipSetItem)
+        AtlasLootTooltip2:HookScript("OnTooltipCleared", OnTooltipCleared)
+    end
+end
+
+local function UpdateComparison(tt)
+    if not tt or not tt:IsShown() or not tt.GetItem then return end
+    local _, link = tt:GetItem()
+    if not link then return end
+
+    if not ShouldCompareItems() then
+        local owner = tt:GetOwner()
+        if owner and owner:IsShown() and owner.GetScript and owner:GetScript("OnEnter") then
+            RefreshTooltip(tt)
+        end
+        HideShoppingTooltips()
+        return
+    end
+
+    local owner = tt:GetOwner()
+    if owner and owner:IsShown() and owner.GetScript and owner:GetScript("OnEnter") then
+        RefreshTooltip(tt)
+    end
+
+    local compareVisible = false
+    if tt.shoppingTooltips and tt.shoppingTooltips[1] and tt.shoppingTooltips[1]:IsShown() then
+        compareVisible = true
+    elseif tt == AtlasLootTooltip and AtlasLootTooltip2 and AtlasLootTooltip2:IsShown() then
+        compareVisible = true
+    end
+
+    if not compareVisible then
+        if not tt.shoppingTooltips then
+            if tt == ItemRefTooltip then
+                tt.shoppingTooltips = { ItemRefShoppingTooltip1, ItemRefShoppingTooltip2 }
+            else
+                tt.shoppingTooltips = { ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3 }
+            end
+        end
+        GameTooltip_ShowCompareItem(tt)
+    end
+end
+
+local function UpdateTooltipOnModifier(tt)
+    if not tt or not tt:IsShown() then return end
+    RefreshTooltip(tt)
+    if ShouldCompareItems() then
+        local compareVisible = false
+        if tt.shoppingTooltips and tt.shoppingTooltips[1] and tt.shoppingTooltips[1]:IsShown() then
+            compareVisible = true
+        elseif tt == AtlasLootTooltip and AtlasLootTooltip2 and AtlasLootTooltip2:IsShown() then
+            compareVisible = true
+        end
+
+        if not compareVisible then
+            if not tt.shoppingTooltips then
+                if tt == ItemRefTooltip then
+                    tt.shoppingTooltips = { ItemRefShoppingTooltip1, ItemRefShoppingTooltip2 }
+                else
+                    tt.shoppingTooltips = { ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3 }
+                end
+            end
+            GameTooltip_ShowCompareItem(tt)
+        end
+    end
+end
+
+function BisTooltipAddon:ClearTooltipCache()
+    UpdateTooltipOnModifier(GameTooltip)
+    UpdateTooltipOnModifier(AtlasLootTooltip)
+    UpdateTooltipOnModifier(ItemRefTooltip)
+end
 
 function BisTooltipAddon:initBisTooltip()
     GameTooltip:HookScript("OnShow", StyleTooltip)
@@ -251,6 +408,10 @@ function BisTooltipAddon:initBisTooltip()
     if ItemRefShoppingTooltip1 then hooksecurefunc(ItemRefShoppingTooltip1, "SetInventoryItem", HookSetInventoryItem) end
     if ItemRefShoppingTooltip2 then hooksecurefunc(ItemRefShoppingTooltip2, "SetInventoryItem", HookSetInventoryItem) end
 
+    if ItemRefTooltip and not ItemRefTooltip.shoppingTooltips then
+        ItemRefTooltip.shoppingTooltips = { ItemRefShoppingTooltip1, ItemRefShoppingTooltip2 }
+    end
+
     hooksecurefunc("GameTooltip_ShowCompareItem", function(tooltip)
         local t = tooltip or GameTooltip
         local s1, s2, s3
@@ -266,64 +427,52 @@ function BisTooltipAddon:initBisTooltip()
         if s1 and s1:IsShown() then s1.BisIsCompareItem = true; StyleTooltip(s1, true) end
         if s2 and s2:IsShown() then s2.BisIsCompareItem = true; StyleTooltip(s2, true) end
         if s3 and s3:IsShown() then s3.BisIsCompareItem = true; StyleTooltip(s3, true) end
+        if AtlasLootTooltip2 and AtlasLootTooltip2:IsShown() then
+            if not AtlasLootTooltip2.BisHooked then HookAtlasLoot() end
+            AtlasLootTooltip2.BisIsCompareItem = true
+            StyleTooltip(AtlasLootTooltip2, true)
+        end
     end)
 
+    HookAtlasLoot()
+
     eventFrame:RegisterEvent("PLAYER_LOGIN")
+    eventFrame:RegisterEvent("ADDON_LOADED")
+    eventFrame:RegisterEvent("MODIFIER_STATE_CHANGED")
     eventFrame:SetScript("OnEvent", function(_, event, key)
-        if event == "PLAYER_LOGIN" then
-            if AtlasLootTooltip then
-                AtlasLootTooltip:HookScript("OnShow", StyleTooltip)
-                AtlasLootTooltip:HookScript("OnTooltipSetItem", OnTooltipSetItem)
-                AtlasLootTooltip:HookScript("OnTooltipCleared", OnTooltipCleared)
-            end
+        if event == "ADDON_LOADED" or event == "PLAYER_LOGIN" then
+            HookAtlasLoot()
             return
         end
 
         if event == "MODIFIER_STATE_CHANGED" then
-            if key == "LALT" or key == "RALT" or key == "LCTRL" or key == "RCTRL" or key == "LSHIFT" or key == "RSHIFT" then
-
-                if GameTooltip:IsShown() then
-                    local _, link = GameTooltip:GetItem()
-
-                    if link then
-                        local owner = GameTooltip:GetOwner()
-
-                        if owner and owner:GetScript("OnEnter") then
-                            owner:GetScript("OnEnter")(owner)
-                        else
-                            GameTooltip:SetHyperlink("item:3299:0:0:0:0:0:0:0:0")
-                            GameTooltip:SetHyperlink(link)
-
-                            if IsModifiedClick("COMPAREITEMS") then
-                                GameTooltip_ShowCompareItem(GameTooltip)
-                            else
-                                if ShoppingTooltip1 then ShoppingTooltip1:Hide() end
-                                if ShoppingTooltip2 then ShoppingTooltip2:Hide() end
-                                if ShoppingTooltip3 then ShoppingTooltip3:Hide() end
-                            end
-                        end
-                    end
+            if key == "LALT" or key == "RALT" or key == "LCTRL" or key == "RCTRL" then
+                local db = BisTooltipAddon.db and BisTooltipAddon.db.char
+                local isCtrl = (key == "LCTRL" or key == "RCTRL")
+                if isCtrl and not (db and db.tooltip_with_ctrl) then
+                    return
                 end
 
-                if ItemRefTooltip:IsShown() then
-                    local _, link = ItemRefTooltip:GetItem()
-                    if link then
-                        ItemRefTooltip:SetHyperlink("item:3299:0:0:0:0:0:0:0:0")
-                        ItemRefTooltip:SetHyperlink(link)
+                UpdateTooltipOnModifier(GameTooltip)
+                UpdateTooltipOnModifier(AtlasLootTooltip)
 
-                        local focus = GetMouseFocus()
-                        if focus == ItemRefTooltip or (focus and focus:GetParent() == ItemRefTooltip) then
-                            if IsModifiedClick("COMPAREITEMS") then
-                                GameTooltip_ShowCompareItem(ItemRefTooltip)
-                            else
-                                if ItemRefShoppingTooltip1 then ItemRefShoppingTooltip1:Hide() end
-                                if ItemRefShoppingTooltip2 then ItemRefShoppingTooltip2:Hide() end
-                            end
-                        end
+                if ItemRefTooltip:IsShown() then
+                    local focus = GetMouseFocus()
+                    if focus and (focus == ItemRefTooltip or focus:GetParent() == ItemRefTooltip) then
+                        UpdateTooltipOnModifier(ItemRefTooltip)
+                    end
+                end
+            elseif key == "LSHIFT" or key == "RSHIFT" then
+                UpdateComparison(GameTooltip)
+                UpdateComparison(AtlasLootTooltip)
+
+                if ItemRefTooltip:IsShown() then
+                    local focus = GetMouseFocus()
+                    if focus and (focus == ItemRefTooltip or focus:GetParent() == ItemRefTooltip) then
+                        UpdateComparison(ItemRefTooltip)
                     end
                 end
             end
         end
     end)
-    eventFrame:RegisterEvent("MODIFIER_STATE_CHANGED")
 end

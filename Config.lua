@@ -6,13 +6,29 @@ local LDBIcon = LDB and LibStub("LibDBIcon-1.0", true)
 local icon_loaded = false
 local icon_name = "BisTooltipIcon"
 
+local keyToClassSpec = {}
+
+local function GetPlayerClassIndex()
+    local playerClass = UnitClass("player")
+    if BisTooltip_ClassData then
+        for i = 1, #BisTooltip_ClassData do
+            if BisTooltip_ClassData[i].name == playerClass then
+                return i
+            end
+        end
+    end
+    return 1
+end
+
 local db_defaults = {
     char = {
-        class_index = 1, spec_index = 1, phase_index = 1,
+        class_index = nil, spec_index = 1, phase_index = 1,
         filter_specs = {}, highlight_spec = {},
         highlight_color = "purple", use_class_colors = true,
+        filter_class_names = false,
         minimap = { hide = false }, tooltip_with_ctrl = false,
-        source_color = "green", dark_tooltips = false,
+        show_sources = true, source_color = "green",
+        show_item_states = true, dark_tooltips = false,
         show_item_borders = true, frame_pos = nil, scroll_status = {}
     }
 }
@@ -20,11 +36,18 @@ local db_defaults = {
 local configTable = {
     type = "group",
     args = {
+        header_general = {
+            name = "General",
+            type = "header",
+            order = 1,
+        },
+
         minimap_icon = {
-            name = "Show minimap icon",
-            order = 0,
-            desc = "Shows/hides the minimap icon\n(Requires Reload)",
-            type = "toggle", width = "double",
+            name = "Show Minimap Icon",
+            order = 2,
+            desc = "Toggle display of the minimap icon\n(Requires Reload)",
+            type = "toggle",
+            width = "full",
             set = function(info, val)
                 BisTooltipAddon.db.char.minimap.hide = not val
                 if LDBIcon then
@@ -38,20 +61,12 @@ local configTable = {
             get = function(info) return not BisTooltipAddon.db.char.minimap.hide end
         },
 
-        tooltip_with_ctrl = {
-            name = "Show item tooltips only with Ctrl",
-            order = 1,
-            desc = "Show item tooltips only when holding Ctrl key",
-            type = "toggle", width = "double",
-            set = function(info, val) BisTooltipAddon.db.char.tooltip_with_ctrl = val end,
-            get = function(info) return BisTooltipAddon.db.char.tooltip_with_ctrl end
-        },
-
         show_item_borders = {
             name = "Show Item Borders",
-            order = 2,
-            desc = "Displays a colored border around equipped and banked items in the addon window",
-            type = "toggle", width = "double",
+            order = 3,
+            desc = "Toggle display of a colored border around equipped and banked items in the main window",
+            type = "toggle",
+            width = "full",
             set = function(info, val)
                 BisTooltipAddon.db.char.show_item_borders = val
                 if BisTooltipAddon.reloadData then BisTooltipAddon:reloadData() end
@@ -59,11 +74,47 @@ local configTable = {
             get = function(info) return BisTooltipAddon.db.char.show_item_borders end
         },
 
+        header_tooltips = {
+            name = "Tooltips",
+            type = "header",
+            order = 10,
+        },
+
+        tooltip_with_ctrl = {
+            name = "Show Item Tooltips only with Ctrl",
+            order = 11,
+            desc = "Only show tooltips when holding down Ctrl key",
+            type = "toggle",
+            width = "full",
+            set = function(info, val)
+                BisTooltipAddon.db.char.tooltip_with_ctrl = val
+                if BisTooltipAddon.ClearTooltipCache then BisTooltipAddon:ClearTooltipCache() end
+            end,
+            get = function(info) return BisTooltipAddon.db.char.tooltip_with_ctrl end
+        },
+
+        show_item_states = {
+            name = "Show Bags/Bank Item Status",
+            order = 12,
+            desc = "Show a line that says whenever an item is already in your bags or bank",
+            type = "toggle",
+            width = "full",
+            set = function(info, val)
+                BisTooltipAddon.db.char.show_item_states = val
+                if BisTooltipAddon.ClearTooltipCache then BisTooltipAddon:ClearTooltipCache() end
+            end,
+            get = function(info)
+                if BisTooltipAddon.db.char.show_item_states == nil then return true end
+                return BisTooltipAddon.db.char.show_item_states
+            end
+        },
+
         filter_class_names = {
-            name = "Hide class names",
-            order = 3,
+            name = "Hide Class Names",
+            order = 13,
             desc = "Removes class names from item tooltips, leaving only spec name",
-            type = "toggle", width = "double",
+            type = "toggle",
+            width = "full",
             set = function(info, val)
                 BisTooltipAddon.db.char.filter_class_names = val
                 if BisTooltipAddon.ClearTooltipCache then BisTooltipAddon:ClearTooltipCache() end
@@ -73,9 +124,10 @@ local configTable = {
 
         use_class_colors = {
             name = "Use Class Colors",
-            order = 4,
+            order = 14,
             desc = "Colorize class/spec text with class colors",
-            type = "toggle", width = "double",
+            type = "toggle",
+            width = "full",
             set = function(info, val)
                 BisTooltipAddon.db.char.use_class_colors = val
                 if BisTooltipAddon.ClearTooltipCache then BisTooltipAddon:ClearTooltipCache() end
@@ -88,26 +140,36 @@ local configTable = {
 
         dark_tooltips = {
             name = "Dark Tooltips",
-            order = 5,
-            desc = "Changes the tooltip background to a solid black color\n(Requires Reload)",
-            type = "toggle", width = "double",
-            set = function(info, val) BisTooltipAddon.db.char.dark_tooltips = val end,
+            order = 15,
+            desc = "Changes the tooltip background to a solid black color",
+            type = "toggle",
+            width = "full",
+            set = function(info, val)
+                BisTooltipAddon.db.char.dark_tooltips = val
+                if BisTooltipAddon.ClearTooltipCache then BisTooltipAddon:ClearTooltipCache() end
+            end,
             get = function(info) return BisTooltipAddon.db.char.dark_tooltips end
         },
 
         highlight_spec = {
             name = "Highlight Spec",
-            order = 6,
+            order = 16,
             desc = "Highlights selected spec in item tooltips",
-            type = "select", values = {},
+            type = "select",
+            values = {},
+            width = "full",
             set = function(info, key)
                 if key == "none" then
                     BisTooltipAddon.db.char.highlight_spec = {}
                 else
-                    local ci, si = strsplit(":", key)
-                    BisTooltipAddon.db.char.highlight_spec = {
-                        key = key, class_name = BisTooltip_ClassData[tonumber(ci)].name, spec_name = BisTooltip_ClassData[tonumber(ci)].specs[tonumber(si)]
-                    }
+                    local entry = keyToClassSpec[key]
+                    if entry then
+                        BisTooltipAddon.db.char.highlight_spec = {
+                            key = key,
+                            class_name = entry.class,
+                            spec_name = entry.spec
+                        }
+                    end
                 end
                 if BisTooltipAddon.ClearTooltipCache then BisTooltipAddon:ClearTooltipCache() end
             end,
@@ -116,19 +178,20 @@ local configTable = {
 
         highlight_color = {
             name = "Highlight Color",
-            order = 7,
+            order = 17,
             desc = "Changes the text color of your highlighted spec",
             type = "select",
+            width = "full",
             values = {
-                ["class"] = "Match Class Color",
-                ["purple"] = "Purple",
-                ["green"] = "Green",
-                ["red"] = "Red",
+                ["class"]     = "Match Class Color",
+                ["purple"]    = "Purple",
+                ["green"]     = "Green",
+                ["red"]       = "Red",
                 ["lightblue"] = "Light Blue",
-                ["yellow"] = "Yellow",
-                ["orange"] = "Orange",
-                ["pink"] = "Pink",
-                ["cyan"] = "Cyan"
+                ["yellow"]    = "Yellow",
+                ["orange"]    = "Orange",
+                ["pink"]      = "Pink",
+                ["cyan"]      = "Cyan"
             },
             set = function(info, val)
                 BisTooltipAddon.db.char.highlight_color = val
@@ -137,43 +200,67 @@ local configTable = {
             get = function(info) return BisTooltipAddon.db.char.highlight_color or "class" end
         },
 
+        show_sources = {
+            name = "Show Item Sources",
+            order = 18,
+            desc = "Shows item drop source in tooltips",
+            type = "toggle",
+            width = "full",
+            set = function(info, val)
+                BisTooltipAddon.db.char.show_sources = val
+                if BisTooltipAddon.ClearTooltipCache then BisTooltipAddon:ClearTooltipCache() end
+            end,
+            get = function(info)
+                if BisTooltipAddon.db.char.show_sources == nil then return true end
+                return BisTooltipAddon.db.char.show_sources
+            end
+        },
+
         source_color = {
             name = "Source Color",
-            order = 8,
-            desc = "Changes the text color of the item's source data",
+            order = 19,
+            desc = "Changes the text color of the item's drop source",
             type = "select",
+            width = "full",
+            disabled = function() return BisTooltipAddon.db.char.show_sources == false end,
             values = {
-                ["purple"] = "Purple",
-                ["green"] = "Green",
-                ["red"] = "Red",
+                ["purple"]    = "Purple",
+                ["green"]     = "Green",
+                ["red"]       = "Red",
                 ["lightblue"] = "Light Blue",
-                ["yellow"] = "Yellow",
-                ["orange"] = "Orange",
-                ["pink"] = "Pink",
-                ["cyan"] = "Cyan",
-                ["white"] = "White"
+                ["yellow"]    = "Yellow",
+                ["orange"]    = "Orange",
+                ["pink"]      = "Pink",
+                ["cyan"]      = "Cyan",
+                ["white"]     = "White"
             },
-            set = function(info, val) BisTooltipAddon.db.char.source_color = val end,
+            set = function(info, val)
+                BisTooltipAddon.db.char.source_color = val
+                if BisTooltipAddon.ClearTooltipCache then BisTooltipAddon:ClearTooltipCache() end
+            end,
             get = function(info) return BisTooltipAddon.db.char.source_color or "green" end
         },
 
         filter_specs = {
-            name = "Hide Specs",
-            order = 9,
+            name = "Hide Specs (Hold Alt to show)",
+            order = 30,
             desc = "Removes checked specs from item tooltips",
-            type = "multiselect", values = {}, --width = "full",
+            type = "multiselect",
+            values = {},
             set = function(info, key, val)
-                local ci, si = strsplit(":", key)
-                local class_name = BisTooltip_ClassData[tonumber(ci)].name
-                local spec_name = BisTooltip_ClassData[tonumber(ci)].specs[tonumber(si)]
+                local entry = keyToClassSpec[key]
+                if not entry then return end
+                local class_name = entry.class
+                local spec_name = entry.spec
                 if not BisTooltipAddon.db.char.filter_specs[class_name] then BisTooltipAddon.db.char.filter_specs[class_name] = {} end
                 BisTooltipAddon.db.char.filter_specs[class_name][spec_name] = val
                 if BisTooltipAddon.ClearTooltipCache then BisTooltipAddon:ClearTooltipCache() end
             end,
             get = function(info, key)
-                local ci, si = strsplit(":", key)
-                local class_name = BisTooltip_ClassData[tonumber(ci)].name
-                local spec_name = BisTooltip_ClassData[tonumber(ci)].specs[tonumber(si)]
+                local entry = keyToClassSpec[key]
+                if not entry then return false end
+                local class_name = entry.class
+                local spec_name = entry.spec
                 if not BisTooltipAddon.db.char.filter_specs[class_name] then return false end
                 return BisTooltipAddon.db.char.filter_specs[class_name][spec_name] or false
             end
@@ -184,6 +271,7 @@ local configTable = {
 local function buildFilterSpecOptions()
     local filter_specs_options = {}
     local highlight_specs_options = {["none"] = "None" }
+    wipe(keyToClassSpec)
     if BisTooltip_ClassData then
         for ci, class in ipairs(BisTooltip_ClassData) do
             for si, spec in ipairs(class.specs) do
@@ -191,6 +279,7 @@ local function buildFilterSpecOptions()
                 local option_key = ci .. ":" .. si
                 filter_specs_options[option_key] = option_val
                 highlight_specs_options[option_key] = option_val
+                keyToClassSpec[option_key] = { class = class.name, spec = spec }
             end
         end
     end
@@ -199,14 +288,21 @@ local function buildFilterSpecOptions()
 end
 
 local function migrateAddonDB()
-    if not BisTooltipAddon.db.char.version or BisTooltipAddon.db.char.version < 7.9 then
-        BisTooltipAddon.db.char.version = 7.9
+    if not BisTooltipAddon.db.char.version or BisTooltipAddon.db.char.version < 8.1 then
+        BisTooltipAddon.db.char.version = 8.1
         if not BisTooltipAddon.db.char.highlight_spec then BisTooltipAddon.db.char.highlight_spec = {} end
         if not BisTooltipAddon.db.char.filter_specs then BisTooltipAddon.db.char.filter_specs = {} end
-        if not BisTooltipAddon.db.char.class_index then BisTooltipAddon.db.char.class_index = 1 end
+        BisTooltipAddon.db.char.class_index = GetPlayerClassIndex()
         if not BisTooltipAddon.db.char.spec_index then BisTooltipAddon.db.char.spec_index = 1 end
         if not BisTooltipAddon.db.char.phase_index then BisTooltipAddon.db.char.phase_index = 1 end
     end
+
+    if not BisTooltipAddon.db.char.class_index then
+        BisTooltipAddon.db.char.class_index = GetPlayerClassIndex()
+    end
+
+    if BisTooltipAddon.db.char.show_sources == nil then BisTooltipAddon.db.char.show_sources = true end
+    if BisTooltipAddon.db.char.show_item_states == nil then BisTooltipAddon.db.char.show_item_states = true end
 
     if BisTooltipAddon.db.char.minimap == nil then
         BisTooltipAddon.db.char.minimap = { hide = false }
@@ -220,10 +316,13 @@ local function migrateAddonDB()
     if BisTooltipAddon.db.char.show_item_borders == nil then BisTooltipAddon.db.char.show_item_borders = true end
 end
 
-local config_shown = false
 function BisTooltipAddon:openConfigDialog()
-    if config_shown then InterfaceOptionsFrame_Show() else InterfaceOptionsFrame_OpenToCategory(BisTooltipAddon.AceAddonName) end
-    config_shown = not config_shown
+    if InterfaceOptionsFrame:IsShown() then
+        InterfaceOptionsFrame:Hide()
+    else
+        InterfaceOptionsFrame_OpenToCategory(BisTooltipAddon.AceAddonName)
+        InterfaceOptionsFrame_OpenToCategory(BisTooltipAddon.AceAddonName)
+    end
 end
 
 function BisTooltipAddon:addMapIcon()
@@ -233,7 +332,7 @@ function BisTooltipAddon:addMapIcon()
         if LDB then
             icon_loaded = true
             local PC_MinimapBtn = LDB:NewDataObject(icon_name, {
-                type = "launcher", text = "Bis-Tooltip Renewed", icon = "interface/icons/inv_weapon_glave_01.blp",
+                type = "launcher", text = "BiS-Tooltip Renewed", icon = "interface/icons/inv_weapon_glave_01.blp",
                 OnClick = function(_, button)
                     if button == "LeftButton" then BisTooltipAddon:createMainFrame() end
                     if button == "RightButton" then BisTooltipAddon:openConfigDialog() end

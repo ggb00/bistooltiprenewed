@@ -1,24 +1,49 @@
 -- Core.lua
-BisTooltipAddon = LibStub("AceAddon-3.0"):NewAddon("Bis-Tooltip Renewed", "AceConsole-3.0")
+BisTooltipAddon = LibStub("AceAddon-3.0"):NewAddon("BiS-Tooltip Renewed", "AceConsole-3.0")
 BisTooltip_AliToHorde = {}
 BisTooltip_EquippedCache = {}
+
+local bagUpdateFrame = CreateFrame("Frame")
+bagUpdateFrame:Hide()
+bagUpdateFrame:SetScript("OnUpdate", function(self)
+    self:Hide()
+    if BisTooltipAddon.RefreshItemStateVisuals then
+        BisTooltipAddon.RefreshItemStateVisuals()
+    end
+end)
 
 local equipWatcher = CreateFrame("Frame")
 equipWatcher:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
 equipWatcher:RegisterEvent("PLAYER_ENTERING_WORLD")
-equipWatcher:SetScript("OnEvent", function()
+equipWatcher:RegisterEvent("BAG_UPDATE")
+equipWatcher:RegisterEvent("PLAYERBANKSLOTS_CHANGED")
+equipWatcher:RegisterEvent("BANKFRAME_OPENED")
+equipWatcher:RegisterEvent("BANKFRAME_CLOSED")
+equipWatcher:SetScript("OnEvent", function(_, event)
+    if event == "BAG_UPDATE" or event == "PLAYERBANKSLOTS_CHANGED" or event == "BANKFRAME_OPENED" or event == "BANKFRAME_CLOSED" then
+        if BisTooltipAddon.IsWindowOpen and BisTooltipAddon:IsWindowOpen() then
+            bagUpdateFrame:Show()
+        end
+        return
+    end
+
     wipe(BisTooltip_EquippedCache)
     for i = 1, 19 do
         local itemID = GetInventoryItemID("player", i)
         if itemID then BisTooltip_EquippedCache[itemID] = true end
+    end
+    if BisTooltipAddon.RefreshItemStateVisuals then
+        BisTooltipAddon.RefreshItemStateVisuals()
     end
 end)
 
 function BisTooltipAddon:GetItemState(itemID)
     if not itemID then return 0 end
     if BisTooltip_EquippedCache[itemID] then return 2 end
-    if GetItemCount(itemID, false) > 0 then return 1 end
-    if GetItemCount(itemID, true) > 0 then return 3 end
+    local altID = (BisTooltip_FactionMap and BisTooltip_FactionMap[itemID]) or (BisTooltip_AliToHorde and BisTooltip_AliToHorde[itemID])
+    if altID and BisTooltip_EquippedCache[altID] then return 2 end
+    if GetItemCount(itemID, false) > 0 or (altID and GetItemCount(altID, false) > 0) then return 1 end
+    if GetItemCount(itemID, true) > 0 or (altID and GetItemCount(altID, true) > 0) then return 3 end
     return 0
 end
 
@@ -34,6 +59,7 @@ end
 function BisTooltipAddon:BuildReverseLookup()
     self.FormattedNames = {}
     local canonicalClasses = {}
+    local specKeys = {}
 
     if BisTooltip_ClassData then
         for _, classData in ipairs(BisTooltip_ClassData) do
@@ -42,6 +68,7 @@ function BisTooltipAddon:BuildReverseLookup()
             canonicalClasses[string.gsub(class, "%s+", "")] = class
 
             self.FormattedNames[class] = {}
+            specKeys[class] = {}
             for _, spec in ipairs(classData.specs) do
                 local icon = BisTooltip_SpecIcons[class] and BisTooltip_SpecIcons[class][spec]
                 local iconStr = icon and string.format("|T%s:18|t", icon) or ""
@@ -49,6 +76,7 @@ function BisTooltipAddon:BuildReverseLookup()
                     withClass = string.format("%s %s - %s", iconStr, class, spec),
                     withoutClass = string.format("%s %s", iconStr, spec)
                 }
+                specKeys[class][spec] = class .. ":" .. spec
             end
         end
     end
@@ -60,11 +88,9 @@ function BisTooltipAddon:BuildReverseLookup()
         local tItem = tempLookup[targetId]
         if not tItem then tItem = {}; tempLookup[targetId] = tItem end
 
-        local tClass = tItem[cls]
-        if not tClass then tClass = {}; tItem[cls] = tClass end
-
-        local tSpec = tClass[spc]
-        if not tSpec then tSpec = {}; tClass[spc] = tSpec end
+        local key = (specKeys[cls] and specKeys[cls][spc]) or (cls .. ":" .. spc)
+        local tSpec = tItem[key]
+        if not tSpec then tSpec = { class = cls, spec = spc }; tItem[key] = tSpec end
 
         local currentRank = tSpec[phs]
         if not currentRank or rank < currentRank then
@@ -105,25 +131,23 @@ function BisTooltipAddon:BuildReverseLookup()
     self.ReverseLookup = {}
     for itemId, classes in pairs(tempLookup) do
         local flatList = {}
-        for class, specs in pairs(classes) do
-            for spec, phaseRanks in pairs(specs) do
-                local labels = {}
+        for _, entry in pairs(classes) do
+            local labels = {}
 
-                for _, phase in ipairs(sortedPhases) do
-                    local rank = phaseRanks[phase]
-                    if rank then
-                        local phaseLabel = (rank == 1) and (phase .. " BIS") or (phase .. " alt " .. (rank - 1))
-                        table.insert(labels, phaseLabel)
-                    end
+            for _, phase in ipairs(sortedPhases) do
+                local rank = entry[phase]
+                if rank then
+                    local phaseLabel = (rank == 1) and (phase .. " BIS") or (phase .. " alt " .. (rank - 1))
+                    table.insert(labels, phaseLabel)
                 end
+            end
 
-                if #labels > 0 then
-                    table.insert(flatList, {
-                        class = class,
-                        spec = spec,
-                        rightText = table.concat(labels, " / ")
-                    })
-                end
+            if #labels > 0 then
+                table.insert(flatList, {
+                    class = entry.class,
+                    spec = entry.spec,
+                    rightText = table.concat(labels, " / ")
+                })
             end
         end
 
@@ -139,8 +163,8 @@ function BisTooltipAddon:OnInitialize()
     self:BuildFactionMaps()
     self:BuildReverseLookup()
 
-    self.AceAddonName = "Bis-Tooltip Renewed"
-    self.AddonNameAndVersion = "Bis-Tooltip Renewed"
+    self.AceAddonName = "BiS-Tooltip Renewed"
+    self.AddonNameAndVersion = "BiS-Tooltip Renewed"
     self:initConfig()
     self:addMapIcon()
     self:initBisTooltip()

@@ -19,15 +19,23 @@ local classDropdown = nil
 local specDropdown = nil
 local phaseDropDown = nil
 
-local isHorde = UnitFactionGroup("player") == "Horde"
+local function IsPlayerHorde()
+    return UnitFactionGroup("player") == "Horde"
+end
 
 local missing_widgets = {}
-local pending_widget_update = false
+local fetch_attempts = {}
+local displayed_item_widgets = {}
 local scanner = CreateFrame("GameTooltip", "BisTooltipScanner", UIParent, "GameTooltipTemplate")
 local item_fetch_frame = CreateFrame("Frame")
 local fetch_timer = 0
+local MAX_FETCH_ATTEMPTS = 10
 
 local checkmark_path = "Interface\\AddOns\\" .. addonName .. "\\checkmark-16.tga"
+local MAIN_WINDOW_FRAME_NAME = "BisTooltipRenewed_MainWindow"
+local isSpecialFrameRegistered = false
+
+local EMPTY_TABLE = {}
 
 local function HandleItemTooltip(widget, item_id)
     GameTooltip:SetOwner(widget.frame, "ANCHOR_NONE")
@@ -38,7 +46,9 @@ local function HandleItemTooltip(widget, item_id)
 
     GameTooltip:SetHyperlink(validLink)
     GameTooltip:Show()
-    if IsShiftKeyDown() then GameTooltip_ShowCompareItem(GameTooltip) end
+    if IsShiftKeyDown() or IsModifiedClick("COMPAREITEMS") or (GetCVarBool and GetCVarBool("alwaysCompareItems")) then
+        GameTooltip_ShowCompareItem(GameTooltip)
+    end
 end
 
 local function ApplyItemStateVisuals(widget, item_id, is_missing)
@@ -73,7 +83,8 @@ local function ApplyItemStateVisuals(widget, item_id, is_missing)
 
     elseif state == 1 or state == 3 then
         widget.image:SetVertexColor(0.35, 0.35, 0.35, 1)
-        widget.frame.bisCheckMark:SetTexture("Interface\\Icons\\inv_misc_bag_08")
+        local iconTexture = (state == 3) and "Interface\\Icons\\inv_box_01" or "Interface\\Icons\\inv_misc_bag_08"
+        widget.frame.bisCheckMark:SetTexture(iconTexture)
         widget.frame.bisCheckMark:SetTexCoord(0.08, 0.92, 0.08, 0.92)
         widget.frame.bisCheckMark:SetWidth(16)
         widget.frame.bisCheckMark:SetHeight(16)
@@ -97,6 +108,76 @@ local function ApplyItemStateVisuals(widget, item_id, is_missing)
     end
 end
 
+local function RefreshItemStateVisuals()
+    if not main_frame or not main_frame.frame:IsShown() then return end
+    for i = 1, #displayed_item_widgets do
+        local entry = displayed_item_widgets[i]
+        if entry.widget and entry.widget.frame then
+            ApplyItemStateVisuals(entry.widget, entry.item_id, false)
+        end
+    end
+end
+BisTooltipAddon.RefreshItemStateVisuals = RefreshItemStateVisuals
+
+function BisTooltipAddon:IsWindowOpen()
+    return main_frame and main_frame.frame and main_frame.frame:IsShown()
+end
+
+local function ProcessMissingItems(self, elapsed)
+    fetch_timer = fetch_timer + elapsed
+    if fetch_timer <= 0.25 then return end
+    fetch_timer = 0
+
+    local hasRemaining = false
+    for item_id, widgets in pairs(missing_widgets) do
+        local itemName, _, _, _, _, _, _, _, _, itemIcon, _, _, _, bindType = GetItemInfo(item_id)
+
+        if itemName then
+            for _, widget in ipairs(widgets) do
+                if widget and widget.frame and widget.frame:IsShown() then
+                    widget:SetImage(itemIcon)
+                    if bindType == 2 then widget.frame.bisBoeMark:Show() else widget.frame.bisBoeMark:Hide() end
+                    ApplyItemStateVisuals(widget, item_id, false)
+                end
+            end
+            missing_widgets[item_id] = nil
+            fetch_attempts[item_id] = nil
+        else
+            local attempts = (fetch_attempts[item_id] or 0) + 1
+            fetch_attempts[item_id] = attempts
+
+            if attempts >= MAX_FETCH_ATTEMPTS then
+                missing_widgets[item_id] = nil
+            else
+                hasRemaining = true
+                scanner:SetOwner(UIParent, "ANCHOR_NONE")
+                scanner:SetHyperlink("item:" .. item_id .. ":0:0:0:0:0:0:0")
+                scanner:ClearLines()
+            end
+        end
+    end
+
+    if not hasRemaining then
+        item_fetch_frame:SetScript("OnUpdate", nil)
+    end
+end
+
+local function StartItemFetch()
+    if next(missing_widgets) then
+        item_fetch_frame:SetScript("OnUpdate", ProcessMissingItems)
+    else
+        item_fetch_frame:SetScript("OnUpdate", nil)
+    end
+end
+
+item_fetch_frame:RegisterEvent("GET_ITEM_INFO_RECEIVED")
+item_fetch_frame:SetScript("OnEvent", function()
+    if next(missing_widgets) then
+        fetch_timer = 0.25
+        item_fetch_frame:SetScript("OnUpdate", ProcessMissingItems)
+    end
+end)
+
 local function createItemFrame(item_id, size)
     if item_id < 0 then
         local empty_icon = AceGUI:Create("Icon")
@@ -116,17 +197,19 @@ local function createItemFrame(item_id, size)
 
     item_frame.frame:EnableMouse(true)
 
-    if not item_frame.frame.bisCheckMark then
-        item_frame.frame.bisCheckMark = item_frame.frame:CreateTexture(nil, "OVERLAY")
-    end
-
     if not item_frame.frame.bisBorder then
-        item_frame.frame.bisBorder = item_frame.frame:CreateTexture(nil, "OVERLAY")
+        item_frame.frame.bisBorder = item_frame.frame:CreateTexture(nil, "ARTWORK")
         item_frame.frame.bisBorder:SetTexture("Interface\\Buttons\\CheckButtonHilight")
         item_frame.frame.bisBorder:SetBlendMode("ADD")
         item_frame.frame.bisBorder:SetAllPoints(item_frame.image)
         item_frame.frame.bisBorder:Hide()
     end
+    item_frame.frame.bisBorder:SetDrawLayer("ARTWORK", 1)
+
+    if not item_frame.frame.bisCheckMark then
+        item_frame.frame.bisCheckMark = item_frame.frame:CreateTexture(nil, "OVERLAY")
+    end
+    item_frame.frame.bisCheckMark:SetDrawLayer("OVERLAY", 1)
 
     if not item_frame.frame.bisBoeMark then
         item_frame.frame.bisBoeMark = item_frame.frame:CreateTexture(nil, "OVERLAY")
@@ -135,6 +218,7 @@ local function createItemFrame(item_id, size)
         item_frame.frame.bisBoeMark:SetPoint("TOPLEFT", 2, -5)
         item_frame.frame.bisBoeMark:SetTexture("Interface\\Icons\\INV_Misc_Coin_01")
     end
+    item_frame.frame.bisBoeMark:SetDrawLayer("OVERLAY", 2)
 
     item_frame:SetCallback("OnClick", function()
         local _, link = GetItemInfo(item_id)
@@ -161,6 +245,7 @@ local function createItemFrame(item_id, size)
 
         if not missing_widgets[item_id] then missing_widgets[item_id] = {} end
         table.insert(missing_widgets[item_id], item_frame)
+        StartItemFetch()
         return item_frame
     end
 
@@ -171,41 +256,17 @@ local function createItemFrame(item_id, size)
     return item_frame
 end
 
-item_fetch_frame:RegisterEvent("GET_ITEM_INFO_RECEIVED")
-item_fetch_frame:SetScript("OnEvent", function()
-    pending_widget_update = true
-end)
-
-item_fetch_frame:SetScript("OnUpdate", function(self, elapsed)
-    fetch_timer = fetch_timer + elapsed
-    if fetch_timer > 0.25 then
-        fetch_timer = 0
-        for item_id, widgets in pairs(missing_widgets) do
-            local itemName, _, _, _, _, _, _, _, _, itemIcon, _, _, _, bindType = GetItemInfo(item_id)
-
-            if itemName then
-                for _, widget in ipairs(widgets) do
-                    if widget and widget.frame then
-                        widget:SetImage(itemIcon)
-                        if bindType == 2 then widget.frame.bisBoeMark:Show() else widget.frame.bisBoeMark:Hide() end
-                        ApplyItemStateVisuals(widget, item_id, false)
-                    end
-                end
-                missing_widgets[item_id] = nil
-            else
-                scanner:SetOwner(UIParent, "ANCHOR_NONE")
-                scanner:SetHyperlink("item:" .. item_id .. ":0:0:0:0:0:0:0")
-                scanner:ClearLines()
-            end
-        end
-    end
-end)
-
 local function createSpellFrame(spell_id, size)
     if spell_id < 0 then
         local empty_spell = AceGUI:Create("Icon")
         empty_spell:SetImageSize(size, size)
         empty_spell.frame:EnableMouse(false)
+
+        if empty_spell.frame.bisCheckMark then empty_spell.frame.bisCheckMark:Hide() end
+        if empty_spell.frame.bisBoeMark then empty_spell.frame.bisBoeMark:Hide() end
+        if empty_spell.frame.bisBorder then empty_spell.frame.bisBorder:Hide() end
+        empty_spell:SetImage("")
+
         return empty_spell
     end
 
@@ -287,10 +348,10 @@ local function drawItemSlot(slot)
     f.label:SetJustifyH("LEFT")
     spec_frame:AddChild(f)
 
-    local enhs = {}
-    local enh_class = BisTooltip_Enhancements and (BisTooltip_Enhancements[class] or BisTooltip_Enhancements[string.gsub(class, "%s+", "")])
+    local enhs = EMPTY_TABLE
+    local enh_class = BisTooltip_Enhancements and BisTooltip_Enhancements[class]
     if enh_class and enh_class[spec] and enh_class[spec][phase] then
-        enhs = enh_class[spec][phase][slot.slot_name] or {}
+        enhs = enh_class[spec][phase][slot.slot_name] or EMPTY_TABLE
     end
 
     spec_frame:AddChild(createEnhancementsFrame(enhs))
@@ -301,13 +362,17 @@ local function drawItemSlot(slot)
 
         local display_id = original_item_id
 
-        if isHorde and BisTooltip_AliToHorde and BisTooltip_AliToHorde[original_item_id] then
+        if IsPlayerHorde() and BisTooltip_AliToHorde and BisTooltip_AliToHorde[original_item_id] then
             display_id = BisTooltip_AliToHorde[original_item_id]
-        elseif not isHorde and BisTooltip_FactionMap and BisTooltip_FactionMap[original_item_id] then
+        elseif not IsPlayerHorde() and BisTooltip_FactionMap and BisTooltip_FactionMap[original_item_id] then
             display_id = BisTooltip_FactionMap[original_item_id]
         end
 
-        spec_frame:AddChild(createItemFrame(display_id, 40))
+        local item_widget = createItemFrame(display_id, 40)
+        if display_id > 0 then
+            table.insert(displayed_item_widgets, { widget = item_widget, item_id = display_id })
+        end
+        spec_frame:AddChild(item_widget)
         count = count + 1
     end
 
@@ -356,7 +421,10 @@ local function drawSpecData()
         targetScroll = BisTooltipAddon.db.char.scroll_status.scrollvalue
     end
 
-    missing_widgets = {}
+    wipe(displayed_item_widgets)
+    wipe(missing_widgets)
+    wipe(fetch_attempts)
+    item_fetch_frame:SetScript("OnUpdate", nil)
 
     spec_frame:ReleaseChildren()
     drawTableHeader(spec_frame)
@@ -374,7 +442,7 @@ local function drawSpecData()
 end
 
 local function buildClassDict()
-    if not BisTooltip_ClassData or type(BisTooltip_ClassData) ~= "table" then return end
+    if #class_options > 0 or not BisTooltip_ClassData or type(BisTooltip_ClassData) ~= "table" then return end
     class_options = {}
     for ci, class_data in ipairs(BisTooltip_ClassData) do
         local option_name = class_data.name
@@ -524,7 +592,16 @@ function BisTooltipAddon:reloadData()
 end
 
 function BisTooltipAddon:createMainFrame()
-    if main_frame then BisTooltipAddon:closeMainFrame(); return end
+    if main_frame then
+        if main_frame.frame:IsShown() then
+            BisTooltipAddon:closeMainFrame()
+        else
+            main_frame:Show()
+            RefreshItemStateVisuals()
+            StartItemFetch()
+        end
+        return
+    end
 
     buildClassDict()
     loadData()
@@ -540,8 +617,15 @@ function BisTooltipAddon:createMainFrame()
         main_frame.frame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", pos.x, pos.y)
     end
 
-    _G["BisTooltipRenewed_MainWindow"] = main_frame.frame
-    tinsert(UISpecialFrames, "BisTooltipRenewed_MainWindow")
+    _G[MAIN_WINDOW_FRAME_NAME] = main_frame.frame
+    if not isSpecialFrameRegistered then
+        tinsert(UISpecialFrames, MAIN_WINDOW_FRAME_NAME)
+        isSpecialFrameRegistered = true
+    end
+
+    main_frame.frame:SetScript("OnHide", function()
+        item_fetch_frame:SetScript("OnUpdate", nil)
+    end)
 
     hooksecurefunc(main_frame.frame, "StopMovingOrSizing", function(self)
         local x = self:GetLeft()
@@ -574,11 +658,8 @@ function BisTooltipAddon:createMainFrame()
         main_frame.frame.darkOverlay:SetTexture(0, 0, 0, 0.60)
     end
 
-    main_frame:SetCallback("OnClose", function(widget)
-        spec_frame = nil
-        missing_widgets = {}
-        AceGUI:Release(widget)
-        main_frame = nil
+    main_frame:SetCallback("OnClose", function()
+        BisTooltipAddon:closeMainFrame()
     end)
     main_frame:SetLayout("List")
     main_frame:SetTitle(BisTooltipAddon.AddonNameAndVersion)
@@ -629,14 +710,9 @@ function BisTooltipAddon:createMainFrame()
 end
 
 function BisTooltipAddon:closeMainFrame()
-    if main_frame then
-        AceGUI:Release(main_frame)
-        classDropdown = nil
-        specDropdown = nil
-        phaseDropDown = nil
-        missing_widgets = {}
-
-        main_frame = nil
+    if main_frame and main_frame.frame:IsShown() then
+        item_fetch_frame:SetScript("OnUpdate", nil)
+        main_frame:Hide()
     end
 end
 

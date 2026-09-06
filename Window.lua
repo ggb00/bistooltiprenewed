@@ -46,7 +46,9 @@ local function HandleItemTooltip(widget, item_id)
 
     GameTooltip:SetHyperlink(validLink)
     GameTooltip:Show()
-    if IsShiftKeyDown() then GameTooltip_ShowCompareItem(GameTooltip) end
+    if IsShiftKeyDown() or IsModifiedClick("COMPAREITEMS") or (GetCVarBool and GetCVarBool("alwaysCompareItems")) then
+        GameTooltip_ShowCompareItem(GameTooltip)
+    end
 end
 
 local function ApplyItemStateVisuals(widget, item_id, is_missing)

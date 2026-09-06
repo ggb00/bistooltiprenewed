@@ -289,37 +289,6 @@ local function RefreshTooltip(tt)
     end
 end
 
-local function UpdateComparison(tt)
-    if not tt or not tt:IsShown() or not tt.GetItem then return end
-    local _, link = tt:GetItem()
-    if not link then return end
-
-    if not ShouldCompareItems() then
-        HideShoppingTooltips()
-        local owner = tt:GetOwner()
-        if owner and owner:IsShown() and owner.GetScript and owner:GetScript("OnEnter") then
-            RefreshTooltip(tt)
-        end
-        return
-    end
-
-    local owner = tt:GetOwner()
-    if owner and owner:IsShown() and owner.GetScript and owner:GetScript("OnEnter") then
-        RefreshTooltip(tt)
-    end
-
-    if not (ShoppingTooltip1 and ShoppingTooltip1:IsShown()) and not (AtlasLootTooltip2 and AtlasLootTooltip2:IsShown()) and not (ItemRefShoppingTooltip1 and ItemRefShoppingTooltip1:IsShown()) then
-        if not tt.shoppingTooltips then
-            if tt == ItemRefTooltip then
-                tt.shoppingTooltips = { ItemRefShoppingTooltip1, ItemRefShoppingTooltip2 }
-            else
-                tt.shoppingTooltips = { ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3 }
-            end
-        end
-        GameTooltip_ShowCompareItem(tt)
-    end
-end
-
 local function HookAtlasLoot()
     if AtlasLootTooltip and not AtlasLootTooltip.BisHooked then
         AtlasLootTooltip.BisHooked = true
@@ -338,16 +307,72 @@ local function HookAtlasLoot()
     end
 end
 
+local function UpdateComparison(tt)
+    if not tt or not tt:IsShown() or not tt.GetItem then return end
+    local _, link = tt:GetItem()
+    if not link then return end
+
+    if not ShouldCompareItems() then
+        local owner = tt:GetOwner()
+        if owner and owner:IsShown() and owner.GetScript and owner:GetScript("OnEnter") then
+            RefreshTooltip(tt)
+        end
+        HideShoppingTooltips()
+        return
+    end
+
+    local owner = tt:GetOwner()
+    if owner and owner:IsShown() and owner.GetScript and owner:GetScript("OnEnter") then
+        RefreshTooltip(tt)
+    end
+
+    local compareVisible = false
+    if tt.shoppingTooltips and tt.shoppingTooltips[1] and tt.shoppingTooltips[1]:IsShown() then
+        compareVisible = true
+    elseif tt == AtlasLootTooltip and AtlasLootTooltip2 and AtlasLootTooltip2:IsShown() then
+        compareVisible = true
+    end
+
+    if not compareVisible then
+        if not tt.shoppingTooltips then
+            if tt == ItemRefTooltip then
+                tt.shoppingTooltips = { ItemRefShoppingTooltip1, ItemRefShoppingTooltip2 }
+            else
+                tt.shoppingTooltips = { ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3 }
+            end
+        end
+        GameTooltip_ShowCompareItem(tt)
+    end
+end
+
+local function UpdateTooltipOnModifier(tt)
+    if not tt or not tt:IsShown() then return end
+    RefreshTooltip(tt)
+    if ShouldCompareItems() then
+        local compareVisible = false
+        if tt.shoppingTooltips and tt.shoppingTooltips[1] and tt.shoppingTooltips[1]:IsShown() then
+            compareVisible = true
+        elseif tt == AtlasLootTooltip and AtlasLootTooltip2 and AtlasLootTooltip2:IsShown() then
+            compareVisible = true
+        end
+
+        if not compareVisible then
+            if not tt.shoppingTooltips then
+                if tt == ItemRefTooltip then
+                    tt.shoppingTooltips = { ItemRefShoppingTooltip1, ItemRefShoppingTooltip2 }
+                else
+                    tt.shoppingTooltips = { ShoppingTooltip1, ShoppingTooltip2, ShoppingTooltip3 }
+                end
+            end
+            GameTooltip_ShowCompareItem(tt)
+        end
+    end
+end
+
 function BisTooltipAddon:ClearTooltipCache()
-    if GameTooltip:IsShown() then
-        RefreshTooltip(GameTooltip)
-    end
-    if ItemRefTooltip:IsShown() then
-        RefreshTooltip(ItemRefTooltip)
-    end
-    if AtlasLootTooltip and AtlasLootTooltip:IsShown() then
-        RefreshTooltip(AtlasLootTooltip)
-    end
+    UpdateTooltipOnModifier(GameTooltip)
+    UpdateTooltipOnModifier(AtlasLootTooltip)
+    UpdateTooltipOnModifier(ItemRefTooltip)
 end
 
 function BisTooltipAddon:initBisTooltip()
@@ -402,7 +427,11 @@ function BisTooltipAddon:initBisTooltip()
         if s1 and s1:IsShown() then s1.BisIsCompareItem = true; StyleTooltip(s1, true) end
         if s2 and s2:IsShown() then s2.BisIsCompareItem = true; StyleTooltip(s2, true) end
         if s3 and s3:IsShown() then s3.BisIsCompareItem = true; StyleTooltip(s3, true) end
-        if AtlasLootTooltip2 and AtlasLootTooltip2:IsShown() then AtlasLootTooltip2.BisIsCompareItem = true; StyleTooltip(AtlasLootTooltip2, true) end
+        if AtlasLootTooltip2 and AtlasLootTooltip2:IsShown() then
+            if not AtlasLootTooltip2.BisHooked then HookAtlasLoot() end
+            AtlasLootTooltip2.BisIsCompareItem = true
+            StyleTooltip(AtlasLootTooltip2, true)
+        end
     end)
 
     HookAtlasLoot()
@@ -424,37 +453,18 @@ function BisTooltipAddon:initBisTooltip()
                     return
                 end
 
-                if GameTooltip:IsShown() then
-                    RefreshTooltip(GameTooltip)
-                    if ShouldCompareItems() then
-                        UpdateComparison(GameTooltip)
-                    end
-                end
-
-                if AtlasLootTooltip and AtlasLootTooltip:IsShown() then
-                    RefreshTooltip(AtlasLootTooltip)
-                    if ShouldCompareItems() then
-                        UpdateComparison(AtlasLootTooltip)
-                    end
-                end
+                UpdateTooltipOnModifier(GameTooltip)
+                UpdateTooltipOnModifier(AtlasLootTooltip)
 
                 if ItemRefTooltip:IsShown() then
                     local focus = GetMouseFocus()
                     if focus and (focus == ItemRefTooltip or focus:GetParent() == ItemRefTooltip) then
-                        RefreshTooltip(ItemRefTooltip)
-                        if ShouldCompareItems() then
-                            UpdateComparison(ItemRefTooltip)
-                        end
+                        UpdateTooltipOnModifier(ItemRefTooltip)
                     end
                 end
             elseif key == "LSHIFT" or key == "RSHIFT" then
-                if GameTooltip:IsShown() then
-                    UpdateComparison(GameTooltip)
-                end
-
-                if AtlasLootTooltip and AtlasLootTooltip:IsShown() then
-                    UpdateComparison(AtlasLootTooltip)
-                end
+                UpdateComparison(GameTooltip)
+                UpdateComparison(AtlasLootTooltip)
 
                 if ItemRefTooltip:IsShown() then
                     local focus = GetMouseFocus()

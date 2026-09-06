@@ -249,6 +249,12 @@ local function createSpellFrame(spell_id, size)
         local empty_spell = AceGUI:Create("Icon")
         empty_spell:SetImageSize(size, size)
         empty_spell.frame:EnableMouse(false)
+
+        if empty_spell.frame.bisCheckMark then empty_spell.frame.bisCheckMark:Hide() end
+        if empty_spell.frame.bisBoeMark then empty_spell.frame.bisBoeMark:Hide() end
+        if empty_spell.frame.bisBorder then empty_spell.frame.bisBorder:Hide() end
+        empty_spell:SetImage("")
+
         return empty_spell
     end
 

@@ -66,7 +66,7 @@ BisTooltip_ItemLists["Rogue"]["Assassination"]["T9"][6] = {["slot_name"] = "Wris
 BisTooltip_ItemLists["Rogue"]["Assassination"]["T9"][7] = {["slot_name"] = "Hands", [1] = 48234, [2] = 46043, [3] = 48241, [4] = 46124, [5] = 45325, [6] = 48244 }
 BisTooltip_ItemLists["Rogue"]["Assassination"]["T9"][8] = {["slot_name"] = "Waist", [1] = 47460, [2] = 47299, [3] = 45829, [4] = 46095, [5] = 45555, [6] = 45547 }
 BisTooltip_ItemLists["Rogue"]["Assassination"]["T9"][9] = {["slot_name"] = "Legs", [1] = 47420, [2] = 48236, [3] = 47259, [4] = 48239, [5] = 45846, [6] = 45536 }
-BisTooltip_ItemLists["Rogue"]["Assassination"]["T9"][10] = {["slot_name"] = "Feet", [1] = 47445, [2] = 47992, [3] = 47071, [4] = 47853, [5] = 45564, [6] = 39701 }
+BisTooltip_ItemLists["Rogue"]["Assassination"]["T9"][10] = {["slot_name"] = "Feet", [1] = 47445, [2] = 47992, [3] = 47284, [4] = 47853, [5] = 45564, [6] = 39701 }
 BisTooltip_ItemLists["Rogue"]["Assassination"]["T9"][11] = {["slot_name"] = "Finger 1", [1] = 47443, [2] = 46048, [3] = 48007, [4] = 47868, [5] = 45157, [6] = 45608 }
 BisTooltip_ItemLists["Rogue"]["Assassination"]["T9"][12] = {["slot_name"] = "Finger 2", [1] = 45608, [2] = 46048, [3] = 48007, [4] = 47443, [5] = 47868, [6] = 45157 }
 BisTooltip_ItemLists["Rogue"]["Assassination"]["T9"][13] = {["slot_name"] = "Trinket 1", [1] = 47464, [2] = 45609, [3] = 47303, [4] = 45522, [5] = 47734, [6] = 48020 }
@@ -162,7 +162,7 @@ BisTooltip_ItemLists["Rogue"]["Combat"]["T8"][11] = {["slot_name"] = "Finger 1",
 BisTooltip_ItemLists["Rogue"]["Combat"]["T8"][12] = {["slot_name"] = "Finger 2", [1] = 45608, [2] = 46048, [3] = 45157, [4] = 45456, [5] = 45525, [6] = 46322 }
 BisTooltip_ItemLists["Rogue"]["Combat"]["T8"][13] = {["slot_name"] = "Trinket 1", [1] = 45609, [2] = 45931, [3] = 45522, [4] = 46038, [5] = 45286, [6] = 40256 }
 BisTooltip_ItemLists["Rogue"]["Combat"]["T8"][14] = {["slot_name"] = "Trinket 2", [1] = 45931, [2] = 45609, [3] = 45522, [4] = 46038, [5] = 45286, [6] = 40256 }
-BisTooltip_ItemLists["Rogue"]["Combat"]["T8"][15] = {["slot_name"] = "Weapon", [1] = 45132, [2] = 45449, [3] = 45947, [4] = 49839, [5] = 45489, [6] = 46097 }
+BisTooltip_ItemLists["Rogue"]["Combat"]["T8"][15] = {["slot_name"] = "Weapon", [1] = 45132, [2] = 45449, [3] = 45947, [4] = 45266, [5] = 45489, [6] = 46097 }
 BisTooltip_ItemLists["Rogue"]["Combat"]["T8"][16] = {["slot_name"] = "Off hand", [1] = 45484, [2] = 46036, [3] = 45331, [4] = 45930, [5] = 45494, [6] = 45142 }
 BisTooltip_ItemLists["Rogue"]["Combat"]["T8"][17] = {["slot_name"] = "Ranged", [1] = 45296, [2] = 45570, [3] = 45870, [4] = 45086, [5] = 40190, [6] = 45327 }
 BisTooltip_ItemLists["Rogue"]["Combat"]["T9"] = BisTooltip_ItemLists["Rogue"]["Combat"]["T9"] or {}
@@ -175,7 +175,7 @@ BisTooltip_ItemLists["Rogue"]["Combat"]["T9"][6] = {["slot_name"] = "Wrist", [1]
 BisTooltip_ItemLists["Rogue"]["Combat"]["T9"][7] = {["slot_name"] = "Hands", [1] = 48234, [2] = 46043, [3] = 48241, [4] = 46124, [5] = 45325, [6] = 48017 }
 BisTooltip_ItemLists["Rogue"]["Combat"]["T9"][8] = {["slot_name"] = "Waist", [1] = 47460, [2] = 47299, [3] = 46095, [4] = 45829, [5] = 45547, [6] = 45555 }
 BisTooltip_ItemLists["Rogue"]["Combat"]["T9"][9] = {["slot_name"] = "Legs", [1] = 47420, [2] = 48236, [3] = 47259, [4] = 48239, [5] = 45536, [6] = 45846 }
-BisTooltip_ItemLists["Rogue"]["Combat"]["T9"][10] = {["slot_name"] = "Feet", [1] = 47445, [2] = 47992, [3] = 47071, [4] = 47853, [5] = 45564, [6] = 45232 }
+BisTooltip_ItemLists["Rogue"]["Combat"]["T9"][10] = {["slot_name"] = "Feet", [1] = 47445, [2] = 47992, [3] = 47284, [4] = 47853, [5] = 45564, [6] = 45232 }
 BisTooltip_ItemLists["Rogue"]["Combat"]["T9"][11] = {["slot_name"] = "Finger 1", [1] = 48007, [2] = 46048, [3] = 47443, [4] = 45157, [5] = 47868, [6] = 45608 }
 BisTooltip_ItemLists["Rogue"]["Combat"]["T9"][12] = {["slot_name"] = "Finger 2", [1] = 47443, [2] = 48007, [3] = 46048, [4] = 45157, [5] = 47868, [6] = 45608 }
 BisTooltip_ItemLists["Rogue"]["Combat"]["T9"][13] = {["slot_name"] = "Trinket 1", [1] = 47464, [2] = 45609, [3] = 45931, [4] = 47303, [5] = 45522, [6] = 46038 }

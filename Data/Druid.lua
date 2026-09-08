@@ -62,7 +62,7 @@ BisTooltip_ItemLists["Druid"]["Balance"]["T9"][2] = {["slot_name"] = "Neck", [1]
 BisTooltip_ItemLists["Druid"]["Balance"]["T9"][3] = {["slot_name"] = "Shoulder", [1] = 48177, [2] = 47714, [3] = 45186, [4] = 47996, [5] = 46068, [6] = 45136 }
 BisTooltip_ItemLists["Druid"]["Balance"]["T9"][4] = {["slot_name"] = "Back", [1] = 47551, [2] = 47452, [3] = 45242, [4] = 47291, [5] = 46042, [6] = 47554 }
 BisTooltip_ItemLists["Druid"]["Balance"]["T9"][5] = {["slot_name"] = "Chest", [1] = 48176, [2] = 47462, [3] = 48051, [4] = 47301, [5] = 47906, [6] = 45865 }
-BisTooltip_ItemLists["Druid"]["Balance"]["T9"][6] = {["slot_name"] = "Wrist", [1] = 47467, [2] = 48000, [3] = 47141, [4] = 47861, [5] = 45275, [6] = 47438 }
+BisTooltip_ItemLists["Druid"]["Balance"]["T9"][6] = {["slot_name"] = "Wrist", [1] = 47467, [2] = 48000, [3] = 47306, [4] = 47861, [5] = 45275, [6] = 47438 }
 BisTooltip_ItemLists["Druid"]["Balance"]["T9"][7] = {["slot_name"] = "Hands", [1] = 48173, [2] = 46045, [3] = 48028, [4] = 47889, [5] = 46189, [6] = 45665 }
 BisTooltip_ItemLists["Druid"]["Balance"]["T9"][8] = {["slot_name"] = "Waist", [1] = 47447, [2] = 47994, [3] = 47286, [4] = 47855, [5] = 45557, [6] = 47469 }
 BisTooltip_ItemLists["Druid"]["Balance"]["T9"][9] = {["slot_name"] = "Legs", [1] = 47479, [2] = 47478, [3] = 48175, [4] = 45488, [5] = 47317, [6] = 48180 }
@@ -172,7 +172,7 @@ BisTooltip_ItemLists["Druid"]["Feral Tank"]["T9"][6] = {["slot_name"] = "Wrist",
 BisTooltip_ItemLists["Druid"]["Feral Tank"]["T9"][7] = {["slot_name"] = "Hands", [1] = 48202, [2] = 48193, [3] = 46043, [4] = 46158, [5] = 45325, [6] = 48017 }
 BisTooltip_ItemLists["Druid"]["Feral Tank"]["T9"][8] = {["slot_name"] = "Waist", [1] = 47460, [2] = 47299, [3] = 46095, [4] = 45555, [5] = 45829, [6] = 45491 }
 BisTooltip_ItemLists["Druid"]["Feral Tank"]["T9"][9] = {["slot_name"] = "Legs", [1] = 47420, [2] = 48200, [3] = 45536, [4] = 47259, [5] = 48195, [6] = 45846 }
-BisTooltip_ItemLists["Druid"]["Feral Tank"]["T9"][10] = {["slot_name"] = "Feet", [1] = 47445, [2] = 47992, [3] = 47071, [4] = 45232, [5] = 47853, [6] = 45564 }
+BisTooltip_ItemLists["Druid"]["Feral Tank"]["T9"][10] = {["slot_name"] = "Feet", [1] = 47445, [2] = 47992, [3] = 47284, [4] = 45232, [5] = 47853, [6] = 45564 }
 BisTooltip_ItemLists["Druid"]["Feral Tank"]["T9"][11] = {["slot_name"] = "Finger 1", [1] = 48027, [2] = 47731, [3] = 45471, [4] = 49489, [5] = 47443, [6] = 47476 }
 BisTooltip_ItemLists["Druid"]["Feral Tank"]["T9"][12] = {["slot_name"] = "Finger 2", [1] = 47731, [2] = 48027, [3] = 45471, [4] = 49489, [5] = 47443, [6] = 47476 }
 BisTooltip_ItemLists["Druid"]["Feral Tank"]["T9"][13] = {["slot_name"] = "Trinket 1", [1] = 47451, [2] = 47290, [3] = 45158, [4] = 46021, [5] = 47216, [6] = 47735 }
@@ -275,7 +275,7 @@ BisTooltip_ItemLists["Druid"]["Feral DPS"]["T9"][6] = {["slot_name"] = "Wrist", 
 BisTooltip_ItemLists["Druid"]["Feral DPS"]["T9"][7] = {["slot_name"] = "Hands", [1] = 48202, [2] = 48017, [3] = 46043, [4] = 45325, [5] = 48193, [6] = 47878 }
 BisTooltip_ItemLists["Druid"]["Feral DPS"]["T9"][8] = {["slot_name"] = "Waist", [1] = 47460, [2] = 46095, [3] = 47299, [4] = 45829, [5] = 45547, [6] = 45555 }
 BisTooltip_ItemLists["Druid"]["Feral DPS"]["T9"][9] = {["slot_name"] = "Legs", [1] = 45536, [2] = 47420, [3] = 48200, [4] = 47259, [5] = 48195, [6] = 45141 }
-BisTooltip_ItemLists["Druid"]["Feral DPS"]["T9"][10] = {["slot_name"] = "Feet", [1] = 47445, [2] = 47992, [3] = 47071, [4] = 47853, [5] = 45232, [6] = 45564 }
+BisTooltip_ItemLists["Druid"]["Feral DPS"]["T9"][10] = {["slot_name"] = "Feet", [1] = 47445, [2] = 47992, [3] = 47284, [4] = 47853, [5] = 45232, [6] = 45564 }
 BisTooltip_ItemLists["Druid"]["Feral DPS"]["T9"][11] = {["slot_name"] = "Finger 1", [1] = 45608, [2] = 48007, [3] = 46048, [4] = 45157, [5] = 47868, [6] = 47443 }
 BisTooltip_ItemLists["Druid"]["Feral DPS"]["T9"][12] = {["slot_name"] = "Finger 2", [1] = 47443, [2] = 48007, [3] = 46048, [4] = 45608, [5] = 47868, [6] = 45157 }
 BisTooltip_ItemLists["Druid"]["Feral DPS"]["T9"][13] = {["slot_name"] = "Trinket 1", [1] = 45931, [2] = 47464, [3] = 47303, [4] = 45522, [5] = 47734, [6] = 45609 }
